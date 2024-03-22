@@ -40,7 +40,7 @@ return require('packer').startup(function(use)
 
  -- harpoon
  use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
-use {
+    use {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     requires = { {"nvim-lua/plenary.nvim"} }
@@ -72,5 +72,8 @@ use {
   use('neovim/nvim-lspconfig')
 	use('jose-elias-alvarez/null-ls.nvim')
 	use('MunifTanjim/prettier.nvim')
+
+    -- vimbegood
+    use("ThePrimeagen/vim-be-good");
 
 end)
