@@ -15,24 +15,49 @@ return require('packer').startup(function(use)
 	  requires = { {'nvim-lua/plenary.nvim'} }
   }
 
+  -- fzf (telescope alternative?)
+use { "ibhagwan/fzf-lua",
+  -- optional for icon support
+  requires = { "nvim-tree/nvim-web-devicons" }
+  }
+
+  --[[ THEMES --]]
+  
+  -- colorizer
+
+  use("norcalli/nvim-colorizer.lua");
+
+  -- colorbudy
+  use ("tjdevries/colorbuddy.nvim")
+
+  -- github
+  use("projekt0n/github-nvim-theme");
+
   -- rose pine theme
-  --[[
-  use({
-	  'rose-pine/neovim',
-	  as = 'rose-pine',
-	  config = function()
-		  vim.cmd('colorscheme rose-pine')
-	  end
-  })
-  --]]
+  use("rose-pine/neovim");
+
+  -- lush
+  use("rktjmp/lush.nvim");
+
+  -- gruvbox
+  use("ellisonleao/gruvbox.nvim");
+
+  -- tokyonight
+  use("folke/tokyonight.nvim");
+
+  -- modus-themes
+  use("miikanissi/modus-themes.nvim");
+
+  -- nord 
+  use("gbprod/nord.nvim");
+
+  -- vscode
+  use("Mofiqul/vscode.nvim");
 
   --- kanagawa theme
   use ("rebelot/kanagawa.nvim")
-  --colorscheme kanagawa
-  vim.cmd("colorscheme kanagawa")
 
   -- treesitter
-
  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
  -- playground

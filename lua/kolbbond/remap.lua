@@ -39,9 +39,8 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
 
 -- format
 vim.keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format()
+    vim.lsp.buf.format()
 end);
-
 
 -- quick movements
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz");
@@ -54,21 +53,21 @@ vim.keymap.set("n", "<leader>s", [[:%s/\\<<C-r><C-w>\\>\<C-r><C-w>/gI<Left><Left
 
 -- add chmod
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>",
-		{ silent = true} );
+    { silent = true });
 
 -- shoutout through leaderleader
 vim.keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
+    vim.cmd("so")
 end);
 
-
-
-
-
-
-
-
-
-
-
-
+-- use j&k to navigate menus 
+--[[
+vim.api.nvim_set_keymap('i', '<C-j>', 'pumvisible() ? "\\<c-n>" : "\\<c-j>"' ,
+{ noremap = true, expr=true })
+vim.api.nvim_set_keymap('n', '<C-j>', 'pumvisible() ? "\\<c-n>" : "\\<c-j>"' ,
+{ noremap = true, expr=true })
+vim.api.nvim_set_keymap('i', '<C-k>', 'pumvisible() ? "\\<c-p>" : "\\<c-j>"' , 
+{ noremap = true, expr=true })
+vim.api.nvim_set_keymap('n', '<C-k>', 'pumvisible() ? "\\<c-p>" : "\\<c-j>"' , 
+{ noremap = true, expr=true })
+--]]
