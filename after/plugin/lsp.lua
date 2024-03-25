@@ -1,41 +1,37 @@
 local lsp = require("lsp-zero");
 
---lsp.preset("recommended");
+lsp.preset("recommended");
 
 
 -- mason is how we setup lsp
 require('mason').setup({})
---[[
-require('mason-lspconfig').setup({
-    ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls'
-
-    },
-    handlers = { lsp.default_setup }
-});
---]]
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
         'matlab_ls', 'bashls'
     },
-    handlers = {
-        lsp.default_setup,
-        matlab_ls = function()
-            require('lspconfig').matlab_ls.setup({
-                filetypes = { "matlab" },
-                settings = {
-                    matlab = {
-                        installPath = "/home/kolbbond/build/MATLAB/2023b",
-                    },
-                },
-                single_file_support = true
-            })
-        end,
+    handlers = { lsp.default_setup,
     },
 });
 
+require("lspconfig").matlab_ls.setup({
+    settings = {
+        MATLAB = {
+            indexWorkspace = true,
+            installPath = vim.env.MATLAB_PATH,
+            telemetry = false,
+        },
+    },
+    single_file_support = true,
+});
 
---[[
+vim.lsp.set_log_level("debug");
+--lsp.default_setup,
+--installPath = "/home/kolbbond/build/MATLAB/2023b",
+
+-- test environment variable
+--print("matlab path: " .. vim.env.MATLAB_PATH);
+
+
 -- keymaps
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -60,7 +56,6 @@ lsp.set_preferences({
 });
 --]]
 --
---[[
 cmp_action = require('lsp-zero').cmp_action();
 cmp.setup({
     mapping = cmp_mappings
@@ -83,7 +78,6 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-q>", function() vim.lsp.buf.signature_help() end, opts)
 end);
---]]
 
 -- lsp auto format keymap
 vim.keymap.set("n", "<leader>af", function() vim.lsp.buf.format() end)
