@@ -1,3 +1,4 @@
+--[[
 local null_ls = require("null-ls")
 
 local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
@@ -40,10 +41,12 @@ prettier.setup({
         "c",
         "cpp",
         "m",
+        "matlab",
         "lua",
     },
 });
 
 -- vim map
-vim.keymap.set("n", "<leader>af", vim.cmd("Prettier"));
+vim.keymap.set("n", "<leader>apf", vim.cmd("Prettier"));
+--]]
 

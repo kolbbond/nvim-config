@@ -86,6 +86,7 @@ use {
 
     -- LSP Support
     {'neovim/nvim-lspconfig'},
+
     -- Autocompletion
     {'hrsh7th/nvim-cmp'},
     {'hrsh7th/cmp-nvim-lsp'},
@@ -94,7 +95,7 @@ use {
   }
 
   -- prettier
-  use('neovim/nvim-lspconfig')
+    use('neovim/nvim-lspconfig')
 	use('jose-elias-alvarez/null-ls.nvim')
 	use('MunifTanjim/prettier.nvim')
 
