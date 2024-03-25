@@ -1,0 +1,2 @@
+# git ignore to ignore machine specific options
+plugin/packer_compiled.lua
