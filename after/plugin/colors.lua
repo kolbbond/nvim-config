@@ -12,7 +12,7 @@ function ColorMyPencils(color)
 	--vim.api.nvim_set_hl(0, "Comment", { fg = "#00CED1" })
 	--vim.api.nvim_set_hl(0, "Comment", { fg = "#33FF4E" })
 	--vim.api.nvim_set_hl(0, "Comment", { fg = "#33EAFF" })
-	vim.api.nvim_set_hl(0, "Comment", { fg = "129C56" })
+	vim.api.nvim_set_hl(0, "Comment", { fg = "#129C56" })
 	vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
 
 
