@@ -29,7 +29,7 @@ vim.lsp.set_log_level("debug");
 --installPath = "/home/kolbbond/build/MATLAB/2023b",
 
 -- test environment variable
---print("matlab path: " .. vim.env.MATLAB_PATH);
+print("matlab path: " .. vim.env.MATLAB_PATH);
 
 
 -- keymaps
