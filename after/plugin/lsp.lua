@@ -9,7 +9,8 @@ require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
         'matlab_ls', 'bashls'
     },
-    handlers = { lsp.default_setup,
+    handlers = {
+        lsp.default_setup,
     },
 });
 
