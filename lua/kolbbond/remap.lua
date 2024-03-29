@@ -60,6 +60,12 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end);
 
+-- reload the current file (helps when using multiple editors for one file)
+vim.keymap.set("n", "<leader>lf", function()
+    vim.cmd("e!")
+end);
+
+
 -- use j&k to navigate menus 
 --[[
 vim.api.nvim_set_keymap('i', '<C-j>', 'pumvisible() ? "\\<c-n>" : "\\<c-j>"' ,

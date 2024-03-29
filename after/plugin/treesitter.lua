@@ -39,4 +39,17 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+
+  -- custom capture highlighting
+  custom_captures = {
+      ['section'] = 'keyword.return',
+      ['test'] = 'comment'
+  }
+
 }
+
+-- try custom highlights here
+--require('nvim-treesitter.highlight').custom_captures {
+   --   ['section'] = 'keyword.return',
+--}
+vim.api.nvim_set_hl(0, "@section.matlab", { link = "Identifier" })

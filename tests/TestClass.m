@@ -2,9 +2,9 @@
 classdef TestClass < handle
     properties
     end
-    methods 
+    methods
         function obj = TestClass()
-
+            
             fprintf("this is matlab?");
             fprintf("another test");
             fprintf("\n");
@@ -19,6 +19,12 @@ classdef TestClass < handle
         end
     end
     methods (Static)
+        %%
+        %
+        function example()
+            return;
+        end
+        
     end
     
 end

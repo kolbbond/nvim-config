@@ -18,7 +18,8 @@ function ColorMyPencils(color)
 
 end
 
-vim.cmd("colorscheme github_dark_dimmed");
+--vim.cmd("colorscheme github_dark_dimmed");
+vim.cmd("colorscheme tokyonight-moon");
 
 --ColorMyPencils()
 vim.keymap.set("n", "<leader>cmp", ColorMyPencils);
