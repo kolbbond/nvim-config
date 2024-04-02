@@ -18,8 +18,12 @@ function ColorMyPencils(color)
 
 end
 
+-- set specific colorscheme
 --vim.cmd("colorscheme github_dark_dimmed");
-vim.cmd("colorscheme tokyonight-moon");
+--vim.cmd("colorscheme tokyonight-moon");
+--vim.o.background = "dark";
+vim.o.background = "light";
+vim.cmd("colorscheme gruvbox");
 
 --ColorMyPencils()
 vim.keymap.set("n", "<leader>cmp", ColorMyPencils);

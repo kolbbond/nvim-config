@@ -41,6 +41,8 @@ use { "ibhagwan/fzf-lua",
 
   -- gruvbox
   use("ellisonleao/gruvbox.nvim");
+  use("sainnhe/gruvbox-material.nvim");
+  use("luisiacc/gruvbox-baby");
 
   -- tokyonight
   use("folke/tokyonight.nvim");
