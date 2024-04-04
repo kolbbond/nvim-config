@@ -22,7 +22,16 @@ end
 --vim.cmd("colorscheme github_dark_dimmed");
 --vim.cmd("colorscheme tokyonight-moon");
 --vim.o.background = "dark";
+require("gruvbox").setup({
+    invert_selection = true,
+    contract = "hard",
+    overrides = {
+        Cursor = {bg = "#000000", fg = "#000000"}
+    }
+});
+
 vim.o.background = "light";
+--vim.o.background = "dark";
 vim.cmd("colorscheme gruvbox");
 
 --ColorMyPencils()

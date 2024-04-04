@@ -10,3 +10,10 @@ set clipboard+=unnamedplus
 
 " load our lua init
 lua require('init')
+    
+" highlight Cursor guibg=#000000 ctermbg=black
+" highlight Cursor ctermfg=black ctermbg=black cterm=bold guifg=black guibg=yellow gui=bold
+:set cursorline
+":highlight CursorLineNr guifg="#000000"
+hi Cursor guifg=black guibg=red
+set guicursor=n-v-c:block-Cursor/lCursor
