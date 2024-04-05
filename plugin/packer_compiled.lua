@@ -104,11 +104,6 @@ _G.packer_plugins = {
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/gruvbox-baby",
     url = "https://github.com/luisiacc/gruvbox-baby"
   },
-  ["gruvbox-material.nvim"] = {
-    loaded = true,
-    path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/gruvbox-material.nvim",
-    url = "https://github.com/sainnhe/gruvbox-material.nvim"
-  },
   ["gruvbox.nvim"] = {
     loaded = true,
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
@@ -179,6 +174,11 @@ _G.packer_plugins = {
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-matlab"] = {
+    loaded = true,
+    path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-matlab",
+    url = "https://github.com/kolbbond/nvim-matlab"
+  },
   ["nvim-treesitter"] = {
     loaded = true,
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
@@ -233,11 +233,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
-  },
-  ["vim-matlab"] = {
-    loaded = true,
-    path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/vim-matlab",
-    url = "https://github.com/daeyun/vim-matlab"
   },
   ["vscode.nvim"] = {
     loaded = true,

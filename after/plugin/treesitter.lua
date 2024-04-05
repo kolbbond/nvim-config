@@ -1,6 +1,6 @@
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "matlab", "c", "lua", "vim",
+    ensure_installed = { "matlab", "c", "lua", "vim", "python",
         "vimdoc", "query" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -51,5 +51,6 @@ require 'nvim-treesitter.configs'.setup {
 -- try custom highlights here
 --require('nvim-treesitter.highlight').custom_captures {
 --   ['section'] = 'keyword.return',
+-- @hey, figure out how to highlight matlab sections
 --}
 vim.api.nvim_set_hl(0, "@section.matlab", { link = "Identifier" })

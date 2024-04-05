@@ -41,7 +41,7 @@ use { "ibhagwan/fzf-lua",
 
   -- gruvbox
   use("ellisonleao/gruvbox.nvim");
-  use("sainnhe/gruvbox-material.nvim");
+  --use("sainnhe/gruvbox-material.nvim");
   use("luisiacc/gruvbox-baby");
 
   -- tokyonight
@@ -105,6 +105,7 @@ use {
     use("ThePrimeagen/vim-be-good");
 
     -- matlab???
-    use("daeyun/vim-matlab");
+    --use("daeyun/vim-matlab");
+    use("kolbbond/nvim-matlab");
 
 end)
