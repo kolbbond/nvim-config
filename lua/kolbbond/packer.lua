@@ -104,4 +104,7 @@ use {
     -- vimbegood
     use("ThePrimeagen/vim-be-good");
 
+    -- matlab???
+    use("daeyun/vim-matlab");
+
 end)
