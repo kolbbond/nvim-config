@@ -106,6 +106,7 @@ use {
 
     -- matlab???
     --use("daeyun/vim-matlab");
-    use("kolbbond/nvim-matlab");
+    --use("kolbbond/nvim-matlab"); -- github version
+    use '~/.config/nvim/plugin/nvim-matlab.nvim'
 
 end)

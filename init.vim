@@ -12,6 +12,8 @@ set clipboard+=unnamedplus
 " load our lua init
 lua require('init')
 
+" sourcing here does not run the commands?
+" @hey, what's up with that?
 source ~/.config/nvim/colors.vim
 
 " highlight stuff

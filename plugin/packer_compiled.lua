@@ -174,10 +174,10 @@ _G.packer_plugins = {
     path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-matlab"] = {
+  ["nvim-matlab.nvim"] = {
     loaded = true,
-    path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-matlab",
-    url = "https://github.com/kolbbond/nvim-matlab"
+    path = "/home/kolbbond/.local/share/nvim/site/pack/packer/start/nvim-matlab.nvim",
+    url = "/home/kolbbond/.config/nvim/plugin/nvim-matlab.nvim"
   },
   ["nvim-treesitter"] = {
     loaded = true,
