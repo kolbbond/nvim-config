@@ -81,7 +81,8 @@ lsp.on_attach(function(client, bufnr)
 end);
 
 -- lsp auto format keymap
-vim.keymap.set("n", "<leader>af", function() vim.lsp.buf.format() end)
+vim.keymap.set("n", "<leader>af", function() vim.lsp.buf.format({
+    async = false, timeout_ms = 10000}) end)
 
 
 lsp.setup();
