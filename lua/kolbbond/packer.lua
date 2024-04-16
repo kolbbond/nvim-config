@@ -16,10 +16,12 @@ return require('packer').startup(function(use)
   }
 
   -- fzf (telescope alternative?)
+  --[[
 use { "ibhagwan/fzf-lua",
   -- optional for icon support
   requires = { "nvim-tree/nvim-web-devicons" }
   }
+  --]]
 
   --[[ THEMES --]]
   
@@ -58,6 +60,9 @@ use { "ibhagwan/fzf-lua",
 
   --- kanagawa theme
   use ("rebelot/kanagawa.nvim")
+
+  ------------------------------------------------------
+  -- End of themes
 
   -- treesitter
  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
@@ -105,6 +110,9 @@ use {
     use("ThePrimeagen/vim-be-good");
 
     -- matlab???
-    use("daeyun/vim-matlab");
+    --use("daeyun/vim-matlab");
+    --use("kolbbond/nvim-matlab"); -- github version
+    use ('~/.config/nvim/plugin/nvim-matlab.nvim')
+    use ('~/.config/nvim/plugin/cheddar.nvim')
 
 end)

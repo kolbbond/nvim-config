@@ -35,25 +35,27 @@ vim.keymap.set("v", "<leader>d", "\"_d");
 vim.keymap.set("n", "Q", "<nop>");
 
 -- tmux sessions
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
+--vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
 
 -- format
-vim.keymap.set("n", "<leader>f", function()
+--[[
+vim.keymap.set("n", "<leader>af", function()
     vim.lsp.buf.format()
 end);
+--]]
 
 -- quick movements
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz");
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz");
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz");
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz");
+--vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz");
+--vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz");
+--vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz");
+--vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz");
 
 -- crazy regex
-vim.keymap.set("n", "<leader>s", [[:%s/\\<<C-r><C-w>\\>\<C-r><C-w>/gI<Left><Left><Left>]]);
+--vim.keymap.set("n", "<leader>s", [[:%s/\\<<C-r><C-w>\\>\<C-r><C-w>/gI<Left><Left><Left>]]);
 
 -- add chmod
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>",
-    { silent = true });
+--vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>",
+ --   { silent = true });
 
 -- shoutout through leaderleader
 vim.keymap.set("n", "<leader><leader>", function()
@@ -64,6 +66,13 @@ end);
 vim.keymap.set("n", "<leader>lf", function()
     vim.cmd("e!")
 end);
+
+-- matlab connectivity
+-- we can manual type this
+--vim.keymap.set("n", "<leader>mls", function()
+    --vim.cmd(":MatlabLaunchServer")
+--end);
+
 
 
 -- use j&k to navigate menus 
