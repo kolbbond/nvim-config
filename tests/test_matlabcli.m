@@ -1,4 +1,5 @@
-% test the relevant parsing of matlab commands for cli
+%test the relevant parsing of matlab commands for cli
+
 % 240410 - 
 
 % what does our plugin have a problem with?
@@ -14,7 +15,20 @@ disp("hello");
 fprintf("test a print statement with dot continuation %s",...
     "here!\n");
 
-%% another 
+
+% test kill server here
+
+
+
+
+
+
+
+
+
+
+
+% another 
 fprintf("test integer format: %i\n",5); 
 fprintf("\n");
 
