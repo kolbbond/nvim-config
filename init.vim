@@ -15,6 +15,7 @@ lua require('init')
 " sourcing here does not run the commands?
 " @hey, what's up with that?
 source ~/.config/nvim/colors.vim
+source ~/.config/nvim/pandoc.vim
 
 " highlight stuff
 " :set cursorline
