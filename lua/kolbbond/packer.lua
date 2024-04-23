@@ -82,6 +82,9 @@ use { "ibhagwan/fzf-lua",
 use('mbbill/undotree');
 use('tpope/vim-fugitive');
 
+-- sniprun
+use{'michaelb/sniprun', run = 'sh./install.sh'};
+
 -- lsp - zero
 use {
   'VonHeikemen/lsp-zero.nvim',

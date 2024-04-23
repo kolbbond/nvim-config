@@ -1,5 +1,7 @@
 " vim functions to run pandoc compilation
 " idea from https://github.com/EntilZha/pandoc-viewer
+" @hey, add a continue if compile is success and a 
+" pause if error
 
 function! PandocCompile()
     silent execute "w"
@@ -16,7 +18,7 @@ function! PandocCompile()
     echo "compiling " .. s:fpathmd .. " to " .. s:fpathpdf
 
     " pandoc compile
-    silent execute "!pandoc -s -i " .. s:fpathmd .. " -o " 
+         execute "!pandoc -s -i " .. s:fpathmd .. " -o " 
                 \ .. s:fpathpdf
 
     
