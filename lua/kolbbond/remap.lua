@@ -31,6 +31,9 @@ vim.keymap.set("n", "<leader>Y", "\"+Y");
 vim.keymap.set("n", "<leader>d", "\"_d");
 vim.keymap.set("v", "<leader>d", "\"_d");
 
+-- single character delete to void register 
+vim.keymap.set("n", "<leader>x", "\"_x");
+
 -- don't hit capital Q?
 vim.keymap.set("n", "Q", "<nop>");
 
