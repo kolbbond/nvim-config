@@ -1,11 +1,9 @@
 ## NEOVIM CONFIG
 
-# GRAB PACKER
+# IMPORTANT: GRAB PACKER FIRST
 https://github.com/wbthomason/packer.nvim
 
-# GRAB THIS NICE THEME
-https://github.com/rebelot/kanagawa.nvim
-
-# RUN PACKERSYNC TO INSTALL STUFF
+## RUN :PACKERSYNC TO INSTALL STUFF
+` :PackerSync `
 
 # GET NPM FOR MATLAB_LS AND BASHLS

@@ -118,4 +118,7 @@ use {
     use ('~/.config/nvim/plugin/nvim-matlab.nvim')
     use ('~/.config/nvim/plugin/cheddar.nvim')
 
+    -- suda
+    use('lambdalisue/suda.vim')
+
 end)
