@@ -112,13 +112,16 @@ use {
     -- vimbegood
     use("ThePrimeagen/vim-be-good");
 
-    -- matlab???
-    --use("daeyun/vim-matlab");
-    --use("kolbbond/nvim-matlab"); -- github version
-    use ('~/.config/nvim/plugin/nvim-matlab.nvim')
-    use ('~/.config/nvim/plugin/cheddar.nvim')
-
     -- suda
     use('lambdalisue/suda.vim')
+
+    -- matlab???
+    --use("daeyun/vim-matlab");
+    use("kolbbond/nvim-matlab"); -- github version
+
+    -- dev 
+    -- use ('~/.config/nvim/plugin/nvim-matlab.nvim')
+    -- use ('~/.config/nvim/plugin/cheddar.nvim')
+
 
 end)
