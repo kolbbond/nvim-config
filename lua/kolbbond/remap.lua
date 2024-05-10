@@ -70,6 +70,23 @@ vim.keymap.set("n", "<leader>lf", function()
     vim.cmd("e!")
 end);
 
+--vim.keymap.set("n", "<leader>cfp", vim.cmd(':let @+=expand("%:p")<CR>'))
+vim.keymap.set("n", "<leader>cfp", "<cmd>let @+=expand(\"%:p\")<CR>")
+vim.keymap.set("n", "<leader>crp", "<cmd>let @+=expand(\"%\")<CR>")
+vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
+
+--[[
+" relative path
+:let @+ = expand("%")
+
+" full path
+:let @+ = expand("%:p")
+
+" just filename
+:let @+ = expand("%:t")
+
+--]]
+
 -- matlab connectivity
 -- we can manual type this
 --vim.keymap.set("n", "<leader>mls", function()
