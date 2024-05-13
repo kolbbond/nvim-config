@@ -18,7 +18,8 @@ require("lspconfig").matlab_ls.setup({
     settings = {
         MATLAB = {
             indexWorkspace = true,
-            installPath = vim.env.MATLAB_PATH,
+            --installPath = vim.env.MATLAB_PATH,
+            installPath = vim.env.Matlab_ROOT_DIR,
             telemetry = false,
         },
     },
@@ -26,12 +27,6 @@ require("lspconfig").matlab_ls.setup({
 });
 
 vim.lsp.set_log_level("debug");
---lsp.default_setup,
---installPath = "/home/kolbbond/build/MATLAB/2023b",
-
--- test environment variable
---print("matlab path: " .. vim.env.MATLAB_PATH);
-
 
 -- keymaps
 local cmp = require('cmp')
