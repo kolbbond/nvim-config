@@ -3,7 +3,10 @@
 " add original vim vimrc path
 set runtimepath^=/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
-source ~/.vimrc
+
+" source regular vimrc
+" source ~/.vimrc
+
 "echo "test"
 
 " load clipboard

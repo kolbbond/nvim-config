@@ -18,8 +18,9 @@ function! PandocCompile()
     echo "compiling " .. s:fpathmd .. " to " .. s:fpathpdf
 
     " pandoc compile
+    "@hey look at :silent exec "!command"
          execute "!pandoc -s -i " .. s:fpathmd .. " -o " 
-                \ .. s:fpathpdf
+                \ .. s:fpathpdf 
 
     
 endfunction

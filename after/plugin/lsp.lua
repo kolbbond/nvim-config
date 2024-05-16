@@ -14,6 +14,7 @@ require('mason-lspconfig').setup({
     },
 });
 
+-- matlab lsp
 require("lspconfig").matlab_ls.setup({
     settings = {
         MATLAB = {
@@ -25,6 +26,13 @@ require("lspconfig").matlab_ls.setup({
     },
     single_file_support = true,
 });
+
+-- clangd
+--[[
+require("lspconfig").clangd.setup({
+    root_files = {vim.env.CLANG_FORMAT}
+});
+--]]
 
 vim.lsp.set_log_level("debug");
 
@@ -73,11 +81,25 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-q>", function() vim.lsp.buf.signature_help() end, opts)
+
+   -- vim.keymap.set("n", "<leader>sh", vim.cmd("ClangdSwitchSourceHeader"));
+    --vim.keymap.set("n", "<leader>sh", "<cmd>!ClangdSwitchSourceHeader<CR>");
 end);
 
+function clang_switch()
+    vim.cmd("ClangdSwitchSourceHeader");
+end
+
+vim.keymap.set("n", "<leader>sh", clang_switch);
+
+
+-- clang switch header
+
 -- lsp auto format keymap
-vim.keymap.set("n", "<leader>af", function() vim.lsp.buf.format({
-    async = false, timeout_ms = 10000}) end)
+vim.keymap.set("n", "<leader>af", function()
+    vim.lsp.buf.format({
+        async = false, timeout_ms = 10000 })
+end)
 
 
 lsp.setup();
