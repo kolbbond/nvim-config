@@ -5,7 +5,10 @@ require("telescope").setup( {
                 --["<C-j>"] = actions.move_selection_next,
                 --["<C-k>"] = "<C-n>"
             }
-        }
+        },
+        file_ignore_patterns = {
+            "*.json",
+        },
     }
 });
 

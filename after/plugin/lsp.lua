@@ -33,13 +33,11 @@ require("lspconfig").clangd.setup({
     root_files = {vim.env.CLANG_FORMAT}
 });
 --]]
---[[
 require("lspconfig").clangd.setup({
     cmd = {"clangd","--header-insertion=never",}
 });
---]]
 
-vim.lsp.set_log_level("debug");
+--vim.lsp.set_log_level("debug");
 
 -- keymaps
 local cmp = require('cmp')
