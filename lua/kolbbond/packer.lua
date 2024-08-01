@@ -119,6 +119,9 @@ use {
     --use("daeyun/vim-matlab");
     --use("kolbbond/nvim-matlab"); -- github version
 
+    -- slime (for python repl etc.)
+    use("jpalardy/vim-slime");
+
     -- dev 
      use ('~/.config/nvim/plugin/nvim-matlab.nvim')
     -- use ('~/.config/nvim/plugin/cheddar.nvim')
