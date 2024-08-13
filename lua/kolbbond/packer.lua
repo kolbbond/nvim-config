@@ -4,110 +4,109 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+    -- telescope
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.6',
+        -- or                            , branch = '0.1.x',
+        requires = { { 'nvim-lua/plenary.nvim' } }
+    }
 
-  -- telescope
-  use {
-	  'nvim-telescope/telescope.nvim', tag = '0.1.6',
-	  -- or                            , branch = '0.1.x',
-	  requires = { {'nvim-lua/plenary.nvim'} }
-  }
-
-  -- fzf (telescope alternative?)
-  --[[
+    -- fzf (telescope alternative?)
+    --[[
 use { "ibhagwan/fzf-lua",
   -- optional for icon support
   requires = { "nvim-tree/nvim-web-devicons" }
   }
   --]]
 
-  --[[ THEMES --]]
-  
-  -- colorizer
+    --[[ THEMES --]]
 
-  use("norcalli/nvim-colorizer.lua");
+    -- colorizer
 
-  -- colorbudy
-  use ("tjdevries/colorbuddy.nvim")
+    use("norcalli/nvim-colorizer.lua");
 
-  -- github
-  use("projekt0n/github-nvim-theme");
+    -- colorbudy
+    use("tjdevries/colorbuddy.nvim")
 
-  -- rose pine theme
-  use("rose-pine/neovim");
+    -- github
+    use("projekt0n/github-nvim-theme");
 
-  -- lush
-  use("rktjmp/lush.nvim");
+    -- rose pine theme
+    use("rose-pine/neovim");
 
-  -- gruvbox
-  use("ellisonleao/gruvbox.nvim");
-  --use("sainnhe/gruvbox-material.nvim");
-  use("luisiacc/gruvbox-baby");
+    -- lush
+    use("rktjmp/lush.nvim");
 
-  -- tokyonight
-  use("folke/tokyonight.nvim");
+    -- gruvbox
+    use("ellisonleao/gruvbox.nvim");
+    --use("sainnhe/gruvbox-material.nvim");
+    use("luisiacc/gruvbox-baby");
 
-  -- modus-themes
-  use("miikanissi/modus-themes.nvim");
+    -- tokyonight
+    use("folke/tokyonight.nvim");
 
-  -- nord 
-  use("gbprod/nord.nvim");
+    -- modus-themes
+    use("miikanissi/modus-themes.nvim");
 
-  -- vscode
-  use("Mofiqul/vscode.nvim");
+    -- nord
+    use("gbprod/nord.nvim");
 
-  --- kanagawa theme
-  use ("rebelot/kanagawa.nvim")
+    -- vscode
+    use("Mofiqul/vscode.nvim");
 
-  ------------------------------------------------------
-  -- End of themes
+    --- kanagawa theme
+    use("rebelot/kanagawa.nvim")
 
-  -- treesitter
- use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+    ------------------------------------------------------
+    -- End of themes
 
- -- playground
- use('nvim-treesitter/playground')
+    -- treesitter
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
- -- harpoon
- use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
+    -- playground
+    use('nvim-treesitter/playground')
+
+    -- harpoon
+    use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
     use {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    requires = { {"nvim-lua/plenary.nvim"} }
-}
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        requires = { { "nvim-lua/plenary.nvim" } }
+    }
 
--- undotree
-use('mbbill/undotree');
-use('tpope/vim-fugitive');
+    -- undotree
+    use('mbbill/undotree');
+    use('tpope/vim-fugitive');
 
--- sniprun
-use{'michaelb/sniprun', run = 'sh./install.sh'};
+    -- sniprun
+    use { 'michaelb/sniprun', run = 'sh./install.sh' };
 
--- lsp - zero
-use {
-  'VonHeikemen/lsp-zero.nvim',
-  branch = 'v3.x',
-  requires = {
-    --- Uncomment the two plugins below if you want to manage the language servers from neovim
-     {'williamboman/mason.nvim'},
-     {'williamboman/mason-lspconfig.nvim'},
+    -- lsp - zero
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        requires = {
+            --- Uncomment the two plugins below if you want to manage the language servers from neovim
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
 
-    -- LSP Support
-    {'neovim/nvim-lspconfig'},
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' },
 
-    -- Autocompletion
-    {'hrsh7th/nvim-cmp'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'L3MON4D3/LuaSnip'},
-  }
-  }
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'L3MON4D3/LuaSnip' },
+        }
+    }
 
-  -- prettier
+    -- prettier
     use('neovim/nvim-lspconfig')
-	use('jose-elias-alvarez/null-ls.nvim')
-	use('MunifTanjim/prettier.nvim')
+    use('jose-elias-alvarez/null-ls.nvim')
+    use('MunifTanjim/prettier.nvim')
 
     -- vimbegood
     use("ThePrimeagen/vim-be-good");
@@ -122,9 +121,10 @@ use {
     -- slime (for python repl etc.)
     use("jpalardy/vim-slime");
 
-    -- dev 
-     use ('~/.config/nvim/plugin/nvim-matlab.nvim')
+    -- iron (REPL)
+    use('Vigemus/iron.nvim')
+
+    -- dev
+    use('~/.config/nvim/plugin/nvim-matlab.nvim')
     -- use ('~/.config/nvim/plugin/cheddar.nvim')
-
-
 end)
