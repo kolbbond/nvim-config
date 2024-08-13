@@ -7,7 +7,7 @@ lsp.preset("recommended");
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls'
+        --        'matlab_ls', 'bashls'
     },
     handlers = {
         lsp.default_setup,
@@ -15,6 +15,7 @@ require('mason-lspconfig').setup({
 });
 
 -- matlab lsp
+--[[
 require("lspconfig").matlab_ls.setup({
     settings = {
         MATLAB = {
@@ -26,6 +27,7 @@ require("lspconfig").matlab_ls.setup({
     },
     single_file_support = true,
 });
+--]]
 
 -- clangd
 --[[
@@ -34,7 +36,7 @@ require("lspconfig").clangd.setup({
 });
 --]]
 require("lspconfig").clangd.setup({
-    cmd = {"clangd","--header-insertion=never",}
+    cmd = { "clangd", "--header-insertion=never", }
 });
 
 --vim.lsp.set_log_level("debug");
@@ -85,7 +87,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-q>", function() vim.lsp.buf.signature_help() end, opts)
 
-   -- vim.keymap.set("n", "<leader>sh", vim.cmd("ClangdSwitchSourceHeader"));
+    -- vim.keymap.set("n", "<leader>sh", vim.cmd("ClangdSwitchSourceHeader"));
     --vim.keymap.set("n", "<leader>sh", "<cmd>!ClangdSwitchSourceHeader<CR>");
 end);
 
