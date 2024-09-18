@@ -73,6 +73,8 @@ end);
 --vim.keymap.set("n", "<leader>cfp", vim.cmd(':let @+=expand("%:p")<CR>'))
 vim.keymap.set("n", "<leader>cfp", "<cmd>let @+=expand(\"%:p\")<CR>")
 vim.keymap.set("n", "<leader>crp", "<cmd>let @+=expand(\"%\")<CR>")
+vim.keymap.set("n", "<leader>cfd", "<cmd>let @+=expand(\"%:p:h\")<CR>")
+vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
 
 --[[
