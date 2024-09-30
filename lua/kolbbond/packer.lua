@@ -126,9 +126,10 @@ use { "ibhagwan/fzf-lua",
     -- use ('~/.config/nvim/plugin/cheddar.nvim')
 
     -- iron (REPL)
+    -- for python atm
     use('Vigemus/iron.nvim')
 
     -- dev
-    use('~/.config/nvim/plugin/nvim-matlab.nvim')
+    --use('~/.config/nvim/plugin/nvim-matlab.nvim')
     -- use ('~/.config/nvim/plugin/cheddar.nvim')
 end)
