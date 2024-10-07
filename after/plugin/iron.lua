@@ -2,6 +2,7 @@ local iron = require("iron.core")
 local view = require("iron.view")
 
 
+-- iron setup
 iron.setup {
     config = {
         -- Whether a repl should be discarded or not
@@ -18,7 +19,18 @@ iron.setup {
             python = {
                 command = { "python3" }, -- or { "ipython", "--no-autoindent" }
                 format = require("iron.fts.common").bracketed_paste_python
+            },
+
+            matlab = {
+                command = { "octave" }, -- or { "matlab", "--no-autoindent" }
+                --format = require("iron.fts.common").bracketed_paste_python
             }
+            --[[
+            octave = {
+                command = { "octave" }, -- or { "matlab", "--no-autoindent" }
+                --format = require("iron.fts.common").bracketed_paste_python
+            }
+            --]]
         },
         -- How the repl window will be displayed
         -- See below for more information
