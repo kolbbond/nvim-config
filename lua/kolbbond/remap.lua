@@ -1,6 +1,9 @@
 -- remaps
 
+-- make space the "<leader>" key
 vim.g.mapleader = " "
+
+-- project viewer (telescope)
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- move highlights around
@@ -12,6 +15,7 @@ vim.keymap.set("n", "J", "mzJ'z");
 vim.keymap.set("n", "J", "mzJ'z");
 
 -- reset screen to center
+-- while paging up/down
 vim.keymap.set("n", "<C-d>", "<C-d>zz");
 vim.keymap.set("n", "<C-u>", "<C-u>zz");
 vim.keymap.set("n", "n", "nzzzv");
@@ -40,13 +44,6 @@ vim.keymap.set("n", "Q", "<nop>");
 -- tmux sessions
 --vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
 
--- format
---[[
-vim.keymap.set("n", "<leader>af", function()
-    vim.lsp.buf.format()
-end);
---]]
-
 -- quick movements
 --vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz");
 --vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz");
@@ -61,6 +58,7 @@ end);
  --   { silent = true });
 
 -- shoutout through leaderleader
+-- reloads file in neovim
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end);
@@ -70,41 +68,9 @@ vim.keymap.set("n", "<leader>lf", function()
     vim.cmd("e!")
 end);
 
---vim.keymap.set("n", "<leader>cfp", vim.cmd(':let @+=expand("%:p")<CR>'))
+-- copy file paths/directories to clipboard
 vim.keymap.set("n", "<leader>cfp", "<cmd>let @+=expand(\"%:p\")<CR>")
 vim.keymap.set("n", "<leader>crp", "<cmd>let @+=expand(\"%\")<CR>")
 vim.keymap.set("n", "<leader>cfd", "<cmd>let @+=expand(\"%:p:h\")<CR>")
 vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
-
---[[
-" relative path
-:let @+ = expand("%")
-
-" full path
-:let @+ = expand("%:p")
-
-" just filename
-:let @+ = expand("%:t")
-
---]]
-
--- matlab connectivity
--- we can manual type this
---vim.keymap.set("n", "<leader>mls", function()
-    --vim.cmd(":MatlabLaunchServer")
---end);
-
-
-
--- use j&k to navigate menus 
---[[
-vim.api.nvim_set_keymap('i', '<C-j>', 'pumvisible() ? "\\<c-n>" : "\\<c-j>"' ,
-{ noremap = true, expr=true })
-vim.api.nvim_set_keymap('n', '<C-j>', 'pumvisible() ? "\\<c-n>" : "\\<c-j>"' ,
-{ noremap = true, expr=true })
-vim.api.nvim_set_keymap('i', '<C-k>', 'pumvisible() ? "\\<c-p>" : "\\<c-j>"' , 
-{ noremap = true, expr=true })
-vim.api.nvim_set_keymap('n', '<C-k>', 'pumvisible() ? "\\<c-p>" : "\\<c-j>"' , 
-{ noremap = true, expr=true })
---]]

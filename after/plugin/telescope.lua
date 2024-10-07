@@ -1,11 +1,11 @@
-require("telescope").setup( {
+require("telescope").setup({
     defaults = {
         mappings = {
             i = {
-                --["<C-j>"] = actions.move_selection_next,
-                --["<C-k>"] = "<C-n>"
             }
         },
+        -- @hey, this ignore is set because
+        -- we were searching through giant jsons???
         file_ignore_patterns = {
             "*.json",
         },
@@ -14,13 +14,14 @@ require("telescope").setup( {
 
 local builtin = require('telescope.builtin')
 
+-- remaps
+-- search for file in project
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
---vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+
+-- search through git files
 vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
-vim.keymap.set('n', '<leader>ps', function() 
-	builtin.grep_string({ search = vim.fn.input("Grep > ") } );
 
-
-
-
+-- rip grep  through files
+vim.keymap.set('n', '<leader>ps', function()
+    builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)

@@ -2,12 +2,11 @@ local lsp = require("lsp-zero");
 
 lsp.preset("recommended");
 
-
 -- mason is how we setup lsp
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-                'matlab_ls', 'bashls'
+        'matlab_ls', 'bashls'
     },
     handlers = {
         lsp.default_setup,
@@ -15,11 +14,12 @@ require('mason-lspconfig').setup({
 });
 
 -- matlab lsp
+-- set Matlab_ROOT_DIR as cmake also uses this environment variable??
+-- @hey, or is this just cmake internal variable?
 require("lspconfig").matlab_ls.setup({
     settings = {
         MATLAB = {
             indexWorkspace = true,
-            --installPath = vim.env.MATLAB_PATH,
             installPath = vim.env.Matlab_ROOT_DIR,
             telemetry = false,
         },
@@ -28,50 +28,62 @@ require("lspconfig").matlab_ls.setup({
 });
 
 -- clangd
---[[
-require("lspconfig").clangd.setup({
-    root_files = {vim.env.CLANG_FORMAT}
-});
---]]
 require("lspconfig").clangd.setup({
     cmd = { "clangd", "--header-insertion=never", }
+    --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
 });
 
+
+-- lua
+require("lspconfig").lua_ls.setup({
+    settings =
+    {
+        Lua = {
+            diagnostics =
+            {
+                -- stop warning about global "vim"
+                globals =
+                {
+                    "vim",
+                    "require"
+                }
+            }
+        }
+    }
+});
+
+-- debug options
 --vim.lsp.set_log_level("debug");
 
 -- keymaps
+-- this is navigation in the lsp buffer list
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-Up>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-Down>'] = cmp.mapping.select_next_item(cmp_select),
     ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Enter>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-l>'] = cmp.mapping.confirm({ select = true }),
-    --['<C-Space>'] = cmp.mapping.complete();
 });
-
--- sign icons
---[[
-lsp.set_preferences({
-	sign_icons = {}
-});
---]]
---
 cmp_action = require('lsp-zero').cmp_action();
 cmp.setup({
     mapping = cmp_mappings
 })
 
+-- sign icons
+-- try ':Telescope symbols' to select others
+lsp.set_sign_icons({
+    error = '❗',
+    warn = '⚠️',
+    hint = '🏴',
+    info = '✖'
+}
+);
+--
 
--- lsp setup remap only in buffer
+-- lsp setup remap
+-- only when lsp buffer is attached to file
+-- check this for information on functions/definitions etc.
 lsp.on_attach(function(client, bufnr)
-    --print("help")
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -84,19 +96,17 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-q>", function() vim.lsp.buf.signature_help() end, opts)
-
-    -- vim.keymap.set("n", "<leader>sh", vim.cmd("ClangdSwitchSourceHeader"));
-    --vim.keymap.set("n", "<leader>sh", "<cmd>!ClangdSwitchSourceHeader<CR>");
 end);
 
+-- remap to switch between source and header files
+-- requires that clangd can find them
+-- Cmake can do this automatically by setting
+-- "set(CMAKE_EXPORT_COMPILE_COMMANDS ON)" in your "CMakeLists.txt"
 function clang_switch()
     vim.cmd("ClangdSwitchSourceHeader");
 end
 
 vim.keymap.set("n", "<leader>sh", clang_switch);
-
-
--- clang switch header
 
 -- lsp auto format keymap
 vim.keymap.set("n", "<leader>af", function()
@@ -104,5 +114,5 @@ vim.keymap.set("n", "<leader>af", function()
         async = false, timeout_ms = 10000 })
 end)
 
-
+-- End
 lsp.setup();

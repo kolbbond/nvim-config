@@ -9,14 +9,10 @@ function ColorMyPencils(color)
     --vim.api.nvim_set_hl(0, "Normal", { blend = "none" })
 
     -- highlights
-    --vim.api.nvim_set_hl(0, "Comment", { fg = "#00CED1" })
-    --vim.api.nvim_set_hl(0, "Comment", { fg = "#33FF4E" })
-    --vim.api.nvim_set_hl(0, "Comment", { fg = "#33EAFF" })
-    --vim.api.nvim_set_hl(0, "Comment", { fg = "#129C56" })
     vim.api.nvim_set_hl(0, "Comment", { fg = "#4C8687" })
-    --vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
 
     -- moving things from init.vim to lua
+    -- @hey, not done
     --[[
     vim.cmd("colorscheme blue");
     vim.cmd("set termguicolors");
@@ -27,17 +23,16 @@ function ColorMyPencils(color)
     --]]
 end
 
--- invert background color 
+-- invert background color
 flag_bg_dark = true;
 function invert_background()
-    if flag_bg_dark then 
+    if flag_bg_dark then
         background_light();
         flag_bg_dark = false;
     else
         background_dark()
         flag_bg_dark = true;
     end
-
 end
 
 -- map the above functions
@@ -52,15 +47,20 @@ function background_dark()
 end
 
 -- set specific colorscheme
---vim.cmd("colorscheme github_dark_dimmed");
---vim.cmd("colorscheme tokyonight-moon");
---vim.o.background = "dark";
+-- we love gruvbox
 require("gruvbox").setup({
     invert_selection = true,
     contrast = "hard",
+
+    -- trying to change cursor color but we overrided with terminal
+    -- (wanted pink cursor)
     --overrides = {
-       -- Cursor = { bg = "#000000", fg = "#000000" }
+    -- Cursor = { bg = "#000000", fg = "#000000" }
     --}
+    -- darker background
+    palette_overrides = {
+--        dark0_hard = "#0f0f0f",
+    },
 });
 
 --vim.o.background = "light";

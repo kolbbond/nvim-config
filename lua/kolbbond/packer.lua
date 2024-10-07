@@ -5,26 +5,110 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use('wbthomason/packer.nvim')
 
+    --------------------------------------------------
+    -- super useful section
     -- telescope
-    use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.6',
+    -- fuzzy finder for files
+    use({
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.6',
         -- or                            , branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
-    }
+    });
 
-    -- fzf (telescope alternative?)
-    --[[
-use { "ibhagwan/fzf-lua",
-  -- optional for icon support
-  requires = { "nvim-tree/nvim-web-devicons" }
-  }
-  --]]
+    -- treesitter
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
+    -- playground
+    use('nvim-treesitter/playground')
+
+    -- harpoon
+    -- allows quick movement between files from a hotlist
+    use("nvim-lua/plenary.nvim") -- don't forget to add this one if you don't have it yet!
+    use ({
+        "kolbbond/harpoon2",
+        branch = "master",
+        requires = { { "nvim-lua/plenary.nvim" } }
+    });
+
+    -- undotree
+    -- keeps a huge list of changes
+    -- @hey, investigate
+    use('mbbill/undotree');
+
+    -- fugitive
+    -- @hey, start using this
+    use('tpope/vim-fugitive');
+
+    -- lsp - zero
+    -- head lsp, super useful
+    use({
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        requires = {
+            --- Uncomment the two plugins below if you want to manage the language servers from neovim
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
+
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' },
+
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'L3MON4D3/LuaSnip' },
+        }
+    });
+
+    -- diagnostics
+    use("folke/trouble.nvim");
+
+    -- suda
+    -- allows writing to files that required elevated permissions
+    use('lambdalisue/suda.vim')
+
+
+    --------------------------------------------------
+    -- REPLS
+
+    -- matlab
+    use("kolbbond/nvim-matlab"); -- github version
+    -- iron (REPL)
+    -- for python and octave atm
+    use('Vigemus/iron.nvim')
+
+    -- sniprun
+    --    use { 'michaelb/sniprun', run = 'sh./install.sh' };
+
+    -- slime (for python repl etc.)
+    -- seems that iron might work better for us
+    --    use("jpalardy/vim-slime");
+    --------------------------------------------------
+
+
+    -- dev
+    --use('~/.config/nvim/plugin/nvim-matlab.nvim')
+    -- use ('~/.config/nvim/plugin/cheddar.nvim')
+
+    -- vimbegood
+    -- fun games
+    use("ThePrimeagen/vim-be-good");
+
+    -- prettier
+    use('neovim/nvim-lspconfig')
+    use('jose-elias-alvarez/null-ls.nvim')
+    use('MunifTanjim/prettier.nvim')
+
+    --------------------------------------------------
     --[[ THEMES --]]
 
     -- colorizer
+
+    -- gruvbox
+    -- objectively the best
+    use("ellisonleao/gruvbox.nvim");
 
     use("norcalli/nvim-colorizer.lua");
 
@@ -40,9 +124,7 @@ use { "ibhagwan/fzf-lua",
     -- lush
     use("rktjmp/lush.nvim");
 
-    -- gruvbox
-    use("ellisonleao/gruvbox.nvim");
-    --use("sainnhe/gruvbox-material.nvim");
+    -- gruvbox alts
     use("luisiacc/gruvbox-baby");
 
     -- tokyonight
@@ -63,73 +145,7 @@ use { "ibhagwan/fzf-lua",
     ------------------------------------------------------
     -- End of themes
 
-    -- treesitter
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-
-    -- playground
-    use('nvim-treesitter/playground')
-
-    -- harpoon
-    use "nvim-lua/plenary.nvim" -- don't forget to add this one if you don't have it yet!
-    use {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        requires = { { "nvim-lua/plenary.nvim" } }
-    }
-
-    -- undotree
-    use('mbbill/undotree');
-    use('tpope/vim-fugitive');
-
-    -- sniprun
-    use { 'michaelb/sniprun', run = 'sh./install.sh' };
-
-    -- lsp - zero
-    use {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        requires = {
-            --- Uncomment the two plugins below if you want to manage the language servers from neovim
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-        }
-    }
-
-    -- prettier
-    use('neovim/nvim-lspconfig')
-    use('jose-elias-alvarez/null-ls.nvim')
-    use('MunifTanjim/prettier.nvim')
-
-    -- vimbegood
-    use("ThePrimeagen/vim-be-good");
-
-    -- suda
-    use('lambdalisue/suda.vim')
-
-    -- matlab???
-    --use("daeyun/vim-matlab");
-    use("kolbbond/nvim-matlab"); -- github version
-
-    -- slime (for python repl etc.)
-    use("jpalardy/vim-slime");
-
-    -- dev 
-     --use ('~/.config/nvim/plugin/nvim-matlab.nvim')
-    -- use ('~/.config/nvim/plugin/cheddar.nvim')
-
-    -- iron (REPL)
-    -- for python atm
-    use('Vigemus/iron.nvim')
-
-    -- dev
-    --use('~/.config/nvim/plugin/nvim-matlab.nvim')
-    -- use ('~/.config/nvim/plugin/cheddar.nvim')
+    -- icons and symbols
+    use('nvim-telescope/telescope-symbols.nvim');
+    use("stevearc/dressing.nvim");
 end)
