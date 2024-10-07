@@ -27,7 +27,7 @@ return require('packer').startup(function(use)
     -- harpoon
     -- allows quick movement between files from a hotlist
     use("nvim-lua/plenary.nvim") -- don't forget to add this one if you don't have it yet!
-    use ({
+    use({
         "kolbbond/harpoon2",
         branch = "master",
         requires = { { "nvim-lua/plenary.nvim" } }
@@ -41,6 +41,13 @@ return require('packer').startup(function(use)
     -- fugitive
     -- @hey, start using this
     use('tpope/vim-fugitive');
+
+    -- edit directories
+    -- we might just prefer netrw?
+    use({ "stevearc/oil.nvim"});
+
+    -- show hotkeys
+    use("folke/which-key.nvim")
 
     -- lsp - zero
     -- head lsp, super useful
@@ -110,6 +117,9 @@ return require('packer').startup(function(use)
     -- objectively the best
     use("ellisonleao/gruvbox.nvim");
 
+    -- rose pine theme
+    use("rose-pine/neovim");
+
     use("norcalli/nvim-colorizer.lua");
 
     -- colorbudy
@@ -117,9 +127,6 @@ return require('packer').startup(function(use)
 
     -- github
     use("projekt0n/github-nvim-theme");
-
-    -- rose pine theme
-    use("rose-pine/neovim");
 
     -- lush
     use("rktjmp/lush.nvim");
@@ -148,4 +155,5 @@ return require('packer').startup(function(use)
     -- icons and symbols
     use('nvim-telescope/telescope-symbols.nvim');
     use("stevearc/dressing.nvim");
+    use('nvim-tree/nvim-web-devicons')
 end)
