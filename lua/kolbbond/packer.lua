@@ -148,8 +148,8 @@ return require('packer').startup(function(use)
     -- colorizer
 
     -- gruvbox
-    -- objectively the best
-    use("ellisonleao/gruvbox.nvim");
+    -- objectively the best so we forked it
+    use("kolbbond/gruvbox.nvim");
 
     -- gruvbox alts
     use("luisiacc/gruvbox-baby");

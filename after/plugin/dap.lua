@@ -1,13 +1,12 @@
-local dap = require('dap');
+local dap,dapui = require('dap'),require("dapui");
+dapui.setup()
 
 require("neodev").setup({
     library = { plugins = { "nvim-dap-ui" }, types = true },
     ...
 })
 
-local ui = require('dapui').setup();
 require('nvim-dap-virtual-text').setup {
-
     --
 }
 
@@ -85,11 +84,34 @@ vim.keymap.set("n", "<leader>gb", dap.run_to_cursor);
 -- eval under cursor
 vim.keymap.set("n", "<leader>?", function()
     require("dapui").eval(nil, { enter = true })
+end);
+
+vim.keymap.set("n", "<F1>", dap.continue);
+vim.keymap.set("n", "<F2>", dap.step_into);
+vim.keymap.set("n", "<F3>", dap.step_over);
+vim.keymap.set("n", "<F4>", dap.step_out);
+vim.keymap.set("n", "<F5>", dap.step_back);
+vim.keymap.set("n", "<F13>", dap.restart);
+
+-- dap ui
+dap.listeners.before.attach.dapui_config = function()
+    dapui.open()
 end
 
-);
+dap.listeners.before.launch.dapui_config = function()
+    dapui.open()
+end
+
+dap.listeners.before.event_terminated.dapui_config = function()
+    --dapui.close()
+end
+
+dap.listeners.before.event_exited.dapui_config = function()
+--    dapui.close()
+end
 
 -- check install
+--[[
 local ok, ui = pcall(require, 'dapui')
 if not ok then
     return
@@ -133,8 +155,6 @@ ui.setup({
     },
 })
 
-local dap = require('dap')
-
 dap.listeners.after.event_initialized['dapui_config'] = function()
     ui.open()
 end
@@ -149,19 +169,5 @@ dap.listeners.before.event_terminated['dapui_config'] = function(e)
     ui.close()
 end
 
--- dap ui
-dap.listeners.before.attach.dapui_config = function()
-    ui.open()
-end
+--]]
 
-dap.listeners.before.launch.dapui_config = function()
-    ui.open()
-end
-
-dap.listeners.before.event_terminated.dapui_config = function()
-    ui.close()
-end
-
-dap.listeners.before.event_exited.dapui_config = function()
-    ui.close()
-end
