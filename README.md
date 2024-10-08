@@ -1,5 +1,9 @@
 ## NEOVIM CONFIG
 
+We assume you already have neovim but make sure have an up to date version 
+by either building yourself from source [neovim](https://github.com/neovim/neovim.git)
+or getting one of the nightly appimages.
+
 To basic install run 
 
 ```shell

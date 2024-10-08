@@ -1,5 +1,11 @@
 require("telescope").setup({
     defaults = {
+        prompt_prefix = ' !  ',
+        entry_prefix = '  ',
+        selection_caret = '-> ',
+        multi_icon = ' │ ',
+        winblend = 0,
+        borderchars = { '*', '│', '─', '|', '┌', '┐', '┘', '└' },
         mappings = {
             i = {
             }
@@ -9,6 +15,8 @@ require("telescope").setup({
         file_ignore_patterns = {
             "*.json",
         },
+        color_devicons = true,
+        devicons = require("nvim-web-devicons"),
     }
 });
 
@@ -25,3 +33,6 @@ vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', function()
     builtin.grep_string({ search = vim.fn.input("Grep > ") });
 end)
+
+-- extensions
+-- require('telescope').load_extension('tmuxinator')

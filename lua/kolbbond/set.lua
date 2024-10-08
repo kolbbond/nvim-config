@@ -27,6 +27,9 @@ vim.opt.undofile = true;
 vim.opt.hlsearch = false;
 vim.opt.incsearch = true;
 
+-- replace many
+vim.opt.inccommand = "split";
+
 -- colors!
 vim.opt.termguicolors = true;
 

@@ -69,12 +69,27 @@ cmp.setup({
     mapping = cmp_mappings
 })
 
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        {
+            name = 'cmdline',
+            option = {
+                ignore_cmds = { 'Man', '!' }
+            }
+        }
+    })
+})
+
 -- sign icons
 -- try ':Telescope symbols' to select others
 lsp.set_sign_icons({
     error = '❗',
-    warn = '⚠️',
-    hint = '🏴',
+    warn = '⚠',
+    hint = '',
     info = '✖'
 }
 );

@@ -1,4 +1,6 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
+-- packer is unmaintained but it works well
+-- might switch to lazy later idk
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
@@ -44,7 +46,7 @@ return require('packer').startup(function(use)
 
     -- edit directories
     -- we might just prefer netrw?
-    use({ "stevearc/oil.nvim"});
+    use({ "stevearc/oil.nvim" });
 
     -- show hotkeys
     use("folke/which-key.nvim")
@@ -69,8 +71,30 @@ return require('packer').startup(function(use)
         }
     });
 
+    -- debugging
+    use({
+        "mfussenegger/nvim-dap",
+        requires =
+        { "rcarriga/nvim-dap-ui" },
+        { "nvim-neotest/nvim-nio" },
+        { "theHamsta/nvim-dap-virtual-text" },
+        { "SGauvin/ctest-telescope.nvim" },
+        { "mfussenegger/nvim-dap-python" },
+    });
+
+    use({ "SGauvin/ctest-telescope.nvim" });
+
+    use('hrsh7th/cmp-cmdline');
+
+    -- dap-ui separate
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
+    use('folke/neodev.nvim');
+
     -- diagnostics
     use("folke/trouble.nvim");
+
+    -- highlight todo
+    use("folke/todo-comments.nvim");
 
     -- suda
     -- allows writing to files that required elevated permissions
@@ -117,6 +141,10 @@ return require('packer').startup(function(use)
     -- objectively the best
     use("ellisonleao/gruvbox.nvim");
 
+    -- gruvbox alts
+    use("luisiacc/gruvbox-baby");
+    use("sainnhe/gruvbox-material");
+
     -- rose pine theme
     use("rose-pine/neovim");
 
@@ -131,8 +159,6 @@ return require('packer').startup(function(use)
     -- lush
     use("rktjmp/lush.nvim");
 
-    -- gruvbox alts
-    use("luisiacc/gruvbox-baby");
 
     -- tokyonight
     use("folke/tokyonight.nvim");
@@ -148,6 +174,28 @@ return require('packer').startup(function(use)
 
     --- kanagawa theme
     use("rebelot/kanagawa.nvim")
+
+    -- flow
+    use("0xstepit/flow.nvim");
+
+    -- rasmus
+    use('kvrohit/rasmus.nvim')
+
+    -- darkvoid
+    use('aliqyan-21/darkvoid.nvim');
+
+    -- falcon
+    use("fenetikm/falcon")
+
+    -- miasma, like gruvbox but dirtier
+    use('xero/miasma.nvim');
+
+    -- fluoromachine (neon)
+    use('maxmx03/fluoromachine.nvim')
+
+    --  moonlight (more neon)
+    use('shaunsingh/moonlight.nvim');
+
 
     ------------------------------------------------------
     -- End of themes

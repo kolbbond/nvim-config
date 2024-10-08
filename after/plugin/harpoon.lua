@@ -4,7 +4,7 @@ local harpoon = require("harpoon")
 harpoon:setup()
 
 -- add to list
-vim.keymap.set("n", "<leader>aa", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>aa", function() harpoon:list():add() end, { desc = "add to harpoon list" })
 
 -- open quick menu
 vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
