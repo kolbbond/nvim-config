@@ -82,7 +82,17 @@ return require('packer').startup(function(use)
         { "mfussenegger/nvim-dap-python" },
     });
 
-    use({ "SGauvin/ctest-telescope.nvim" });
+    --use({ "SGauvin/ctest-telescope.nvim" });
+    use {
+        "nvim-neotest/neotest",
+        requires = {
+            "nvim-neotest/nvim-nio",
+            "nvim-lua/plenary.nvim",
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "alfaix/neotest-gtest",
+        }
+    }
 
     use('hrsh7th/cmp-cmdline');
 
