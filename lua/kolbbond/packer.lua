@@ -26,6 +26,12 @@ return require('packer').startup(function(use)
     -- playground
     use('nvim-treesitter/playground')
 
+    -- highlight todo
+    use("folke/todo-comments.nvim");
+
+    -- color different delimiters
+    use("HiPhish/rainbow-delimiters.nvim");
+
     -- harpoon
     -- allows quick movement between files from a hotlist
     use("nvim-lua/plenary.nvim") -- don't forget to add this one if you don't have it yet!
@@ -94,6 +100,10 @@ return require('packer').startup(function(use)
         }
     }
 
+    -- cmake
+    use('Civitasv/cmake-tools.nvim');
+
+    -- Autocompletion on command line
     use('hrsh7th/cmp-cmdline');
 
     -- dap-ui separate
@@ -103,14 +113,14 @@ return require('packer').startup(function(use)
     -- diagnostics
     use("folke/trouble.nvim");
 
-    -- highlight todo
-    use("folke/todo-comments.nvim");
-
     -- suda
     -- allows writing to files that required elevated permissions
     use('lambdalisue/suda.vim')
 
-
+    -- like tmux but also use tmux
+    use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+        require("toggleterm").setup()
+    end }
     --------------------------------------------------
     -- REPLS
 

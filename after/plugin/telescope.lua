@@ -25,7 +25,10 @@ local builtin = require('telescope.builtin')
 -- remaps
 -- search for file in project
 vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
-
+-- test additional search with hidden files
+vim.keymap.set('n', '<leader>ff',
+    "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>",
+    {})
 -- search through git files
 vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 

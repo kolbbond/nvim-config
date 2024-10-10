@@ -111,7 +111,7 @@ vim.keymap.set("n", "<leader>sh", clang_switch);
 -- lsp auto format keymap
 vim.keymap.set("n", "<leader>af", function()
     vim.lsp.buf.format({
-        async = false, timeout_ms = 10000 })
+        async = false, timeout_ms = 1000 })
 end)
 
 -- End
