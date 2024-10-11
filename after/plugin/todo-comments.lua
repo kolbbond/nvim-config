@@ -1,8 +1,17 @@
+-- Examples of coloring
+-- FIX
 -- todo: help
 -- default
 -- TODO: this
+-- HACK  ex 
+-- WARN
+-- PERF  
+-- NOTE
+-- TEST
 -- hey: fix
 -- HEY: 0
+-- RTFM
+-- @rtfm: 
 require("todo-comments").setup(
     {
         signs = true,      -- show icons in the signs column
@@ -21,7 +30,8 @@ require("todo-comments").setup(
             PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
             NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
             TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-            ["HEY"] = { icon = "🩸", color = "#d00000", alt = { "hey" } },
+            ["HEY"] = { icon = "🩸", color = "#d00000", alt = { "hey" } }, -- todo
+            ["RTFM"] = { icon = "", color = "#d0d000", alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
         },
         gui_style = {
             fg = "NONE",       -- The gui style to use for the fg highlight group.
