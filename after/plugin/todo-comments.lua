@@ -30,8 +30,9 @@ require("todo-comments").setup(
             PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
             NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
             TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-            ["HEY"] = { icon = "🩸", color = "#d00000", alt = { "hey" } }, -- todo
-            ["RTFM"] = { icon = "", color = "#d0d000", alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
+            ["HEY"] = { icon = "🌻", color = "#d0d000", alt = { "hey" } }, -- todo
+            ["RTFM"] = { icon = "💀", color = "#000000",alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
+            ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- mistakes were made, time wasted on bugs
         },
         gui_style = {
             fg = "NONE",       -- The gui style to use for the fg highlight group.

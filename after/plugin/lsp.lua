@@ -72,10 +72,10 @@ cmp.setup({
 -- sign icons
 -- try ':Telescope symbols' to select others
 lsp.set_sign_icons({
-    error = '❗',
-    warn = '⚠',
-    hint = '',
-    info = '✖'
+    error = '🩸',
+    warn = '',
+    hint = '🩵',
+    info = '❔'
 }
 );
 --
