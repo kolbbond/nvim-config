@@ -113,6 +113,8 @@ return require('packer').startup(function(use)
     -- diagnostics
     use("folke/trouble.nvim");
 
+    use({ "artemave/workspace-diagnostics.nvim" })
+
     -- suda
     -- allows writing to files that required elevated permissions
     use('lambdalisue/suda.vim')

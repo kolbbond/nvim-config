@@ -74,7 +74,7 @@ cmp.setup({
 lsp.set_sign_icons({
     error = '🩸',
     warn = '',
-    hint = '🩵',
+    hint = '',
     info = '❔'
 }
 );
