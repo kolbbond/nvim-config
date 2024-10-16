@@ -3,15 +3,18 @@
 -- todo: help
 -- default
 -- TODO: this
--- HACK  ex 
--- WARN
--- PERF  
--- NOTE
--- TEST
+-- HACK:  ex 
+-- WARN:
+-- PERF : 
+-- NOTE:
+-- TEST:
 -- hey: fix
 -- HEY: 0
--- RTFM
+-- RTFM:
 -- @rtfm: 
+-- JVN: 
+-- lol:
+
 require("todo-comments").setup(
     {
         signs = true,      -- show icons in the signs column
@@ -32,7 +35,8 @@ require("todo-comments").setup(
             TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
             ["HEY"] = { icon = "🌻", color = "#d0d000", alt = { "hey" } }, -- todo
             ["RTFM"] = { icon = "💀", color = "#000000",alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
-            ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- mistakes were made, time wasted on bugs
+            ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- don't worry about it
+            ["LOL"] = { icon = "😈", color = "#f0a000", alt = { "lol" } }, -- lmao even
         },
         gui_style = {
             fg = "NONE",       -- The gui style to use for the fg highlight group.
