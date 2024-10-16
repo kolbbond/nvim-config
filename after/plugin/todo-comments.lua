@@ -3,16 +3,16 @@
 -- todo: help
 -- default
 -- TODO: this
--- HACK:  ex 
+-- HACK:  ex
 -- WARN:
--- PERF : 
+-- PERF :
 -- NOTE:
 -- TEST:
 -- hey: fix
 -- HEY: 0
 -- RTFM:
--- @rtfm: 
--- JVN: 
+-- @rtfm:
+-- JVN:
 -- lol:
 
 require("todo-comments").setup(
@@ -34,9 +34,9 @@ require("todo-comments").setup(
             NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
             TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
             ["HEY"] = { icon = "🌻", color = "#d0d000", alt = { "hey" } }, -- todo
-            ["RTFM"] = { icon = "💀", color = "#000000",alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
+            ["RTFM"] = { icon = "💀", color = "#000000", alt = { "rtfm" } }, -- mistakes were made, time wasted on bugs
             ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- don't worry about it
-            ["LOL"] = { icon = "😈", color = "#f0a000", alt = { "lol" } }, -- lmao even
+            ["LOL"] = { icon = "🤣", color = "#f0a000", alt = { "lol" } }, -- lmao even
         },
         gui_style = {
             fg = "NONE",       -- The gui style to use for the fg highlight group.
@@ -88,15 +88,14 @@ require("todo-comments").setup(
 
 -- default keymaps
 vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next()
+    require("todo-comments").jump_next()
 end, { desc = "Next todo comment" })
 
 vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev()
+    require("todo-comments").jump_prev()
 end, { desc = "Previous todo comment" })
 
 -- You can also specify a list of valid jump keywords
 vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next({keywords = { "ERROR", "WARNING" }})
+    require("todo-comments").jump_next({ keywords = { "ERROR", "WARNING" } })
 end, { desc = "Next error/warning todo comment" })
-
