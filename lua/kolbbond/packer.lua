@@ -172,7 +172,7 @@ return require('packer').startup(function(use)
 
     use("norcalli/nvim-colorizer.lua");
 
-    -- colorbudy
+    -- colorbuddy
     use("tjdevries/colorbuddy.nvim")
 
     -- github

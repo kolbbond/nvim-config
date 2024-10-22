@@ -41,6 +41,10 @@ vim.keymap.set("n", "<leader>x", "\"_x");
 -- don't hit capital Q?
 vim.keymap.set("n", "Q", "<nop>");
 
+-- visual block override (as <C-v> is usually paste)
+-- :command! Vb :execute "normal! \<C-v>"
+vim.api.nvim_create_user_command("Vb","execute \"normal! \\<C-v>\"",{});
+
 -- tmux sessions
 --vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
 
