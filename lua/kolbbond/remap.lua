@@ -81,4 +81,15 @@ vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
 
 -- remap to search/replace with quickfix?
--- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
+
+-- separate quickfix to argdo 
+--command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+----[[
+--function! QuickfixFilenames()
+--  let buffer_numbers = {}
+--  for quickfix_item in getqflist()
+--    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+--  endfor
+--  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+--endfunction- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
+----]]
