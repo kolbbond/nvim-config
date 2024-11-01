@@ -40,7 +40,7 @@ dap.adapters["local-lua"] = {
     end,
 }
 
-dap.configurations.c = {
+dap.configurations.cpp = {
     {
         name = "Launch",
         type = "gdb",
