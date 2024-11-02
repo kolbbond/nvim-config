@@ -6,7 +6,7 @@ lsp.preset("recommended");
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls'
+        'matlab_ls', 'bashls', 'hyprls'
     },
     handlers = {
         lsp.default_setup,
@@ -34,6 +34,10 @@ require("lspconfig").clangd.setup({
 });
 
 
+-- hyprls
+require("lspconfig").hyprls.setup({
+});
+
 -- lua
 require("lspconfig").lua_ls.setup({
     settings =
@@ -51,6 +55,7 @@ require("lspconfig").lua_ls.setup({
         }
     }
 });
+
 
 -- debug options
 --vim.lsp.set_log_level("debug");
