@@ -41,6 +41,11 @@ vim.keymap.set("n", "<leader>x", "\"_x");
 -- don't hit capital Q?
 vim.keymap.set("n", "Q", "<nop>");
 
+-- visual block override (as <C-v> is usually paste)
+-- :command! Vb :execute "normal! \<C-v>"
+vim.api.nvim_create_user_command("Vb","execute \"normal! \\<C-v>\"",{});
+vim.keymap.set("n", "<leader>vb", ":Vb<CR>");
+
 -- tmux sessions
 --vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>");
 
@@ -76,4 +81,15 @@ vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
 
 -- remap to search/replace with quickfix?
--- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
+
+-- separate quickfix to argdo 
+--command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+----[[
+--function! QuickfixFilenames()
+--  let buffer_numbers = {}
+--  for quickfix_item in getqflist()
+--    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+--  endfor
+--  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+--endfunction- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
+----]]

@@ -103,6 +103,9 @@ return require('packer').startup(function(use)
     -- cmake
     use('Civitasv/cmake-tools.nvim');
 
+    -- C++ clangd
+    use('p00f/clangd_extensions.nvim');
+
     -- Autocompletion on command line
     use('hrsh7th/cmp-cmdline');
 
@@ -147,7 +150,8 @@ return require('packer').startup(function(use)
 
     -- vimbegood
     -- fun games
-    use("ThePrimeagen/vim-be-good");
+    --use("kolbbond/vim-be-good");
+    use('~/.config/nvim/plugin/vim-be-good');
 
     -- prettier
     use('neovim/nvim-lspconfig')
@@ -172,7 +176,7 @@ return require('packer').startup(function(use)
 
     use("norcalli/nvim-colorizer.lua");
 
-    -- colorbudy
+    -- colorbuddy
     use("tjdevries/colorbuddy.nvim")
 
     -- github
