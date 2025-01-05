@@ -52,6 +52,9 @@ require("lspconfig").lua_ls.setup({
     }
 });
 
+-- bash
+require("lspconfig").bashls.setup({});
+
 -- debug options
 --vim.lsp.set_log_level("debug");
 
