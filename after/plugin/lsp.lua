@@ -6,7 +6,7 @@ lsp.preset("recommended");
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls'
+        'matlab_ls', 'bashls', 'hyprls'
     },
     handlers = {
         lsp.default_setup,
@@ -33,6 +33,10 @@ require("lspconfig").clangd.setup({
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
 });
 
+
+-- hyprls
+require("lspconfig").hyprls.setup({
+});
 
 -- lua
 require("lspconfig").lua_ls.setup({
