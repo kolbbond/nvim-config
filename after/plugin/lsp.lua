@@ -15,7 +15,7 @@ require('mason-lspconfig').setup({
 
 -- matlab lsp
 -- set Matlab_ROOT_DIR as cmake also uses this environment variable??
--- @hey, or is this just cmake internal variable?
+-- @hey:, or is this just cmake internal variable?
 require("lspconfig").matlab_ls.setup({
     settings = {
         MATLAB = {
@@ -29,8 +29,13 @@ require("lspconfig").matlab_ls.setup({
 
 -- clangd
 require("lspconfig").clangd.setup({
+    -- auto-insert headers is annoying
     cmd = { "clangd", "--header-insertion=never", }
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
+});
+
+require("lspconfig").arduino_language_server.setup({
+    filetypes = {'ino','cpp'},
 });
 
 
