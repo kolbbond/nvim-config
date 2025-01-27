@@ -152,7 +152,7 @@ return require('packer').startup(function(use)
 
     -- vimbegood
     -- fun games
-    --use("kolbbond/vim-be-good");
+    use("kolbbond/vim-be-good");
     --use('~/.config/nvim/plugin/vim-be-good');
 
     -- prettier
