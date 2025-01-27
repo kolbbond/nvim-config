@@ -6,7 +6,7 @@ lsp.preset("recommended");
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls', 'hyprls'
+        'matlab_ls', 'bashls'
     },
     handlers = {
         lsp.default_setup,
@@ -63,6 +63,7 @@ require("lspconfig").lua_ls.setup({
 
 -- bash
 require("lspconfig").bashls.setup({});
+require("lspconfig").fortls.setup({});
 
 -- debug options
 --vim.lsp.set_log_level("debug");
@@ -108,7 +109,6 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<C-q>", function() vim.lsp.buf.signature_help() end, opts)
-
 end);
 
 -- remap to switch between source and header files
