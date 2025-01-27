@@ -16,8 +16,8 @@ dap.adapters.gdb = {
 dap.adapters.cppdbg = {
     id = 'cppdbg',
     type = 'executable',
-    command = "/home/" ..
-    os.getenv("USER") .. '/.vscode/extensions/ms-vscode.cpptools-1.22.11-linux-x64/debugAdapters/bin/OpenDebugAD7',
+    --command = "/home/" .. os.getenv("USER") .. '/.vscode/extensions/ms-vscode.cpptools-1.22.11-linux-x64/debugAdapters/bin/OpenDebugAD7',
+    command = os.getenv("CPPDBG_ROOT") .. '/debugAdapters/bin/OpenDebugAD7',
 }
 
 dap.adapters.codelldb = {
