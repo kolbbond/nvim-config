@@ -77,6 +77,8 @@ return require('packer').startup(function(use)
         }
     });
 
+    use({"folke/lazydev.nvim"});
+
     -- debugging
     use({
         "mfussenegger/nvim-dap",
@@ -151,7 +153,7 @@ return require('packer').startup(function(use)
     -- vimbegood
     -- fun games
     --use("kolbbond/vim-be-good");
-    use('~/.config/nvim/plugin/vim-be-good');
+    --use('~/.config/nvim/plugin/vim-be-good');
 
     -- prettier
     use('neovim/nvim-lspconfig')
