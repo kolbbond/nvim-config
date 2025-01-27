@@ -16,7 +16,8 @@ dap.adapters.gdb = {
 dap.adapters.cppdbg = {
     id = 'cppdbg',
     type = 'executable',
-    command = "/home/" .. os.getenv("USER") .. '/.vscode/extensions/ms-vscode.cpptools-1.22.11-linux-x64/debugAdapters/bin/OpenDebugAD7',
+    command = "/home/" ..
+    os.getenv("USER") .. '/.vscode/extensions/ms-vscode.cpptools-1.22.11-linux-x64/debugAdapters/bin/OpenDebugAD7',
 }
 
 dap.adapters.codelldb = {
@@ -262,13 +263,15 @@ vim.keymap.set("n", "<F11>", dap.restart);
 
 vim.keymap.set("n", "<leader>dut", dapui.toggle);
 vim.keymap.set("n", "<leader>de", dapui.eval);
-
+vim.keymap.set("n", "<leader>dt",
+    function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end);
 -- exception handling
 --dap.defaults.cpp.exception_breakpoints = { "Notice", "Warning", "Error", "Exception" }
 
 --dap.set_exception_breakpoints({"raised", "uncaught"})
 
 dap.defaults.fallback.exception_breakpoints = { 'raised', 'uncaught' }
+dap.defaults.fallback.auto_continue_if_many_stopped = false;
 
 require("lazydev").setup({
     library = { "nvim-dap-ui" },
