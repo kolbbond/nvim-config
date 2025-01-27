@@ -177,16 +177,6 @@ require('nvim-dap-virtual-text').setup {
 
 
 
--- keymaps
-vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint);
-vim.keymap.set("n", "<leader>gb", dap.run_to_cursor);
-vim.keymap.set("n", "<leader>dc", dap.continue);
-
--- eval under cursor
-vim.keymap.set("n", "<leader>?", function()
-    require("dapui").eval(nil, { enter = true })
-end);
-
 
 -- dap ui
 dap.listeners.before.attach.dapui_config = function()
@@ -243,6 +233,7 @@ dapui.setup({
             disconnect = ' ([l]d)',
         },
     },
+
 })
 
 --[[
@@ -265,13 +256,31 @@ vim.keymap.set("n", "<leader>dut", dapui.toggle);
 vim.keymap.set("n", "<leader>de", dapui.eval);
 vim.keymap.set("n", "<leader>dt",
     function() require("dap.ui.widgets").centered_float(require("dap.ui.widgets").threads) end);
+
+vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint);
+vim.keymap.set("n", "<leader>gb", dap.run_to_cursor);
+vim.keymap.set("n", "<leader>dc", dap.continue);
+
+-- might auto detect launch.json
+-- anyways, put a .vscode/launch.json in your project with the config 
+-- this way you can get project specific config
+vim.keymap.set("n", "<leader>lj",
+    function() require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } }) end);
+
+-- eval under cursor
+vim.keymap.set("n", "<leader>?", function()
+    require("dapui").eval(nil, { enter = true })
+end);
+
 -- exception handling
 --dap.defaults.cpp.exception_breakpoints = { "Notice", "Warning", "Error", "Exception" }
 
 --dap.set_exception_breakpoints({"raised", "uncaught"})
 
 dap.defaults.fallback.exception_breakpoints = { 'raised', 'uncaught' }
-dap.defaults.fallback.auto_continue_if_many_stopped = false;
+
+-- control how dap runs threads (if false allows multiple threads to stop)
+dap.defaults.fallback.auto_continue_if_many_stopped = true;
 
 require("lazydev").setup({
     library = { "nvim-dap-ui" },
