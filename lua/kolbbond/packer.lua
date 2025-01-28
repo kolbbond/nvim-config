@@ -77,7 +77,7 @@ return require('packer').startup(function(use)
         }
     });
 
-    use({"folke/lazydev.nvim"});
+    use({ "folke/lazydev.nvim" });
 
     -- debugging
     use({
@@ -107,6 +107,9 @@ return require('packer').startup(function(use)
 
     -- C++ clangd
     use('p00f/clangd_extensions.nvim');
+
+    -- async command run (non blocking)
+    use('skywind3000/asyncrun.vim');
 
     -- Autocompletion on command line
     use('hrsh7th/cmp-cmdline');
