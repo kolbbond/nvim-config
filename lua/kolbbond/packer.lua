@@ -77,6 +77,7 @@ return require('packer').startup(function(use)
         }
     });
 
+    -- when are we switching to lazy
     use({ "folke/lazydev.nvim" });
 
     -- debugging
@@ -111,6 +112,31 @@ return require('packer').startup(function(use)
     -- async command run (non blocking)
     use('skywind3000/asyncrun.vim');
 
+
+    -- copilot
+    --use { "zbirenbaum/copilot.lua" }
+    use("onsails/lspkind.nvim");
+
+    use {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                suggestion = { enabled = false },
+                panel = { enabled = false },
+            })
+        end,
+    }
+
+    use {
+        "zbirenbaum/copilot-cmp",
+        after = { "copilot.lua" },
+        config = function()
+            require("copilot_cmp").setup()
+        end
+    }
+
     -- Autocompletion on command line
     use('hrsh7th/cmp-cmdline');
 
@@ -136,6 +162,7 @@ return require('packer').startup(function(use)
 
     -- matlab
     use("kolbbond/nvim-matlab"); -- github version
+
     -- iron (REPL)
     -- for python and octave atm
     use('Vigemus/iron.nvim')
