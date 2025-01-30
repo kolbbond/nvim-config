@@ -117,6 +117,8 @@ return require('packer').startup(function(use)
     --use { "zbirenbaum/copilot.lua" }
     use("onsails/lspkind.nvim");
 
+    use("milanglacier/minuet-ai.nvim");
+
     use {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
