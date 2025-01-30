@@ -227,9 +227,9 @@ dapui.setup({
             step_over = ' (F3)',
             step_out = ' (F4)',
             step_back = ' (F5)',
-            run_last = ' (F10)',
-            restart = "R (F11)",
-            terminate = ' (F11)',
+            run_last = ' (F8)',
+            restart = "R (F9)",
+            terminate = ' (F10)',
             disconnect = ' ([l]d)',
         },
     },
@@ -250,7 +250,9 @@ vim.keymap.set("n", "<F2>", dap.step_into);
 vim.keymap.set("n", "<F3>", dap.step_over);
 vim.keymap.set("n", "<F4>", dap.step_out);
 vim.keymap.set("n", "<F5>", dap.step_back);
-vim.keymap.set("n", "<F11>", dap.restart);
+vim.keymap.set("n", "<F8>", dap.run_last);
+vim.keymap.set("n", "<F9>", dap.restart);
+vim.keymap.set("n", "<F10>", dap.terminate);
 
 vim.keymap.set("n", "<leader>dut", dapui.toggle);
 vim.keymap.set("n", "<leader>de", dapui.eval);
