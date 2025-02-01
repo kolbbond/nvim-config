@@ -215,7 +215,7 @@ dapui.setup({
                 { id = 'repl',    size = 0.60 },
                 { id = 'console', size = 0.40 },
             },
-            size = 20,
+            size = 10,
             position = 'bottom', -- Can be "bottom" or "top"
         },
     },
@@ -235,6 +235,8 @@ dapui.setup({
     },
 
 })
+
+vim.keymap.set("n", "<leader>dK", function() require("dapui").eval() end);
 
 --[[
 require("neodev").setup({
@@ -264,7 +266,7 @@ vim.keymap.set("n", "<leader>gb", dap.run_to_cursor);
 vim.keymap.set("n", "<leader>dc", dap.continue);
 
 -- might auto detect launch.json
--- anyways, put a .vscode/launch.json in your project with the config 
+-- anyways, put a .vscode/launch.json in your project with the config
 -- this way you can get project specific config
 vim.keymap.set("n", "<leader>lj",
     function() require('dap.ext.vscode').load_launchjs(nil, { cppdbg = { 'c', 'cpp' } }) end);
