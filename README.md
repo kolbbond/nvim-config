@@ -23,6 +23,9 @@ It is recommended to also alias vim to nvim in your bashrc.
 
 `alias vim='nvim'`
 
+install ripgrep 
+` pip install ripgrep `
+
 ### Additional LSP support
 We rely on Mason to manage our LSPs.
 Some of them rely on NPM (matlab and bash)
