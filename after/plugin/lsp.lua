@@ -6,7 +6,7 @@ lsp.preset("recommended");
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls'
+        'matlab_ls', 'bashls', 'pylsp'
     },
     handlers = {
         lsp.default_setup,
@@ -35,12 +35,15 @@ require("lspconfig").clangd.setup({
 });
 
 require("lspconfig").arduino_language_server.setup({
-    filetypes = {'ino','cpp'},
+    filetypes = { 'ino', 'cpp' },
 });
 
 
 -- hyprls
 require("lspconfig").hyprls.setup({
+});
+
+require("lspconfig").pylsp.setup({
 });
 
 -- lua
