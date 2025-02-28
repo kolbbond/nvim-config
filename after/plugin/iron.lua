@@ -47,6 +47,7 @@ iron.setup {
         send_line = "<space>sl",
         send_paragraph = "<space>sp",
         send_until_cursor = "<space>su",
+        send_code_block = "<space>sb",
         send_mark = "<space>sm",
         mark_motion = "<space>mc",
         mark_visual = "<space>mc",
