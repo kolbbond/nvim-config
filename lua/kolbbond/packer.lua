@@ -57,6 +57,9 @@ return require('packer').startup(function(use)
     -- show hotkeys
     use("folke/which-key.nvim")
 
+    -- show inputs in overlay
+    use({ "NStefan002/screenkey.nvim", tag = "*" })
+
     -- lsp - zero
     -- head lsp, super useful
     use({

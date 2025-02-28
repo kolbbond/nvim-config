@@ -1,7 +1,7 @@
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = { "matlab", "c", "lua", "vim", "python",
-        "vimdoc", "query" ,"cpp","luadoc","markdown"},
+        "vimdoc", "query", "cpp", "luadoc", "markdown" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -15,6 +15,7 @@ require 'nvim-treesitter.configs'.setup {
 
     ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
     -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+    indent = { enable = false },
 
     highlight = {
         enable = true,
