@@ -18,11 +18,13 @@ iron.setup {
 
             python = {
                 command = { "python3" }, -- or { "ipython", "--no-autoindent" }
-                format = require("iron.fts.common").bracketed_paste_python
+                format = require("iron.fts.common").bracketed_paste_python,
+                block_deviders = { "# %%", "#%%" },
             },
 
             matlab = {
                 command = { "octave" }, -- or { "matlab", "--no-autoindent" }
+                block_deviders = { "%%" },
                 --format = require("iron.fts.common").bracketed_paste_python
             }
             --[[
