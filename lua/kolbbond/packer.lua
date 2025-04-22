@@ -130,6 +130,17 @@ return require('packer').startup(function(use)
             require("copilot").setup({
                 suggestion = { enabled = false },
                 panel = { enabled = false },
+                -- copilot options!
+                server_opts_overrides = {
+                    trace = "verbose",
+                    settings = {
+                        advanced = {
+                            listCount = 10, -- #completions for panel
+                            inlineSuggestCount = 3, -- #completions for getCompletions
+                        }
+                    },
+                }
+
             })
         end,
     }
@@ -138,7 +149,7 @@ return require('packer').startup(function(use)
         "zbirenbaum/copilot-cmp",
         after = { "copilot.lua" },
         config = function()
-            require("copilot_cmp").setup()
+--            require("copilot_cmp").setup()
         end
     }
 
@@ -166,7 +177,8 @@ return require('packer').startup(function(use)
     -- REPLS
 
     -- matlab
-    use("kolbbond/nvim-matlab"); -- github version
+    --use("kolbbond/nvim-matlab"); -- github version
+    use("~/.config/nvim/plugin/nvim-matlab"); -- local version
 
     -- iron (REPL)
     -- for python and octave atm
@@ -213,6 +225,8 @@ return require('packer').startup(function(use)
 
     use("norcalli/nvim-colorizer.lua");
 
+    use("slugbyte/lackluster.nvim");
+
     -- colorbuddy
     use("tjdevries/colorbuddy.nvim")
 
@@ -228,6 +242,9 @@ return require('packer').startup(function(use)
 
     -- modus-themes
     use("miikanissi/modus-themes.nvim");
+
+    -- oxocarbon
+    use("nyoom-engineering/oxocarbon.nvim");
 
     -- nord
     use("gbprod/nord.nvim");

@@ -16,6 +16,9 @@ vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 -- change coloring
 -- require("colors")
 
+-- require lazy
+--require("config.lazy")
+
 
 
 

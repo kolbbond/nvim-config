@@ -1,6 +1,8 @@
 local dap, dapui = require('dap'), require("dapui");
 
-use_dap = false;
+-- @hey: check if dap is installed
+
+use_dap = true;
 if use_dap then
     -- adapters
 
