@@ -6,282 +6,304 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use('wbthomason/packer.nvim')
-
-    --------------------------------------------------
-    -- super useful section
-    -- telescope
-    -- fuzzy finder for files
-    use({
-        'nvim-telescope/telescope.nvim',
-        tag = '0.1.6',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    });
-
-    -- treesitter
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-
-    -- playground
-    use('nvim-treesitter/playground')
-
-    -- highlight todo
-    use("folke/todo-comments.nvim");
-
-    -- color different delimiters
-    use("HiPhish/rainbow-delimiters.nvim");
-
-    -- harpoon
-    -- allows quick movement between files from a hotlist
-    use("nvim-lua/plenary.nvim") -- don't forget to add this one if you don't have it yet!
-    use({
-        "kolbbond/harpoon2",
-        branch = "master",
-        requires = { { "nvim-lua/plenary.nvim" } }
-    });
-
-    -- undotree
-    -- keeps a huge list of changes
-    -- @hey, investigate
-    use('mbbill/undotree');
-
-    -- fugitive
-    -- @hey, start using this
-    use('tpope/vim-fugitive');
-
-    -- edit directories
-    -- we might just prefer netrw?
-    use({ "stevearc/oil.nvim" });
-
-    -- show hotkeys
-    use("folke/which-key.nvim")
-
-    -- show inputs in overlay
-    use({ "NStefan002/screenkey.nvim", tag = "*" })
-
-    -- lsp - zero
-    -- head lsp, super useful
-    use({
-        'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
-        requires = {
-            --- Uncomment the two plugins below if you want to manage the language servers from neovim
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
-
-            -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'L3MON4D3/LuaSnip' },
-        }
-    });
-
-    -- when are we switching to lazy
-    use({ "folke/lazydev.nvim" });
-
-    -- debugging
-    use({
-        "mfussenegger/nvim-dap",
-        requires =
-        { "rcarriga/nvim-dap-ui" },
-        { "nvim-neotest/nvim-nio" },
-        { "theHamsta/nvim-dap-virtual-text" },
-        { "SGauvin/ctest-telescope.nvim" },
-        { "mfussenegger/nvim-dap-python" },
-    });
-
-    --use({ "SGauvin/ctest-telescope.nvim" });
-    use {
-        "nvim-neotest/neotest",
-        requires = {
-            "nvim-neotest/nvim-nio",
-            "nvim-lua/plenary.nvim",
-            "antoinemadec/FixCursorHold.nvim",
-            "nvim-treesitter/nvim-treesitter",
-            "alfaix/neotest-gtest",
-        }
-    }
-
-    -- cmake
-    use('Civitasv/cmake-tools.nvim');
-
-    -- C++ clangd
-    use('p00f/clangd_extensions.nvim');
-
-    -- async command run (non blocking)
-    use('skywind3000/asyncrun.vim');
-
-
-    -- copilot
-    --use { "zbirenbaum/copilot.lua" }
-    use("onsails/lspkind.nvim");
-
-    use("milanglacier/minuet-ai.nvim");
-
-    use {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = { enabled = false },
-                panel = { enabled = false },
-                -- copilot options!
-                server_opts_overrides = {
-                    trace = "verbose",
-                    settings = {
-                        advanced = {
-                            listCount = 10, -- #completions for panel
-                            inlineSuggestCount = 3, -- #completions for getCompletions
-                        }
-                    },
-                }
+	-- Packer can manage itself
+	use('wbthomason/packer.nvim')
+
+	--------------------------------------------------
+	-- super useful section
+	-- telescope
+	-- fuzzy finder for files
+	use({
+		'nvim-telescope/telescope.nvim',
+		tag = '0.1.6',
+		-- or                            , branch = '0.1.x',
+		requires = { { 'nvim-lua/plenary.nvim' } }
+	});
+
+	-- treesitter
+	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+
+	-- playground
+	use('nvim-treesitter/playground')
+
+	-- highlight todo
+	use("folke/todo-comments.nvim");
+
+	-- color different delimiters
+	use("HiPhish/rainbow-delimiters.nvim");
+
+	-- harpoon
+	-- allows quick movement between files from a hotlist
+	use("nvim-lua/plenary.nvim") -- don't forget to add this one if you don't have it yet!
+	use({
+		"kolbbond/harpoon2",
+		branch = "master",
+		requires = { { "nvim-lua/plenary.nvim" } }
+	});
+
+	-- undotree
+	-- keeps a huge list of changes
+	-- @hey, investigate
+	use('mbbill/undotree');
+
+	-- fugitive
+	-- @hey, start using this
+	use('tpope/vim-fugitive');
+
+	-- edit directories
+	-- we might just prefer netrw?
+	use({ "stevearc/oil.nvim" });
+
+	-- show hotkeys
+	use("folke/which-key.nvim")
+
+	-- show inputs in overlay
+	--use({ "NStefan002/screenkey.nvim", tag = "*" })
+
+	--use('williamboman/mason.nvim');
+	--use('williamboman/mason-lspconfig.nvim');
+
+	-- lsp - zero
+	-- head lsp, super useful
+	use({
+		'VonHeikemen/lsp-zero.nvim',
+		branch = 'v3.x',
+		requires = {
+			--- Uncomment the two plugins below if you want to manage the language servers from neovim
+			{ 'williamboman/mason.nvim' },
+			{ 'williamboman/mason-lspconfig.nvim' },
+
+			-- LSP Support
+			{ 'neovim/nvim-lspconfig' },
+
+			-- Autocompletion
+			{ 'hrsh7th/nvim-cmp' },
+			{ 'hrsh7th/cmp-nvim-lsp' },
+			{ 'L3MON4D3/LuaSnip' },
+		}
+	});
+
+	-- when are we switching to lazy
+	use({ "folke/lazydev.nvim" });
+
+	-- debugging
+	use({
+		"mfussenegger/nvim-dap",
+		requires =
+		{ "rcarriga/nvim-dap-ui" },
+		{ "nvim-neotest/nvim-nio" },
+		{ "theHamsta/nvim-dap-virtual-text" },
+		{ "SGauvin/ctest-telescope.nvim" },
+		{ "mfussenegger/nvim-dap-python" },
+	});
+
+	--use({ "SGauvin/ctest-telescope.nvim" });
+	use {
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"alfaix/neotest-gtest",
+		}
+	}
+
+	-- cmake
+	use('Civitasv/cmake-tools.nvim');
+
+	-- C++ clangd
+	use('p00f/clangd_extensions.nvim');
+
+	-- async command run (non blocking)
+	use('skywind3000/asyncrun.vim');
+
+
+	-- copilot
+	--use { "zbirenbaum/copilot.lua" }
+	use("onsails/lspkind.nvim");
+
+	use("milanglacier/minuet-ai.nvim");
+
+	use {
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({
+				suggestion = { enabled = false },
+				panel = { enabled = false },
+				-- copilot options!
+				server_opts_overrides = {
+					trace = "verbose",
+					settings = {
+						advanced = {
+							listCount = 10, -- #completions for panel
+							inlineSuggestCount = 3, -- #completions for getCompletions
+						}
+					},
+				}
+
+			})
+		end,
+	}
+
+	use {
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			--            require("copilot_cmp").setup()
+		end
+	}
+
+	-- Autocompletion on command line
+	use('hrsh7th/cmp-cmdline');
+
+	-- dap-ui separate
+	use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
+	use('folke/neodev.nvim');
+
+	-- diagnostics
+	use("folke/trouble.nvim");
+
+	use({ "artemave/workspace-diagnostics.nvim" })
+
+	-- suda
+	-- allows writing to files that required elevated permissions
+	use('lambdalisue/suda.vim')
+
+	-- like tmux but also use tmux
+	use { "akinsho/toggleterm.nvim", tag = '*', config = function()
+		require("toggleterm").setup()
+	end }
+	--------------------------------------------------
+	-- REPLS
+
+	-- matlab
+	--use("kolbbond/nvim-matlab"); -- github version
+	use("~/.config/nvim/plugin/nvim-matlab"); -- local version
+
+	-- iron (REPL)
+	-- for python and octave atm
+	use('Vigemus/iron.nvim')
 
-            })
-        end,
-    }
+	-- sniprun
+	--use { 'michaelb/sniprun', run = 'sh./install.sh' };
 
-    use {
-        "zbirenbaum/copilot-cmp",
-        after = { "copilot.lua" },
-        config = function()
---            require("copilot_cmp").setup()
-        end
-    }
+	-- slime (for python repl etc.)
+	-- seems that iron might work better for us
+	--    use("jpalardy/vim-slime");
+	use('jpalardy/vim-slime')
 
-    -- Autocompletion on command line
-    use('hrsh7th/cmp-cmdline');
+	--[[
+	use({
+		'jpalardy/vim-slime',
+		keys = {
+			{ "<leader>sc", "<cmd>SlimeConfig<cr>",               desc = "Slime Config" },
+			{ "<leader>sr", "<Plug>SlimeSendCell<BAR>/^# %%<CR>", desc = "Slime Send Cell" },
+		},
+		config = function()
+			vim.g.slime_target = "tmux"
+			vim.g.slime_cell_delimiter = "# %%"
+			vim.g.slime_bracketed_paste = 1
+		end
+	});
+	--]]
+	--------------------------------------------------
 
-    -- dap-ui separate
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } }
-    use('folke/neodev.nvim');
+	-- python repls
+	use("geg2102/nvim-python-repl");
+	use('hanschen/vim-ipython-cell')
 
-    -- diagnostics
-    use("folke/trouble.nvim");
+	-- dev
+	--use('~/.config/nvim/plugin/nvim-matlab.nvim')
+	-- use ('~/.config/nvim/plugin/cheddar.nvim')
 
-    use({ "artemave/workspace-diagnostics.nvim" })
+	-- vimbegood
+	-- fun games
+	use("kolbbond/vim-be-good");
+	--use('~/.config/nvim/plugin/vim-be-good');
 
-    -- suda
-    -- allows writing to files that required elevated permissions
-    use('lambdalisue/suda.vim')
+	-- prettier
+	use('neovim/nvim-lspconfig')
+	use('jose-elias-alvarez/null-ls.nvim')
+	use('MunifTanjim/prettier.nvim')
 
-    -- like tmux but also use tmux
-    use { "akinsho/toggleterm.nvim", tag = '*', config = function()
-        require("toggleterm").setup()
-    end }
-    --------------------------------------------------
-    -- REPLS
+	--------------------------------------------------
+	--[[ THEMES --]]
 
-    -- matlab
-    --use("kolbbond/nvim-matlab"); -- github version
-    use("~/.config/nvim/plugin/nvim-matlab"); -- local version
+	-- colorizer
 
-    -- iron (REPL)
-    -- for python and octave atm
-    use('Vigemus/iron.nvim')
+	-- gruvbox
+	-- objectively the best so we forked it
+	use("kolbbond/gruvbox.nvim");
 
-    -- sniprun
-    --    use { 'michaelb/sniprun', run = 'sh./install.sh' };
+	-- gruvbox alts
+	use("luisiacc/gruvbox-baby");
+	use("sainnhe/gruvbox-material");
 
-    -- slime (for python repl etc.)
-    -- seems that iron might work better for us
-    --    use("jpalardy/vim-slime");
-    --------------------------------------------------
+	-- rose pine theme
+	--use("rose-pine/neovim");
 
+	--use("norcalli/nvim-colorizer.lua");
 
-    -- dev
-    --use('~/.config/nvim/plugin/nvim-matlab.nvim')
-    -- use ('~/.config/nvim/plugin/cheddar.nvim')
+	use("slugbyte/lackluster.nvim");
 
-    -- vimbegood
-    -- fun games
-    use("kolbbond/vim-be-good");
-    --use('~/.config/nvim/plugin/vim-be-good');
+	-- colorbuddy
+	use("tjdevries/colorbuddy.nvim")
 
-    -- prettier
-    use('neovim/nvim-lspconfig')
-    use('jose-elias-alvarez/null-ls.nvim')
-    use('MunifTanjim/prettier.nvim')
+	-- github
+	use("projekt0n/github-nvim-theme");
 
-    --------------------------------------------------
-    --[[ THEMES --]]
+	-- lush
+	use("rktjmp/lush.nvim");
 
-    -- colorizer
 
-    -- gruvbox
-    -- objectively the best so we forked it
-    use("kolbbond/gruvbox.nvim");
+	-- tokyonight
+	use("folke/tokyonight.nvim");
 
-    -- gruvbox alts
-    use("luisiacc/gruvbox-baby");
-    use("sainnhe/gruvbox-material");
+	-- modus-themes
+	use("miikanissi/modus-themes.nvim");
 
-    -- rose pine theme
-    use("rose-pine/neovim");
+	-- oxocarbon
+	use("nyoom-engineering/oxocarbon.nvim");
 
-    use("norcalli/nvim-colorizer.lua");
+	-- nord
+	use("gbprod/nord.nvim");
 
-    use("slugbyte/lackluster.nvim");
+	-- vscode
+	use("Mofiqul/vscode.nvim");
 
-    -- colorbuddy
-    use("tjdevries/colorbuddy.nvim")
+	--- kanagawa theme
+	use("rebelot/kanagawa.nvim")
 
-    -- github
-    use("projekt0n/github-nvim-theme");
+	-- flow
+	use("0xstepit/flow.nvim");
 
-    -- lush
-    use("rktjmp/lush.nvim");
+	-- rasmus
+	use('kvrohit/rasmus.nvim')
 
+	-- darkvoid
+	use('aliqyan-21/darkvoid.nvim');
 
-    -- tokyonight
-    use("folke/tokyonight.nvim");
+	-- falcon
+	use("fenetikm/falcon")
 
-    -- modus-themes
-    use("miikanissi/modus-themes.nvim");
+	-- miasma, like gruvbox but dirtier
+	use('xero/miasma.nvim');
 
-    -- oxocarbon
-    use("nyoom-engineering/oxocarbon.nvim");
+	-- fluoromachine (neon)
+	use('maxmx03/fluoromachine.nvim')
 
-    -- nord
-    use("gbprod/nord.nvim");
+	--  moonlight (more neon)
+	use('shaunsingh/moonlight.nvim');
 
-    -- vscode
-    use("Mofiqul/vscode.nvim");
 
-    --- kanagawa theme
-    use("rebelot/kanagawa.nvim")
+	------------------------------------------------------
+	-- End of themes
 
-    -- flow
-    use("0xstepit/flow.nvim");
-
-    -- rasmus
-    use('kvrohit/rasmus.nvim')
-
-    -- darkvoid
-    use('aliqyan-21/darkvoid.nvim');
-
-    -- falcon
-    use("fenetikm/falcon")
-
-    -- miasma, like gruvbox but dirtier
-    use('xero/miasma.nvim');
-
-    -- fluoromachine (neon)
-    use('maxmx03/fluoromachine.nvim')
-
-    --  moonlight (more neon)
-    use('shaunsingh/moonlight.nvim');
-
-
-    ------------------------------------------------------
-    -- End of themes
-
-    -- icons and symbols
-    use('nvim-telescope/telescope-symbols.nvim');
-    use("stevearc/dressing.nvim");
-    use('nvim-tree/nvim-web-devicons')
+	-- icons and symbols
+	use('nvim-telescope/telescope-symbols.nvim');
+	use("stevearc/dressing.nvim");
+	use('nvim-tree/nvim-web-devicons')
 end)

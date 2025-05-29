@@ -18,8 +18,9 @@ iron.setup {
 
             python = {
                 command = { "python3" }, -- or { "ipython", "--no-autoindent" }
+                --command = { "tmux", "split-window", "-h", "-p", "25", "python3" },
                 format = require("iron.fts.common").bracketed_paste_python,
-                block_deviders = { "# %%", "#%%" },
+                block_deviders = { "# %%", "#%%", "#%" },
             },
 
             matlab = {
@@ -34,17 +35,20 @@ iron.setup {
             }
             --]]
         },
+
         -- How the repl window will be displayed
         -- See below for more information
-        --repl_open_cmd = require('iron.view').bottom(40),
-        repl_open_cmd = 'vertical bo split',
+        --repl_open_cmd = require('iron.view').right(50),
+        repl_open_cmd = 'vertical bo split 20',
+        repl_open_cmd = { "tmux", "split-window", "-h", "-p", "25", "python3" },
+        view = require('iron.view').external
     },
 
     -- Iron doesn't set keymaps by default anymore.
     -- You can set them here or manually add keymaps to the functions in iron.core
     keymaps = {
-        send_motion = "<space>sc",
-        visual_send = "<space>sc",
+        --send_motion = "<space>sc",
+        --visual_send = "<space>sc",
         send_file = "<space>sf",
         send_line = "<space>sl",
         send_paragraph = "<space>sp",

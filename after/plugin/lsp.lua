@@ -2,11 +2,13 @@ local lsp = require("lsp-zero");
 
 lsp.preset("recommended");
 
+--vim.o.winborder = "rounded"
+
 -- mason is how we setup lsp
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = { 'clangd', 'lua_ls',
-        'matlab_ls', 'bashls', 'pylsp'
+    ensure_installed = { 'clangd', 'lua_ls', 'pylsp'
+        --'matlab_ls',
     },
     handlers = {
         lsp.default_setup,
@@ -34,14 +36,15 @@ require("lspconfig").clangd.setup({
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
 });
 
+--[[
 require("lspconfig").arduino_language_server.setup({
     filetypes = { 'ino', 'cpp' },
 });
+--]]
 
 
 -- hyprls
-require("lspconfig").hyprls.setup({
-});
+--require("lspconfig").hyprls.setup({});
 
 require("lspconfig").pylsp.setup({
 });
@@ -65,8 +68,8 @@ require("lspconfig").lua_ls.setup({
 });
 
 -- bash
-require("lspconfig").bashls.setup({});
-require("lspconfig").fortls.setup({});
+--require("lspconfig").bashls.setup({});
+--require("lspconfig").fortls.setup({});
 
 -- debug options
 --vim.lsp.set_log_level("debug");

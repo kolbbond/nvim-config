@@ -71,6 +71,6 @@ vim.cmd("colorscheme gruvbox");
 vim.keymap.set("n", "<leader>cmp", ColorMyPencils);
 
 -- colorizer map
-vim.keymap.set("n", "<leader>ca", vim.cmd("ColorizerAttachToBuffer"));
-vim.keymap.set("n", "<leader>cd", vim.cmd("ColorizerDetachFromBuffer"));
-vim.keymap.set("n", "<leader>ct", vim.cmd("ColorizerToggle"));
+--vim.keymap.set("n", "<leader>ca", vim.cmd("ColorizerAttachToBuffer"));
+--vim.keymap.set("n", "<leader>cd", vim.cmd("ColorizerDetachFromBuffer"));
+--vim.keymap.set("n", "<leader>ct", vim.cmd("ColorizerToggle"));

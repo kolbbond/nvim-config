@@ -1,3 +1,4 @@
+--[[
 require("screenkey").setup({
     win_opts = {
         row = vim.o.lines - vim.o.cmdheight - 1,
@@ -65,3 +66,4 @@ require("screenkey").setup({
 vim.keymap.set("n", "<leader>tsc", function()
     vim.cmd("Screenkey")
 end);
+--]]

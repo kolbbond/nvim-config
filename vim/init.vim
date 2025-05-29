@@ -74,4 +74,5 @@ au BufLeave * silent! !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
 autocmd FileType vim setlocal fileformat=unix
 set fileformat=unix
 
+" vim.o.winborder = "rounded"
 
