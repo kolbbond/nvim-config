@@ -126,7 +126,7 @@ local mymodule = require('modules');
 -- async run make
 --vim.keymap.set("n", "<leader>asm", '<cmd>AsyncRun make<CR><cmd>echom "asyncrun make started"<CR>')
 vim.keymap.set("n", "<leader>asm", function()
-    vim.notify("🚀 asyncrun make started")
+    vim.notify("🚀 asyncrun make started 🚀")
     vim.cmd("AsyncRun make")
 end)
 

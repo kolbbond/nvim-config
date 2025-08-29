@@ -6,8 +6,6 @@ M.notify_build_status = function()
     local msg = ""
     local level = vim.log.levels.INFO
 
-    vim.notify("🚧 Build process completed", vim.log.levels.INFO, { title = "Build Status", timeout = 3000 })
-    vim.notify("🚧 Build process completed", vim.log.levels.INFO, { title = "Build Status", timeout = 3000 })
     vim.api.nvim_echo({ { "status: " .. status } }, false, {})
 
     if status == 'success' then
