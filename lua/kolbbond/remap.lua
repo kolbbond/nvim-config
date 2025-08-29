@@ -80,11 +80,59 @@ vim.keymap.set("n", "<leader>cfd", "<cmd>let @+=expand(\"%:p:h\")<CR>")
 vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
 
+-- make and check output
+local function asyncrun_make()
+    -- start make job
+    local job_id = vim.fn.jobstart('make', {
+        on_stdout = function(_, data)
+            --       vim.fn.caddexpr(data)
+        end,
+        on_stderr = function(_, data)
+            --      vim.fn.caddexpr(data)
+        end,
+        on_exit = function(_, exit_code, _, _)
+            if exit_code == 0 then
+                vim.cmd('echom "Build finished successfully!"')
+            else
+                vim.cmd('echom "Build FAILED!"')
+            end
+
+
+            -- find quickfix window
+            local qf_win = vim.fn.bufwinnr('^quickfix$')
+
+            -- check for quickfix window
+            for _, win in ipairs(vim.fn.getwininfo()) do
+                if win.quickfix == 1 then
+                    is_open = true
+                    break
+                end
+            end
+
+            -- fill quickfix buffer
+            local buf = vim.fn.bufnr()
+            local qf_list = vim.fn.getbufline(buf, 1, '$')
+            vim.fn.setqflist({}, 'r', { lines = qf_list })
+        end,
+
+        -- run in terminal
+        pty = true,
+    })
+end
+
+
+local mymodule = require('modules');
+
 -- async run make
-vim.keymap.set("n", "<leader>asm", "<cmd>AsyncRun make<CR>")
+--vim.keymap.set("n", "<leader>asm", '<cmd>AsyncRun make<CR><cmd>echom "asyncrun make started"<CR>')
+vim.keymap.set("n", "<leader>asm", function()
+    vim.notify("🚀 asyncrun make started")
+    vim.cmd("AsyncRun make")
+end)
+
 
 -- quickfix toggle
-function qf_toggle()
+function QF_toggle()
     -- Check if the quickfix window exists and is a valid window
     local is_open = false
     local qf_win = vim.fn.bufwinnr('^quickfix$')
@@ -102,10 +150,11 @@ function qf_toggle()
         vim.cmd('cclose')
     else
         vim.cmd('copen')
+        vim.cmd('normal! G')
     end
 end
 
-vim.keymap.set("n", "<leader>qf", qf_toggle, { desc = "toggle quickfix" })
+vim.keymap.set("n", "<leader>qf", QF_toggle, { desc = "toggle quickfix" })
 -- remap to search/replace with quickfix?
 
 -- separate quickfix to argdo

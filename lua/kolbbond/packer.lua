@@ -41,13 +41,16 @@ return require('packer').startup(function(use)
         requires = { { "nvim-lua/plenary.nvim" } }
     });
 
+    -- quickfix
+    --use("kevinhwang91/nvim-bqf");
+
     -- undotree
     -- keeps a huge list of changes
     -- @hey, investigate
     use('mbbill/undotree');
 
     -- fugitive
-    -- @hey, start using this
+    -- @hey: start using this
     use('tpope/vim-fugitive');
 
     -- edit directories
@@ -86,6 +89,14 @@ return require('packer').startup(function(use)
     -- when are we switching to lazy
     use({ "folke/lazydev.nvim" });
 
+    -- notify
+    -- Packer.nvim
+    use({
+        "rcarriga/nvim-notify",
+        config = function()
+            vim.notify = require("notify")
+        end
+    });
     -- debugging
     use({
         "mfussenegger/nvim-dap",
@@ -117,6 +128,7 @@ return require('packer').startup(function(use)
 
     -- async command run (non blocking)
     use('skywind3000/asyncrun.vim');
+
 
 
     -- copilot
