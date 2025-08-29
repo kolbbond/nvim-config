@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>Y", "\"+Y");
 vim.keymap.set("n", "<leader>d", "\"_d");
 vim.keymap.set("v", "<leader>d", "\"_d");
 
--- single character delete to void register 
+-- single character delete to void register
 vim.keymap.set("n", "<leader>x", "\"_x");
 
 -- don't hit capital Q?
@@ -43,7 +43,7 @@ vim.keymap.set("n", "Q", "<nop>");
 
 -- visual block override (as <C-v> is usually paste)
 -- :command! Vb :execute "normal! \<C-v>"
-vim.api.nvim_create_user_command("Vb","execute \"normal! \\<C-v>\"",{});
+vim.api.nvim_create_user_command("Vb", "execute \"normal! \\<C-v>\"", {});
 vim.keymap.set("n", "<leader>vb", ":Vb<CR>");
 
 -- tmux sessions
@@ -60,7 +60,7 @@ vim.keymap.set("n", "<leader>vb", ":Vb<CR>");
 
 -- add chmod
 --vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>",
- --   { silent = true });
+--   { silent = true });
 
 -- shoutout through leaderleader
 -- reloads file in neovim
@@ -80,9 +80,35 @@ vim.keymap.set("n", "<leader>cfd", "<cmd>let @+=expand(\"%:p:h\")<CR>")
 vim.keymap.set("n", "<leader>crd", "<cmd>let @+=expand(\"%:h\")<CR>")
 vim.keymap.set("n", "<leader>cfn", "<cmd>let @+=expand(\"%:t\")<CR>")
 
+-- async run make
+vim.keymap.set("n", "<leader>asm", "<cmd>AsyncRun make<CR>")
+
+-- quickfix toggle
+function qf_toggle()
+    -- Check if the quickfix window exists and is a valid window
+    local is_open = false
+    local qf_win = vim.fn.bufwinnr('^quickfix$')
+
+    -- check for quickfix window
+    for _, win in ipairs(vim.fn.getwininfo()) do
+        if win.quickfix == 1 then
+            is_open = true
+            break
+        end
+    end
+
+    -- if open or not
+    if is_open then
+        vim.cmd('cclose')
+    else
+        vim.cmd('copen')
+    end
+end
+
+vim.keymap.set("n", "<leader>qf", qf_toggle, { desc = "toggle quickfix" })
 -- remap to search/replace with quickfix?
 
--- separate quickfix to argdo 
+-- separate quickfix to argdo
 --command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
 ----[[
 --function! QuickfixFilenames()

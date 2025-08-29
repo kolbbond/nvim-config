@@ -8,8 +8,9 @@ vim.g.slime_bracketed_paste = 1
 
 -- set slime connect command and specified interpreter
 --vim.g.slime_tmux_target = new_pane_id
-vim.g.slime_restart_repl_command = 'ipython3'
-vim.g.slime_new_pane_command = 'tmux split-window -h -p 40 -P -F "#{pane_id}" ipython3';
+python_exec = 'ipython3'
+vim.g.slime_restart_repl_command = python_exec
+vim.g.slime_new_pane_command = 'tmux split-window -h -p 40 -P -F "#{pane_id}" ' .. python_exec;
 -- vim.g.slime_restart_repl_command = 'source ~/.venv/myproject/bin/activate && python'
 
 -- opens a tmux pane and connect slime (AI assisted))
@@ -40,43 +41,87 @@ function SlimeOpenPythonREPL25V()
 end
 
 -- restart function courtesy of GEMINI AI 2.5 FLASH
+local function SlimeClose()
+    -- save buffer?
+    --vim.cmd('w')
+
+    -- Check if tmux is running. If not, this function won't work.
+    -- This prevents errors if the user tries to run it outside of tmux.
+    local tmux_status = vim.fn.system('tmux display-message -p "#S"')
+    if tmux_status:match('no server running') then
+        vim.notify("Error: tmux is not running. Cannot restart Slime target.", vim.log.levels.ERROR)
+        return
+    end
+
+    -- 6. Close the old pane (if it exists).
+    if vim.g.slime_tmux_target then
+        -- Check if the old pane still exists before trying to kill it.
+        -- This prevents error messages from tmux if it was already closed.
+        local pane_exists_check = vim.fn.system(string.format('tmux has-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
+        if pane_exists_check:match('no such pane') then
+            vim.notify("Old Slime pane (" .. vim.g.slime_tmux_target .. ") not found or already closed.",
+                vim.log.levels.INFO)
+        else
+            -- Kill the old pane. Redirect stderr to /dev/null to suppress any minor warnings.
+            vim.fn.system(string.format('tmux kill-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
+            vim.notify("Closed old Slime pane: " .. vim.g.slime_tmux_target, vim.log.levels.INFO)
+        end
+    else
+        vim.notify("No previous Slime pane found to close.", vim.log.levels.INFO)
+    end
+
+    -- just don't restart
+end
+
+-- restart function courtesy of GEMINI AI 2.5 FLASH
 local function SlimeRestart()
     -- save buffer?
-  --vim.cmd('w')
+    --vim.cmd('w')
 
-  -- Check if tmux is running. If not, this function won't work.
-  -- This prevents errors if the user tries to run it outside of tmux.
-  local tmux_status = vim.fn.system('tmux display-message -p "#S"')
-  if tmux_status:match('no server running') then
-    vim.notify("Error: tmux is not running. Cannot restart Slime target.", vim.log.levels.ERROR)
-    return
-  end 
-
-  -- 6. Close the old pane (if it exists).
-  if vim.g.slime_tmux_target then
-    -- Check if the old pane still exists before trying to kill it.
-    -- This prevents error messages from tmux if it was already closed.
-    local pane_exists_check = vim.fn.system(string.format('tmux has-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
-    if pane_exists_check:match('no such pane') then
-      vim.notify("Old Slime pane (" .. vim.g.slime_tmux_target .. ") not found or already closed.", vim.log.levels.INFO)
-    else
-      -- Kill the old pane. Redirect stderr to /dev/null to suppress any minor warnings.
-      vim.fn.system(string.format('tmux kill-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
-      vim.notify("Closed old Slime pane: " .. vim.g.slime_tmux_target, vim.log.levels.INFO)
+    -- Check if tmux is running. If not, this function won't work.
+    -- This prevents errors if the user tries to run it outside of tmux.
+    local tmux_status = vim.fn.system('tmux display-message -p "#S"')
+    if tmux_status:match('no server running') then
+        vim.notify("Error: tmux is not running. Cannot restart Slime target.", vim.log.levels.ERROR)
+        return
     end
-  else
-    vim.notify("No previous Slime pane found to close.", vim.log.levels.INFO)
-  end
 
-  -- use our repl function
-  SlimeOpenPythonREPL25V();
+    -- 6. Close the old pane (if it exists).
+    if vim.g.slime_tmux_target then
+        -- Check if the old pane still exists before trying to kill it.
+        -- This prevents error messages from tmux if it was already closed.
+        local pane_exists_check = vim.fn.system(string.format('tmux has-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
+        if pane_exists_check:match('no such pane') then
+            vim.notify("Old Slime pane (" .. vim.g.slime_tmux_target .. ") not found or already closed.",
+                vim.log.levels.INFO)
+        else
+            -- Kill the old pane. Redirect stderr to /dev/null to suppress any minor warnings.
+            vim.fn.system(string.format('tmux kill-pane -t %s 2>/dev/null', vim.g.slime_tmux_target))
+            vim.notify("Closed old Slime pane: " .. vim.g.slime_tmux_target, vim.log.levels.INFO)
+        end
+    else
+        vim.notify("No previous Slime pane found to close.", vim.log.levels.INFO)
+    end
 
+    -- use our repl function
+    SlimeOpenPythonREPL25V();
+end
+
+local SlimeRestartAndSend = function()
+    -- Restart the Slime target and send the current file to it.
+    SlimeRestart()       -- Restart the target first
+    vim.cmd('SlimeSend') -- Send the current file to the REPL
 end
 
 -- Create a user command that can be called with :SlimeRestart from Neovim.
+vim.api.nvim_create_user_command('SlimeClose', SlimeClose, {})
+vim.keymap.set('n', '<Leader>sq', ':SlimeClose<CR>', { desc = 'Close Slime Target' })
+
 vim.api.nvim_create_user_command('SlimeRestart', SlimeRestart, {})
 vim.keymap.set('n', '<Leader>sr', ':SlimeRestart<CR>', { desc = 'Restart Slime Target' })
 
+vim.api.nvim_create_user_command('SlimeRestartAndSend', SlimeRestartAndSend, {})
+vim.keymap.set('n', '<Leader>so', ':SlimeRestartAndSend<CR>', { desc = 'Restart Slime Target and send file' })
 
 -- Keymaps
 -- @hey: we need a :SlimeRestart
@@ -93,6 +138,8 @@ vim.api.nvim_set_keymap('n', '<leader>vc', "<cmd>SlimeConfig<cr>",
 vim.api.nvim_set_keymap('n', '<leader>sc', "<Plug>SlimeSendCell<BAR>/^# %%<CR>",
     { noremap = true, silent = true, desc = 'Slime send cell' })
 vim.api.nvim_set_keymap('n', '<leader>ss', ':SlimeSend<CR>',
+    { noremap = true, silent = true, desc = 'Send visual selection or current line to REPL' })
+vim.api.nvim_set_keymap('n', '<C-l>', ':SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection or current line to REPL' })
 vim.api.nvim_set_keymap('v', '<leader>sv', '<esc>:SlimeRegionSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection to REPL' })
