@@ -13,7 +13,7 @@ require("telescope").setup({
         -- @hey, this ignore is set because
         -- we were searching through giant jsons???
         file_ignore_patterns = {
-            "*.json","*.xml","*.vtk",
+            "*.json", "*.xml", "*.vtk", "bak/.*",
         },
         color_devicons = true,
         devicons = require("nvim-web-devicons"),
@@ -35,7 +35,12 @@ vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 
 -- rip grep  through files
 vim.keymap.set('n', '<leader>ps', function()
-    builtin.grep_string({ search = vim.fn.input("Grep > ") });
+  builtin.grep_string({
+    search = vim.fn.input("Grep > "),
+    additional_args = function(args)
+      return vim.list_extend(args, { "--glob", "!.bak/*", "--glob", "!bak/*" })
+    end,
+  })
 end)
 
 -- extensions

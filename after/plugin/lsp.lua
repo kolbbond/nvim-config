@@ -32,7 +32,9 @@ require("lspconfig").matlab_ls.setup({
 -- clangd
 require("lspconfig").clangd.setup({
     -- auto-insert headers is annoying
-    cmd = { "clangd", "--header-insertion=never", }
+    cmd = { "clangd", "--header-insertion=never", },
+    -- Add the exclude pattern here
+    exclude_patterns = { "bak/*", "bak/**/*" },
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
 });
 

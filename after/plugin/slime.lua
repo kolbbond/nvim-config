@@ -8,7 +8,9 @@ vim.g.slime_bracketed_paste = 1
 
 -- set slime connect command and specified interpreter
 --vim.g.slime_tmux_target = new_pane_id
+-- @hey: how can we configure this as a function
 python_exec = 'ipython3'
+--python_exec = 'python3'
 vim.g.slime_restart_repl_command = python_exec
 vim.g.slime_new_pane_command = 'tmux split-window -h -p 40 -P -F "#{pane_id}" ' .. python_exec;
 -- vim.g.slime_restart_repl_command = 'source ~/.venv/myproject/bin/activate && python'
