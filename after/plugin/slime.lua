@@ -133,17 +133,28 @@ vim.keymap.set('n', '<Leader>so', ':SlimeRestartAndSend<CR>', { desc = 'Restart 
 -- open and config keymaps
 vim.api.nvim_set_keymap('n', '<leader>vp', ':lua SlimeOpenPythonREPL25V()<CR>',
     { noremap = true, silent = true, desc = 'Open Python REPL in 25% tmux split' })
+
 vim.api.nvim_set_keymap('n', '<leader>vc', "<cmd>SlimeConfig<cr>",
     { noremap = true, silent = true, desc = 'SlimeConfig' })
 
 -- keymaps to send
-vim.api.nvim_set_keymap('n', '<leader>sc', "<Plug>SlimeSendCell<BAR>/^# %%<CR>",
+vim.api.nvim_set_keymap('n', '<leader>sc', "<Plug>SlimeSendCell<BAR>/^# %%<CR>'''",
     { noremap = true, silent = true, desc = 'Slime send cell' })
+
 vim.api.nvim_set_keymap('n', '<leader>ss', ':SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection or current line to REPL' })
+
 vim.api.nvim_set_keymap('n', '<C-l>', ':SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection or current line to REPL' })
+
 vim.api.nvim_set_keymap('v', '<leader>sv', '<esc>:SlimeRegionSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection to REPL' })
+
 vim.api.nvim_set_keymap('n', '<leader>sf', ':%SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send current file to REPL' })
+
+vim.api.nvim_set_keymap('n', '<leader>sp', ':1,.SlimeSend<CR>',
+    { noremap = true, silent = true, desc = 'Send file to cursor to REPL' })
+
+--
+
