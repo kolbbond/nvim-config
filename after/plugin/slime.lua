@@ -137,10 +137,16 @@ vim.api.nvim_set_keymap('n', '<leader>vp', ':lua SlimeOpenPythonREPL25V()<CR>',
 vim.api.nvim_set_keymap('n', '<leader>vc', "<cmd>SlimeConfig<cr>",
     { noremap = true, silent = true, desc = 'SlimeConfig' })
 
--- keymaps to send
-vim.api.nvim_set_keymap('n', '<leader>sc', "<Plug>SlimeSendCell<BAR>/^# %%<CR>'''",
-    { noremap = true, silent = true, desc = 'Slime send cell' })
+-- send cell and return to cursor
+--vim.api.nvim_set_keymap('n', '<leader>sc', "<Plug>SlimeSendCell<BAR>/^# %%<CR>'''",
+--   { noremap = true, silent = true, desc = 'Slime send cell' })
+vim.keymap.set('n', '<leader>sc', function()
+  local pos = vim.api.nvim_win_get_cursor(0)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>SlimeSendCell", true, false, true), "n", true)
+  vim.api.nvim_win_set_cursor(0, pos)
+end, { desc = 'Slime send cell and return to cursor', silent = true })
 
+-- send visual selection
 vim.api.nvim_set_keymap('n', '<leader>ss', ':SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send visual selection or current line to REPL' })
 
@@ -157,4 +163,3 @@ vim.api.nvim_set_keymap('n', '<leader>sp', ':1,.SlimeSend<CR>',
     { noremap = true, silent = true, desc = 'Send file to cursor to REPL' })
 
 --
-

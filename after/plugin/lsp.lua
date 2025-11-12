@@ -49,6 +49,7 @@ require("lspconfig").arduino_language_server.setup({
 --require("lspconfig").hyprls.setup({});
 
 require("lspconfig").pylsp.setup({
+    timeout = 10000,
 });
 
 -- lua
