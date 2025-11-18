@@ -40,6 +40,8 @@ require("todo-comments").setup(
             ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- don't worry about it
             ["LOL"] = { icon = "🤣", color = "#f0a000", alt = { "lol" } }, -- lmao even
             ["DONE"] = { icon = "✅", color = "info", alt = { "done" } },
+            ["GRUG"] = { icon = "🦴", color = "info", alt = { "grug" } },
+            ["ICE"] = { icon = "🏒", color = "info", alt = { "ice" } },
 
 
         },
