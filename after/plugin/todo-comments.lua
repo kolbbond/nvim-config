@@ -15,6 +15,7 @@
 -- JVN:
 -- lol:
 -- @done:
+-- @grug:
 
 -- use :Telescope symbols to show possible symbols
 require("todo-comments").setup(
@@ -40,7 +41,7 @@ require("todo-comments").setup(
             ["JVN"] = { icon = "😈", color = "#d000d0", alt = { "jvn" } }, -- don't worry about it
             ["LOL"] = { icon = "🤣", color = "#f0a000", alt = { "lol" } }, -- lmao even
             ["DONE"] = { icon = "✅", color = "info", alt = { "done" } },
-            ["GRUG"] = { icon = "🦴", color = "info", alt = { "grug" } },
+            ["GRUG"] = { icon = "🦴", color = "#ff00ff", alt = { "grug" } },
             ["ICE"] = { icon = "🏒", color = "info", alt = { "ice" } },
 
 

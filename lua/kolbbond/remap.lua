@@ -73,6 +73,10 @@ vim.keymap.set("n", "<leader>lf", function()
     vim.cmd("e!")
 end);
 
+vim.keymap.set("n", "<leader>lr", function()
+    vim.cmd("LspRestart")
+end);
+
 -- copy file paths/directories to clipboard
 vim.keymap.set("n", "<leader>cfp", "<cmd>let @+=expand(\"%:p\")<CR>")
 vim.keymap.set("n", "<leader>crp", "<cmd>let @+=expand(\"%\")<CR>")
