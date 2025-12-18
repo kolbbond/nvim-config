@@ -171,4 +171,30 @@ vim.keymap.set("n", "<leader>qf", QF_toggle, { desc = "toggle quickfix" })
 --  endfor
 --  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
 --endfunction- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
-----]]
+
+-- Store settings in a table (persistent for the session)
+local tmux_config = {
+    target = "build:1", -- Default session:window
+    cmd = "make"        -- Default command
+}
+
+vim.keymap.set('n', '<leader>mt', function()
+    vim.ui.input({ prompt = 'Target (session:window): ', default = tmux_config.target }, function(t)
+        if not t or t == "" then return end
+        tmux_config.target = t
+
+        vim.ui.input({ prompt = 'Command: ', default = tmux_config.cmd }, function(c)
+            if not c or c == "" then return end
+            tmux_config.cmd = c
+            print(string.format("Stored: %s -> %s", tmux_config.cmd, tmux_config.target))
+        end)
+    end)
+end, { desc = 'Configure Tmux target and command' })
+
+vim.keymap.set('n', '<leader>mn', function()
+    local full_shell_cmd = string.format('tmux send-keys -t %s "%s" C-m', tmux_config.target, tmux_config.cmd)
+
+    vim.fn.system(full_shell_cmd)
+
+    print("Sent " .. tmux_config.cmd .. " to " .. tmux_config.target)
+end, { desc = 'Send stored command to Tmux' })
