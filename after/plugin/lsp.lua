@@ -17,8 +17,7 @@ require('mason-lspconfig').setup({
 
 -- matlab lsp
 -- set Matlab_ROOT_DIR as cmake also uses this environment variable??
--- @hey:, or is this just cmake internal variable?
-require("lspconfig").matlab_ls.setup({
+vim.lsp.config("matlab_ls.setup", {
     settings = {
         MATLAB = {
             indexWorkspace = true,
@@ -28,32 +27,44 @@ require("lspconfig").matlab_ls.setup({
     },
     single_file_support = true,
 });
+--vim.lsp.enable("matlab_ls.setup");
 
 -- clangd
-require("lspconfig").clangd.setup({
+vim.lsp.config("clangd", {
     -- auto-insert headers is annoying
     cmd = { "clangd", "--header-insertion=never", },
     -- Add the exclude pattern here
     exclude_patterns = { "bak/*", "bak/**/*" },
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
 });
+vim.lsp.enable("clangd");
 
---[[
-require("lspconfig").arduino_language_server.setup({
-    filetypes = { 'ino', 'cpp' },
-});
---]]
-
-
--- hyprls
---require("lspconfig").hyprls.setup({});
-
-require("lspconfig").pylsp.setup({
+-- python
+vim.lsp.config("pylsp", {
     timeout = 10000,
-});
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    enabled = true, -- easiest: turn it off completely
+                    ignore = { "E302", "E305" }
+                },
+            },
+        },
+    },
+
+    on_attach = function(_, bufnr)
+        vim.keymap.set({ "n", "v" }, "<C-l>", "<cmd>SlimeSend<CR>", {
+            buffer = bufnr,
+            silent = true,
+            desc = "Send to REPL (pylsp attached)",
+        })
+    end,
+})
+vim.lsp.enable("pylsp")
 
 -- lua
-require("lspconfig").lua_ls.setup({
+vim.lsp.config("lua_ls", {
     settings =
     {
         Lua = {
@@ -69,13 +80,7 @@ require("lspconfig").lua_ls.setup({
         }
     }
 });
-
--- bash
---require("lspconfig").bashls.setup({});
---require("lspconfig").fortls.setup({});
-
--- debug options
---vim.lsp.set_log_level("debug");
+vim.lsp.enable("lua_ls");
 
 -- keymaps
 -- this is navigation in the lsp buffer list
@@ -137,4 +142,16 @@ vim.keymap.set("n", "<leader>af", function()
 end)
 
 -- End
+lsp.setup();
+
+--[[
+require("lspconfig").arduino_language_server.setup({
+    filetypes = { 'ino', 'cpp' },
+});
+--]]
+
+
+-- hyprls
+--require("lspconfig").hyprls.setup({});
+
 lsp.setup();

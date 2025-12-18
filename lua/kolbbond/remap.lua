@@ -73,9 +73,14 @@ vim.keymap.set("n", "<leader>lf", function()
     vim.cmd("e!")
 end);
 
+-- lsp restart
 vim.keymap.set("n", "<leader>lr", function()
     vim.cmd("LspRestart")
 end);
+
+-- save all
+vim.keymap.set("n", "<leader>wa", "<cmd>wall<cr>", { desc = "Write all buffers" })
+
 
 -- copy file paths/directories to clipboard
 vim.keymap.set("n", "<leader>cfp", "<cmd>let @+=expand(\"%:p\")<CR>")
