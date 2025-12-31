@@ -195,8 +195,9 @@ return require('packer').startup(function(use)
     -- REPLS
 
     -- matlab
-    --use("kolbbond/nvim-matlab"); -- github version
-    use("~/.config/nvim/plugin/nvim-matlab"); -- local version
+    use("kolbbond/nvim-matlab"); -- github version
+    --use("~/.config/nvim/plugin/nvim-matlab"); -- local version
+    use('ziontee113/color-picker.nvim')
 
     -- iron (REPL)
     -- for python and octave atm
@@ -243,11 +244,8 @@ return require('packer').startup(function(use)
     use("luisiacc/gruvbox-baby");
     use("sainnhe/gruvbox-material");
 
-    -- rose pine theme
-    --use("rose-pine/neovim");
-
-    --use("norcalli/nvim-colorizer.lua");
-
+    use("rose-pine/neovim");
+    use("norcalli/nvim-colorizer.lua");
     use("slugbyte/lackluster.nvim");
 
     -- colorbuddy
