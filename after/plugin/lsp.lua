@@ -32,7 +32,7 @@ vim.lsp.config("matlab_ls.setup", {
 -- clangd
 vim.lsp.config("clangd", {
     -- auto-insert headers is annoying
-    cmd = { "clangd", "--header-insertion=never", },
+    cmd = { "clangd", "--header-insertion=never", "--clang-tidy" },
     -- Add the exclude pattern here
     exclude_patterns = { "bak/*", "bak/**/*" },
     --root_files = {vim.env.CLANG_FORMAT}, -- use custom clang format
