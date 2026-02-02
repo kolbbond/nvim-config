@@ -79,7 +79,7 @@ vim.keymap.set("n", "<leader>lr", function()
 end);
 
 -- save all
-vim.keymap.set("n", "<leader>wa", "<cmd>wall<cr>", { desc = "Write all buffers" })
+vim.keymap.set("n", "<leader>wa", "<cmd>wall<cr><cmd>w<cr>", { desc = "Write all buffers" })
 
 
 -- copy file paths/directories to clipboard
@@ -177,10 +177,11 @@ vim.keymap.set("n", "<leader>qf", QF_toggle, { desc = "toggle quickfix" })
 --  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
 --endfunction- do a ripgrep <leader>ps then <C-q> to put in quickfix then :cdo s/foo/bar
 
+--------------------------------------------------------
 -- Store settings in a table (persistent for the session)
 local tmux_config = {
-    target = "build:1", -- Default session:window
-    cmd = "make"        -- Default command
+    target = "0:1", -- Default session:window
+    cmd = "make"    -- Default command
 }
 
 vim.keymap.set('n', '<leader>mt', function()

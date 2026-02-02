@@ -10,10 +10,9 @@ require("telescope").setup({
             i = {
             }
         },
-        -- @hey, this ignore is set because
         -- we were searching through giant jsons???
         file_ignore_patterns = {
-            "*.json", "*.xml", "*.vtk", "bak/.*","external/*",
+            "*.json", "*.xml", "*.vtk", "bak/.*","m.css",
         },
         color_devicons = true,
         devicons = require("nvim-web-devicons"),
