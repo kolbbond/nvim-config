@@ -1,2 +1,1 @@
-
-print("copilot.lua")
+-- copilot config (setup is in lua/plugins/lsp.lua)

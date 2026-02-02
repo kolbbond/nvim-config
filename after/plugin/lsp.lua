@@ -1,12 +1,17 @@
-local lsp = require("lsp-zero");
+local ok, lsp = pcall(require, "lsp-zero")
+if not ok then return end
 
 lsp.preset("recommended");
 
 --vim.o.winborder = "rounded"
 
 -- mason is how we setup lsp
-require('mason').setup({})
-require('mason-lspconfig').setup({
+local mason_ok, mason = pcall(require, 'mason')
+if not mason_ok then return end
+mason.setup({})
+local mason_lsp_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
+if not mason_lsp_ok then return end
+mason_lspconfig.setup({
     ensure_installed = { 'clangd', 'lua_ls', 'pylsp'
         --'matlab_ls',
     },

@@ -1,6 +1,6 @@
 -- kolbbond init.lua
 --
 require("kolbbond.remap");
-require("kolbbond.packer");
+require("config.lazy");
 require("kolbbond.set");
 

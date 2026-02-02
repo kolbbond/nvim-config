@@ -45,3 +45,6 @@ end)
 
 -- extensions
 -- require('telescope').load_extension('tmuxinator')
+
+-- project.nvim integration
+vim.keymap.set('n', '<leader>fp', ':Telescope projects<CR>', { desc = "Find projects" })
