@@ -4,7 +4,7 @@ return {
     -- Telescope - Fuzzy finder
     {
         "nvim-telescope/telescope.nvim",
-        version = "0.1.6",
+        --version = "0.1.6",
         dependencies = { "nvim-lua/plenary.nvim" },
     },
 
@@ -82,7 +82,7 @@ return {
     -- noice.nvim - Better UI for messages, cmdline, popupmenu
     {
         "folke/noice.nvim",
-        enabled = false,  -- disabled by default, set to true to enable
+        enabled = false, -- disabled by default, set to true to enable
         event = "VeryLazy",
         dependencies = {
             "MunifTanjim/nui.nvim",
@@ -105,7 +105,7 @@ return {
             },
         },
         keys = {
-            { "<leader>nl", "<cmd>Noice last<cr>", desc = "Noice last message" },
+            { "<leader>nl", "<cmd>Noice last<cr>",    desc = "Noice last message" },
             { "<leader>nh", "<cmd>Noice history<cr>", desc = "Noice history" },
             { "<leader>nd", "<cmd>Noice dismiss<cr>", desc = "Dismiss notifications" },
         },
@@ -174,10 +174,10 @@ return {
         event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {
-            { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
-            { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
-            { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick buffer" },
-            { "<leader>bc", "<cmd>BufferLinePickClose<cr>", desc = "Pick close buffer" },
+            { "<S-h>",      "<cmd>BufferLineCyclePrev<cr>",   desc = "Prev buffer" },
+            { "<S-l>",      "<cmd>BufferLineCycleNext<cr>",   desc = "Next buffer" },
+            { "<leader>bp", "<cmd>BufferLinePick<cr>",        desc = "Pick buffer" },
+            { "<leader>bc", "<cmd>BufferLinePickClose<cr>",   desc = "Pick close buffer" },
             { "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close other buffers" },
         },
         opts = {
@@ -227,6 +227,7 @@ return {
     -- Aerial - Code outline sidebar
     {
         "stevearc/aerial.nvim",
+        enabled = false,
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",

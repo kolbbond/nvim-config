@@ -36,9 +36,7 @@ vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', function()
   builtin.grep_string({
     search = vim.fn.input("Grep > "),
-    additional_args = function(args)
-      return vim.list_extend(args, { "--glob", "!.bak/*", "--glob", "!bak/*" })
-    end,
+    additional_args = { "--glob", "!.bak/*", "--glob", "!bak/*" },
   })
 end)
 

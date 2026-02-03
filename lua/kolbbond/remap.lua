@@ -3,8 +3,8 @@
 -- make space the "<leader>" key
 vim.g.mapleader = " "
 
--- project viewer (telescope)
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+-- project viewer (netrw file explorer)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)
 
 -- reset screen to center
 -- while paging up/down
