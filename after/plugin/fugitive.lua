@@ -1,6 +1,6 @@
 -- Fugitive keymaps
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Git status" })
-vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>", { desc = "Git diff split" })
+vim.keymap.set("n", "<leader>gD", ":Gdiffsplit<CR>", { desc = "Git diff split" })
 vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame" })
 vim.keymap.set("n", "<leader>gl", ":Git log --oneline<CR>", { desc = "Git log" })
 vim.keymap.set("n", "<leader>gL", ":Git log -p %<CR>", { desc = "Git log current file" })

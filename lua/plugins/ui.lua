@@ -179,6 +179,7 @@ return {
             { "<leader>bp", "<cmd>BufferLinePick<cr>",        desc = "Pick buffer" },
             { "<leader>bc", "<cmd>BufferLinePickClose<cr>",   desc = "Pick close buffer" },
             { "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close other buffers" },
+            { "<leader>bd", "<cmd>bdelete<cr>",               desc = "Close current buffer" },
         },
         opts = {
             options = {
@@ -187,6 +188,18 @@ return {
                 offsets = {
                     { filetype = "neo-tree", text = "Files", highlight = "Directory" },
                 },
+            },
+            highlights = {
+                buffer_selected = { italic = false },
+                diagnostic_selected = { italic = false },
+                hint_selected = { italic = false },
+                hint_diagnostic_selected = { italic = false },
+                info_selected = { italic = false },
+                info_diagnostic_selected = { italic = false },
+                warning_selected = { italic = false },
+                warning_diagnostic_selected = { italic = false },
+                error_selected = { italic = false },
+                error_diagnostic_selected = { italic = false },
             },
         },
     },

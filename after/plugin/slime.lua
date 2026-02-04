@@ -8,11 +8,24 @@ vim.g.slime_bracketed_paste = 1
 
 -- set slime connect command and specified interpreter
 --vim.g.slime_tmux_target = new_pane_id
--- @hey: how can we configure this as a function
-python_exec = 'ipython3'
---python_exec = 'python3'
-vim.g.slime_restart_repl_command = python_exec
-vim.g.slime_new_pane_command = 'tmux split-window -h -p 40 -P -F "#{pane_id}" ' .. python_exec;
+
+-- Build the command to open ipython, using active venv if available
+local function get_python_repl_command()
+    local venv = os.getenv("VIRTUAL_ENV")
+    if venv and venv ~= "" then
+        -- Use venv's ipython, with fallback to python -m IPython if ipython not installed
+        return string.format('source "%s/bin/activate" && ipython', venv)
+    else
+        return 'ipython3'
+    end
+end
+
+vim.g.slime_restart_repl_command = get_python_repl_command()
+
+-- Generate the tmux split command dynamically
+local function get_slime_pane_command()
+    return 'tmux split-window -h -p 40 -P -F "#{pane_id}" bash -c \'' .. get_python_repl_command() .. '\''
+end
 -- vim.g.slime_restart_repl_command = 'source ~/.venv/myproject/bin/activate && python'
 
 -- opens a tmux pane and connect slime (AI assisted))
@@ -23,8 +36,8 @@ function SlimeOpenPythonREPL25V()
     -- Create a new vertical pane, % width, and run ipython
     -- The -d flag runs it in the background, so you stay in current pane.
     -- The -P flag prints the pane_id of the new pane.
-    -- @hey: add a configurable python version command
-    local new_pane_id = vim.fn.system(vim.g.slime_new_pane_command)
+    -- Uses active venv if available
+    local new_pane_id = vim.fn.system(get_slime_pane_command())
     new_pane_id = vim.fn.trim(new_pane_id) -- Remove any trailing newline/whitespace
 
     if new_pane_id ~= '' then
