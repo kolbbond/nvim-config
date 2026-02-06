@@ -11,15 +11,18 @@ return {
     { "jpalardy/vim-slime" },
 
     -- Molten - Jupyter-style code execution in Neovim
+    -- NOTE: Cannot be lazy-loaded (remote plugin limitation)
     {
         "benlubas/molten-nvim",
         build = ":UpdateRemotePlugins",
+        lazy = false,
         dependencies = {
             "3rd/image.nvim",
         },
     },
 
     -- Image rendering (for molten output)
+    -- NOTE: Requires kitty graphics protocol (use WezTerm, not Windows Terminal)
     {
         "3rd/image.nvim",
         opts = {
@@ -37,5 +40,14 @@ return {
     {
         "kiyoon/jupynium.nvim",
         build = "pip install --user jupynium",
+        opts = {
+            -- Snap Firefox can't share profiles with geckodriver.
+            firefox_profiles_ini_path = nil,
+            firefox_profile_name = nil,
+            default_notebook_URL = "localhost:8888",
+            -- We define our own keymaps in after/plugin/jupynium.lua
+            use_default_keybindings = false,
+            textobjects = { use_default_keybindings = false },
+        },
     },
 }
