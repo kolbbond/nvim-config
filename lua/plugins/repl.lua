@@ -40,11 +40,24 @@ return {
     {
         "kiyoon/jupynium.nvim",
         build = "pip install --user jupynium",
+        init = function()
+            -- Snap Firefox can't access /tmp profiles from geckodriver.
+            -- Point TMPDIR to home so Snap can reach it.
+            local tmpdir = vim.fn.expand("~/.cache/geckodriver-tmp")
+            vim.fn.mkdir(tmpdir, "p")
+            vim.env.TMPDIR = tmpdir
+        end,
         opts = {
             -- Snap Firefox can't share profiles with geckodriver.
             firefox_profiles_ini_path = nil,
             firefox_profile_name = nil,
             default_notebook_URL = "localhost:8888",
+            notebook_dir = "~/notebooks",
+            autoscroll = {
+                enable = true,
+                mode = "always",
+                cell = { top_margin_percent = 20 },
+            },
             -- We define our own keymaps in after/plugin/jupynium.lua
             use_default_keybindings = false,
             textobjects = { use_default_keybindings = false },
