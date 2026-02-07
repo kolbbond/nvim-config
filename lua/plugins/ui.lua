@@ -181,6 +181,15 @@ return {
             { "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", desc = "Close other buffers" },
             { "<leader>bd", "<cmd>bdelete<cr>",               desc = "Close current buffer" },
         },
+        init = function()
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "netrw",
+                callback = function()
+                    vim.keymap.set("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { buffer = true, desc = "Prev buffer" })
+                    vim.keymap.set("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { buffer = true, desc = "Next buffer" })
+                end,
+            })
+        end,
         opts = {
             options = {
                 diagnostics = "nvim_lsp",
@@ -210,7 +219,7 @@ return {
         event = "VeryLazy",
         opts = {
             cursor = { timing = function(_, n) return 150 / n end },
-            scroll = { timing = function(_, n) return 100 / n end },
+            scroll = { enable = false },
             resize = { enable = false },
             open = { enable = false },
             close = { enable = false },

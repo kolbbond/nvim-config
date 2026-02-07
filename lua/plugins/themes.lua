@@ -25,6 +25,7 @@ return {
                     ["@string"] = { fg = "#646a20", italic = true },
                     ["@constant.builtin"] = { fg = "#bb55bb" },
                     ["@function.builtin"] = { fg = "#a18a20" },
+                    cStorageClass = { fg = "#882206", bold = true },
                 },
                 palette_overrides = {
                     dark0_hard = "#1d1a1a",
