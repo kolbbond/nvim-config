@@ -23,6 +23,9 @@ map({ "n", "x" }, "<leader>juo", "<cmd>JupyniumToggleSelectedCellsOutputsScroll<
 map("n", "<leader>jud", "<cmd>JupyniumDownloadIpynb<cr>", "Jupynium download .ipynb")
 map("n", "<leader>jut", "<cmd>JupyniumShortsightedToggle<cr>", "Jupynium toggle shortsighted")
 
+-- Run entire file (select all cells then execute)
+map("n", "<leader>juR", "ggVG<cmd>JupyniumExecuteSelectedCells<cr><esc>", "Jupynium run entire file")
+
 -- Cell navigation (these are short since you use them a lot)
 map({ "n", "x", "o" }, "]j", "<cmd>lua require'jupynium.textobj'.goto_next_cell_separator()<cr>", "Next Jupynium cell")
 map({ "n", "x", "o" }, "[j", "<cmd>lua require'jupynium.textobj'.goto_previous_cell_separator()<cr>", "Prev Jupynium cell")
