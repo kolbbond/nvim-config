@@ -69,7 +69,8 @@ return {
         config = function()
             require("project_nvim").setup({
                 detection_methods = { "lsp", "pattern" },
-                patterns = { ".git", "Makefile", "CMakeLists.txt", "package.json" },
+                patterns = { ".git", "Makefile", "package.json" },
+                silent_chdir = false,
             })
             -- Telescope integration
             local ok, telescope = pcall(require, "telescope")
@@ -171,6 +172,7 @@ return {
     -- bufferline - Tab bar for buffers
     {
         "akinsho/bufferline.nvim",
+        enabled = false,
         event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = {

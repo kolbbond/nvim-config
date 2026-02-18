@@ -2,7 +2,8 @@
 
 return {
     -- MATLAB (custom fork)
-    { "kolbbond/nvim-matlab" },
+    -- NOTE: Remote plugin — must not be lazy-loaded
+    { "kolbbond/nvim-matlab", lazy = false },
 
     -- Iron - REPL for Python/Octave
     { "Vigemus/iron.nvim" },
