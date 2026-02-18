@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd("User", {
 -- require("colors")
 
 -- require lazy
---require("config.lazy")
+require("config.lazy")
 mymsg = "✅ Neovim loaded ✅";
 vim.schedule(function()
     vim.api.nvim_echo({ { mymsg } }, false, {})
