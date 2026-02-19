@@ -24,7 +24,13 @@ vim.keymap.set("n", "J", "mzJ'z");
 
 -- greatest remap ever - primeagen
 -- deletes to void register, preserves paste
-vim.keymap.set("x", "<leader>p", "\"_dP");
+vim.keymap.set("x", "<leader>p", function()
+    if vim.fn.mode() == "V" then
+        return '"_dp'
+    else
+        return '"_dP'
+    end
+end, { expr = true });
 
 -- yanks to system clipboard "+ register"
 vim.keymap.set("n", "<leader>y", "\"+y");
