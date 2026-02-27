@@ -1,9 +1,6 @@
-local dap, dapui = require('dap'), require("dapui");
-
--- @hey: check if dap is installed
-
-use_dap = true;
-if use_dap then
+local dap_ok, dap = pcall(require, 'dap')
+local dapui_ok, dapui = pcall(require, 'dapui')
+if not (dap_ok and dapui_ok) then return end
     -- adapters
 
     -- gdb for c/c++
@@ -35,7 +32,10 @@ if use_dap then
     }
 
     -- python setup
-    require("dap-python").setup(os.getenv("HOME") .. ".virtualenvs/debugpy/bin/python -m debugpy");
+    local dap_python_ok, dap_python = pcall(require, "dap-python")
+    if dap_python_ok then
+        dap_python.setup(os.getenv("HOME") .. ".virtualenvs/debugpy/bin/python -m debugpy")
+    end
 
     -- lua
     dap.adapters["local-lua"] = {
@@ -159,7 +159,9 @@ require("lazydev").setup({
         },
     }
 
-    require('nvim-dap-virtual-text').setup {
+    local vt_ok, dap_vt = pcall(require, 'nvim-dap-virtual-text')
+    if vt_ok then
+    dap_vt.setup {
         --    dap_virtual_text_status.setup({
         enabled = true,                    -- enable this plugin (the default)
         enabled_commands = true,           -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
@@ -177,9 +179,7 @@ require("lazydev").setup({
         virt_text_win_col = nil            -- position the virtual text at a fixed window column (starting from the first text column) ,
         -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
     }
-
-
-
+    end
 
     -- dap ui
     dap.listeners.before.attach.dapui_config = function()
@@ -289,9 +289,10 @@ require("neodev").setup({
     -- control how dap runs threads (if false allows multiple threads to stop)
     dap.defaults.fallback.auto_continue_if_many_stopped = true;
 
-    require("lazydev").setup({
-        library = { "nvim-dap-ui" },
-    })
+    local lazydev_ok, lazydev = pcall(require, "lazydev")
+    if lazydev_ok then
+        lazydev.setup({ library = { "nvim-dap-ui" } })
+    end
 
     --[[
 -- neotest
@@ -323,4 +324,3 @@ dap.listeners.before.event_terminated['dapui_config'] = function(e)
     dapui.close()
 end
 ]]
-end
