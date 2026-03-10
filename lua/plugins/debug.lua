@@ -4,6 +4,7 @@ return {
     -- DAP - Debug Adapter Protocol
     {
         "mfussenegger/nvim-dap",
+        cond = function() return vim.fn.executable("gdb") == 1 or vim.fn.executable("codelldb") == 1 end,
         dependencies = {
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
@@ -14,6 +15,7 @@ return {
     -- DAP UI
     {
         "rcarriga/nvim-dap-ui",
+        cond = function() return vim.fn.executable("gdb") == 1 or vim.fn.executable("codelldb") == 1 end,
         dependencies = {
             "mfussenegger/nvim-dap",
             "nvim-neotest/nvim-nio",
