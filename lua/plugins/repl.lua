@@ -17,6 +17,7 @@ return {
         "benlubas/molten-nvim",
         build = ":UpdateRemotePlugins",
         lazy = false,
+        cond = function() return vim.fn.executable("magick") == 1 end,
         dependencies = {
             "3rd/image.nvim",
         },
@@ -26,6 +27,7 @@ return {
     -- NOTE: Requires kitty graphics protocol (use WezTerm, not Windows Terminal)
     {
         "3rd/image.nvim",
+        cond = function() return vim.fn.executable("magick") == 1 end,
         opts = {
             backend = "kitty",
             max_width = 100,
