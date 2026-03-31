@@ -37,6 +37,13 @@ return {
     -- CTest telescope integration
     { "SGauvin/ctest-telescope.nvim" },
 
-    -- CMake tools
-    { "Civitasv/cmake-tools.nvim" },
+    -- CMake tools (lazy-load to avoid startup error with nvim_create_user_command)
+    {
+        "Civitasv/cmake-tools.nvim",
+        cmd = { "CMakeBuild", "CMakeRun", "CMakeDebug", "CMakeSelectBuildType", "CMakeSelectBuildTarget", "CMakeSelectLaunchTarget" },
+        config = function()
+            local ok, cmake = pcall(require, "cmake-tools")
+            if ok then cmake.setup({}) end
+        end,
+    },
 }

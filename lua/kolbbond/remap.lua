@@ -84,6 +84,20 @@ vim.keymap.set("n", "<leader>lr", function()
     vim.cmd("LspRestart")
 end);
 
+-- copy error messages to clipboard
+vim.keymap.set("n", "<leader>me", function()
+    local err = vim.v.errmsg
+    if err and err ~= "" then
+        vim.fn.setreg("+", err)
+        vim.notify("Copied last error to clipboard")
+    else
+        -- fallback: grab all messages
+        local msgs = vim.fn.execute("messages")
+        vim.fn.setreg("+", msgs)
+        vim.notify("Copied messages to clipboard")
+    end
+end, { desc = "Copy error/messages to clipboard" })
+
 -- save all
 vim.keymap.set("n", "<leader>wa", "<cmd>wall<cr><cmd>w<cr>", { desc = "Write all buffers" })
 
