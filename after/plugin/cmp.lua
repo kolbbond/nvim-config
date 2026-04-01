@@ -1,50 +1,66 @@
-local ok, cmp = pcall(require, "cmp")
+local ok, blink = pcall(require, "blink.cmp")
 if not ok then return end
 
-local has_words_before = function()
-    if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-end
+blink.setup({
+    snippets = { preset = 'luasnip' },
 
--- setup
-cmp.setup {
+    keymap = {
+        preset = 'none',
+        ['<C-n>'] = { 'select_next', 'fallback' },
+        ['<C-p>'] = { 'select_prev', 'fallback' },
+        ['<C-y>'] = { 'accept', 'fallback' },
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ['<C-space>'] = { 'show', 'fallback' },
+        ['<C-e>'] = { 'cancel', 'fallback' },
+        ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+        ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+    },
+
     sources = {
-        -- Copilot Source
-        { name = "copilot",  group_index = 2 },
-        -- Other Sources
-        { name = "nvim_lsp", group_index = 2 },
-        { name = "path",     group_index = 2 },
-        { name = "luasnip",  group_index = 2 },
+        default = { 'copilot', 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+            copilot = {
+                name = "copilot",
+                module = "blink-cmp-copilot",
+                score_offset = 100,
+                async = true,
+            },
+        },
     },
 
-    mapping = {
-        ["<Tab>"] = vim.schedule_wrap(function(fallback)
-            if cmp.visible() and has_words_before() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            else
-                fallback()
-            end
-        end),
+    cmdline = {
+        enabled = true,
+        keymap = { preset = 'cmdline' },
+        sources = { 'cmdline', 'path' },
+        completion = {
+            menu = { auto_show = true },
+            ghost_text = { enabled = true },
+        },
     },
-}
 
--- `:` cmdline setup.
-cmp.setup.cmdline(':', {
-    -- C-n/C-p cycle through completions if a character has been typed and through
-    -- command history if not (from https://www.reddit.com/r/neovim/comments/v5pfmy/comment/ibb61w3/)
-    mapping = cmp.mapping.preset.cmdline({
-        ["<C-n>"] = { c = cmp.mapping.select_next_item() },
-        ["<C-p>"] = { c = cmp.mapping.select_prev_item() },
-    }),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        {
-            name = 'cmdline',
-            option = {
-                ignore_cmds = { 'Man', '!' }
-            }
-        }
-    })
+    completion = {
+        menu = {
+            draw = {
+                columns = {
+                    { 'kind_icon' },
+                    { 'label', 'label_description', gap = 1 },
+                    { 'kind' },
+                },
+            },
+        },
+        documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 200,
+        },
+    },
+
+    appearance = {
+        nerd_font_variant = 'mono',
+        kind_icons = {
+            Copilot = "",
+        },
+    },
 })
+
+vim.api.nvim_set_hl(0, "BlinkCmpKindCopilot", { fg = "#6CC644" })

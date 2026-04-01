@@ -13,17 +13,20 @@ return {
             -- LSP Support
             { "neovim/nvim-lspconfig" },
 
-            -- Autocompletion
-            { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-path" },
+            -- Snippets
             { "L3MON4D3/LuaSnip" },
-            { "saadparwaiz1/cmp_luasnip" },
         },
     },
 
-    -- Command line completion
-    { "hrsh7th/cmp-cmdline" },
+    -- Autocompletion (blink.cmp)
+    {
+        "saghen/blink.cmp",
+        version = "1.*",
+        dependencies = {
+            "L3MON4D3/LuaSnip",
+            "giuxtaposition/blink-cmp-copilot",
+        },
+    },
 
     -- LSP kind icons
     { "onsails/lspkind.nvim" },
@@ -53,15 +56,8 @@ return {
         end,
     },
 
-    -- Copilot CMP integration
-    {
-        "zbirenbaum/copilot-cmp",
-        event = "InsertEnter",
-        dependencies = { "zbirenbaum/copilot.lua" },
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    },
+    -- Copilot CMP integration (via blink-cmp-copilot)
+    { "giuxtaposition/blink-cmp-copilot" },
 
     -- Minuet AI
     { "milanglacier/minuet-ai.nvim" },

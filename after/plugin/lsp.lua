@@ -87,19 +87,18 @@ vim.lsp.config("lua_ls", {
 });
 vim.lsp.enable("lua_ls");
 
--- keymaps
--- this is navigation in the lsp buffer list
-local cmp = require('cmp')
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-});
-cmp_action = require('lsp-zero').cmp_action();
-cmp.setup({
-    mapping = cmp_mappings
-})
+-- blink.cmp provides capabilities to LSP servers
+local blink_ok, blink = pcall(require, 'blink.cmp')
+if blink_ok then
+    local lspconfig = require('lspconfig')
+    local capabilities = blink.get_lsp_capabilities()
+    -- apply to all servers via lspconfig default
+    lspconfig.util.default_config = vim.tbl_deep_extend(
+        'force',
+        lspconfig.util.default_config,
+        { capabilities = capabilities }
+    )
+end
 
 -- sign icons
 -- try ':Telescope symbols' to select others
