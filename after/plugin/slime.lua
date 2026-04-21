@@ -13,8 +13,13 @@ vim.g.slime_bracketed_paste = 1
 local function get_python_repl_command()
     local venv = os.getenv("VIRTUAL_ENV")
     if venv and venv ~= "" then
-        -- Use venv's ipython, with fallback to python -m IPython if ipython not installed
-        return string.format('source "%s/bin/activate" && ipython', venv)
+        -- Use venv's ipython if available, otherwise fall back to python
+        local ipython_path = venv .. "/bin/ipython"
+        if vim.fn.filereadable(ipython_path) == 1 then
+            return string.format('source "%s/bin/activate" && ipython', venv)
+        else
+            return string.format('source "%s/bin/activate" && python', venv)
+        end
     else
         return 'ipython3'
     end
