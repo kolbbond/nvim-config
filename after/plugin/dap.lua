@@ -13,12 +13,14 @@ if not (dap_ok and dapui_ok) then return end
 
     }
 
-    dap.adapters.cppdbg = {
-        id = 'cppdbg',
-        type = 'executable',
-        --command = "/home/" .. os.getenv("USER") .. '/.vscode/extensions/ms-vscode.cpptools-1.22.11-linux-x64/debugAdapters/bin/OpenDebugAD7',
-        command = os.getenv("CPPDBG_ROOT") .. '/debugAdapters/bin/OpenDebugAD7',
-    }
+    local cppdbg_root = os.getenv("CPPDBG_ROOT")
+    if cppdbg_root then
+        dap.adapters.cppdbg = {
+            id = 'cppdbg',
+            type = 'executable',
+            command = cppdbg_root .. '/debugAdapters/bin/OpenDebugAD7',
+        }
+    end
 
     dap.adapters.codelldb = {
         type = 'server',
@@ -34,7 +36,10 @@ if not (dap_ok and dapui_ok) then return end
     -- python setup
     local dap_python_ok, dap_python = pcall(require, "dap-python")
     if dap_python_ok then
-        dap_python.setup(os.getenv("HOME") .. ".virtualenvs/debugpy/bin/python -m debugpy")
+        local debugpy_python = os.getenv("HOME") .. "/.virtualenvs/debugpy/bin/python"
+        if vim.fn.executable(debugpy_python) == 1 then
+            dap_python.setup(debugpy_python)
+        end
     end
 
     -- lua
@@ -42,14 +47,14 @@ if not (dap_ok and dapui_ok) then return end
         type = "executable",
         command = "node",
         args = {
-            (os.getenv("HOME") .. "build/local-lua-debugger-vscode/extension/debugAdapter.js")
+            (os.getenv("HOME") .. "/build/local-lua-debugger-vscode/extension/debugAdapter.js")
         },
         enrich_config = function(config, on_config)
             if not config["extensionPath"] then
                 local c = vim.deepcopy(config)
                 -- 💀 If this is missing or wrong you'll see
                 -- "module 'lldebugger' not found" errors in the dap-repl when trying to launch a debug session
-                c.extensionPath = (os.getenv("HOME") .. "build/local-lua-debugger-vscode/");
+                c.extensionPath = (os.getenv("HOME") .. "/build/local-lua-debugger-vscode/");
                 on_config(c)
             else
                 on_config(config)
