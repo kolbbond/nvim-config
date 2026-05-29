@@ -14,9 +14,9 @@ vim.g.slime_menu_config = 1
 vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 -- asyncrun autocmd
-local mymsg = "--- initializing ---";
+local init_msg = "--- initializing ---";
 vim.schedule(function()
-    vim.api.nvim_echo({ { mymsg } }, false, {})
+    vim.api.nvim_echo({ { init_msg } }, false, {})
 end)
 
 require("modules")
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("User", {
 
 -- require lazy
 require("config.lazy")
-mymsg = "✅ Neovim loaded ✅";
+local loaded_msg = "✅ Neovim loaded ✅";
 vim.schedule(function()
-    vim.api.nvim_echo({ { mymsg } }, false, {})
+    vim.api.nvim_echo({ { loaded_msg } }, false, {})
 end)
