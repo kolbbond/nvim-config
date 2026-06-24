@@ -5,6 +5,11 @@
 vim.g.slime_target = 'tmux'
 vim.g.slime_cell_delimiter = "# %%"
 vim.g.slime_bracketed_paste = 1
+-- Route multi-line python through ipython's %cpaste so indented blocks
+-- (loops/defs/if-bodies) actually execute. Without this, a bracketed paste of
+-- a block ending in an indented line leaves ipython sitting at the `...:`
+-- continuation prompt (code shows but never runs).
+vim.g.slime_python_ipython = 1
 
 -- set slime connect command and specified interpreter
 --vim.g.slime_tmux_target = new_pane_id

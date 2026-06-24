@@ -8,7 +8,13 @@ lsp.preset("recommended");
 -- mason is how we setup lsp
 local mason_ok, mason = pcall(require, 'mason')
 if not mason_ok then return end
-mason.setup({})
+mason.setup({
+    -- Force public PyPI for pip-based installs (pylsp, etc.) so Mason
+    -- doesn't inherit the internal index from global pip.conf/PIP_INDEX_URL.
+    pip = {
+        install_args = { "--index-url", "https://pypi.org/simple" },
+    },
+})
 local mason_lsp_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
 if not mason_lsp_ok then return end
 mason_lspconfig.setup({

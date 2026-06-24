@@ -62,9 +62,6 @@ return {
     -- Minuet AI
     { "milanglacier/minuet-ai.nvim" },
 
-    -- Null-ls for formatters/linters
-    { "jose-elias-alvarez/null-ls.nvim" },
-
     -- Prettier
     { "MunifTanjim/prettier.nvim" },
 
