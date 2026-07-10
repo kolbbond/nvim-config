@@ -81,7 +81,7 @@ end);
 
 -- lsp restart
 vim.keymap.set("n", "<leader>lr", function()
-    vim.cmd("LspRestart")
+    vim.cmd("lsp restart")
 end);
 
 -- copy error messages to clipboard
