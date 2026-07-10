@@ -8,9 +8,32 @@ return {
       "ClaudeCode", "ClaudeCodeFocus", "ClaudeCodeSend", "ClaudeCodeAdd",
       "ClaudeCodeDiffAccept", "ClaudeCodeDiffDeny",
     },
-    opts = {
-      terminal = { provider = "native" }, -- no extra deps; swap to "snacks" if you add folke/snacks.nvim
-    },
+    opts = function()
+      -- Outside tmux there is no pane to split into; fall back to an in-nvim
+      -- terminal so <leader>ac still works.
+      if not vim.env.TMUX then
+        return { terminal = { provider = "native" } }
+      end
+      return {
+        terminal = {
+          provider = "external",
+          provider_opts = {
+            -- Function form is REQUIRED: the tmux pane runs on the tmux server,
+            -- which does NOT inherit the jobstart client env. We must forward
+            -- each attach var explicitly with `-e KEY=VAL`.
+            external_terminal_cmd = function(cmd, env)
+              local args = { "tmux", "split-window", "-h", "-l", "40%", "-c", vim.fn.getcwd() }
+              for key, value in pairs(env or {}) do
+                table.insert(args, "-e")
+                table.insert(args, key .. "=" .. tostring(value))
+              end
+              table.insert(args, cmd)
+              return args
+            end,
+          },
+        },
+      }
+    end,
     keys = {
       { "<leader>a",  nil,                             desc = "+claude" },
       { "<leader>ac", "<cmd>ClaudeCode<cr>",           desc = "Toggle Claude" },
