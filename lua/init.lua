@@ -32,8 +32,9 @@ vim.api.nvim_create_autocmd("User", {
 -- change coloring
 -- require("colors")
 
--- require lazy
-require("config.lazy")
+-- lazy.nvim is set up in lua/kolbbond/init.lua, which runs via
+-- require("kolbbond") at the top of this file. Requiring it again here
+-- would be a no-op (Lua caches modules), so it is intentionally absent.
 local loaded_msg = "✅ Neovim loaded ✅";
 vim.schedule(function()
     vim.api.nvim_echo({ { loaded_msg } }, false, {})
