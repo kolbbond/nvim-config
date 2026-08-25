@@ -113,20 +113,82 @@ function M.session_exists(name)
     return M.runner({ "tmux", "has-session", "-t", session_target(name) }).code == 0
 end
 
---- Find or create the background session, rooted at the repo.
+--- Visible text of the session's active pane.
 ---@param name string
----@param root string
----@return boolean ok, string|nil err
-function M.ensure_session(name, root)
-    if M.session_exists(name) then return true end
+---@return string
+function M.pane_text(name)
+    local res = M.runner({ "tmux", "capture-pane", "-p", "-t", pane_target(name) })
+    if res.code ~= 0 then return "" end
+    return res.stdout or ""
+end
 
-    local res = M.runner({
-        "tmux", "new-session", "-d", "-s", name, "-c", root, "claude",
-    })
-    if res.code ~= 0 then
-        return false, "tmux new-session failed: " .. vim.trim(res.stderr)
+--- What state is the background Claude in?
+--- "ready"        -- the input box is up and will accept a message
+--- "trust_prompt" -- Claude is asking the user to approve the folder; anything
+---                   we send gets eaten by that dialog
+--- "starting"     -- still booting
+---@param name string
+---@return string
+function M.readiness(name)
+    local text = M.pane_text(name)
+    if text:lower():find("trust this folder", 1, true) then
+        return "trust_prompt"
+    end
+    if text:find("❯", 1, true) then
+        return "ready"
+    end
+    return "starting"
+end
+
+--- Block until the background Claude can actually accept input.
+---
+--- Condition-based rather than a fixed sleep: startup time varies with machine
+--- load, so any guess is wrong somewhere. This exists because `tmux
+--- new-session` returns in ~14ms while Claude's TUI needs ~10s -- text sent in
+--- between is buffered by the terminal and replayed into the input box, but the
+--- Enter is swallowed, so the message sits there forever and later throws
+--- concatenate onto it.
+---@param name string
+---@param timeout_ms integer|nil  default 30000
+---@param interval_ms integer|nil default 250
+---@return boolean ok, string|nil err
+function M.wait_ready(name, timeout_ms, interval_ms)
+    local state
+    local ok = vim.wait(timeout_ms or 30000, function()
+        state = M.readiness(name)
+        return state == "ready" or state == "trust_prompt"
+    end, interval_ms or 250)
+
+    if not ok then
+        return false, "timed out waiting for Claude to start in " .. name
+    end
+    if state == "trust_prompt" then
+        return false, name .. " is waiting for you to approve the folder -- "
+            .. "switch to it (<leader>ag), approve, then throw again"
     end
     return true
+end
+
+--- Find or create the background session, rooted at the repo, and only report
+--- success once it can actually receive a message.
+---@param name string
+---@param root string
+---@param timeout_ms integer|nil
+---@param interval_ms integer|nil
+---@return boolean ok, string|nil err
+function M.ensure_session(name, root, timeout_ms, interval_ms)
+    if not M.session_exists(name) then
+        local res = M.runner({
+            "tmux", "new-session", "-d", "-s", name, "-c", root, "claude",
+        })
+        if res.code ~= 0 then
+            return false, "tmux new-session failed: " .. vim.trim(res.stderr)
+        end
+    end
+
+    -- Always gate on readiness, not just after creating: a session spawned by
+    -- an earlier throw may still be booting.
+    return M.wait_ready(name, timeout_ms, interval_ms)
 end
 
 --- Send text to the background session, then submit it.
@@ -207,6 +269,12 @@ function M.throw_current(opts)
         -- prompt to the background session.
         local text = M.compose(relpath, range, question)
         if not text then return end
+
+        -- Starting a background Claude blocks nvim for a few seconds while we
+        -- wait for its TUI, so say why rather than appearing to hang.
+        if not M.session_exists(name) then
+            vim.notify("starting " .. name .. " ...", vim.log.levels.INFO)
+        end
 
         local ok2, err2 = M.ensure_session(name, root)
         if not ok2 then

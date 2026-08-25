@@ -107,10 +107,11 @@ end)
 
 test("ensure_session creates the session when absent", function()
     with_stub({
-        { code = 1, stdout = "", stderr = "" },  -- has-session: no
-        { code = 0, stdout = "", stderr = "" },  -- new-session: ok
+        { code = 1, stdout = "", stderr = "" },      -- has-session: no
+        { code = 0, stdout = "", stderr = "" },      -- new-session: ok
+        { code = 0, stdout = "❯ ", stderr = "" },    -- capture: ready
     }, function(calls)
-        local ok = ct.ensure_session("claude-bg-x", "/repo/root")
+        local ok = ct.ensure_session("claude-bg-x", "/repo/root", 5000, 10)
         assert(ok, "ensure_session reported failure")
         assert(vim.deep_equal(calls[2],
             { "tmux", "new-session", "-d", "-s", "claude-bg-x", "-c", "/repo/root", "claude" }),
@@ -119,9 +120,13 @@ test("ensure_session creates the session when absent", function()
 end)
 
 test("ensure_session does not recreate an existing session", function()
-    with_stub({ { code = 0, stdout = "", stderr = "" } }, function(calls)
-        assert(ct.ensure_session("claude-bg-x", "/repo/root"), "reported failure")
-        assert(#calls == 1, "should not have called new-session")
+    with_stub({
+        { code = 0, stdout = "", stderr = "" },      -- has-session: yes
+        { code = 0, stdout = "❯ ", stderr = "" },    -- capture: ready
+    }, function(calls)
+        assert(ct.ensure_session("claude-bg-x", "/repo/root", 5000, 10), "reported failure")
+        assert(calls[2][2] == "capture-pane",
+            "2nd call should be the readiness poll, not new-session: " .. vim.inspect(calls[2]))
     end)
 end)
 
@@ -172,6 +177,66 @@ test("throw never builds a shell string", function()
             assert(type(cmd) == "table", "argv must be a list, got " .. type(cmd))
             assert(cmd[1] == "tmux", "first arg must be the tmux binary")
         end
+    end)
+end)
+
+-- ── readiness gating ────────────────────────────────────────
+-- Regression: ensure_session used to return the instant `tmux new-session`
+-- succeeded (~14ms), but Claude's TUI needs ~10s to boot. Text sent into the
+-- not-yet-ready terminal got buffered and replayed into the input box while
+-- the Enter was swallowed -- so the message sat there unsubmitted, and later
+-- throws concatenated onto it.
+
+test("readiness reports ready when the prompt is present", function()
+    with_stub({ { code = 0, stdout = "some output\n❯ \n", stderr = "" } }, function()
+        assert(ct.readiness("claude-bg-x") == "ready", "should be ready")
+    end)
+end)
+
+test("readiness reports trust_prompt when the folder dialog is up", function()
+    with_stub({ { code = 0, stdout = "❯ 1. Yes, I trust this folder\n", stderr = "" } }, function()
+        assert(ct.readiness("claude-bg-x") == "trust_prompt", "should detect the trust dialog")
+    end)
+end)
+
+test("readiness reports starting during boot", function()
+    with_stub({ { code = 0, stdout = "  ▝▜██████▀  splash\n", stderr = "" } }, function()
+        assert(ct.readiness("claude-bg-x") == "starting", "should still be starting")
+    end)
+end)
+
+test("pane_text uses the target-PANE form", function()
+    with_stub({}, function(calls)
+        ct.pane_text("claude-bg-x")
+        assert(vim.deep_equal(calls[1],
+            { "tmux", "capture-pane", "-p", "-t", "=claude-bg-x:" }),
+            "wrong argv: " .. vim.inspect(calls[1]))
+    end)
+end)
+
+test("ensure_session waits for the TUI before returning", function()
+    with_stub({
+        { code = 1, stdout = "", stderr = "" },              -- has-session: no
+        { code = 0, stdout = "", stderr = "" },              -- new-session: ok
+        { code = 0, stdout = "splash", stderr = "" },        -- capture: starting
+        { code = 0, stdout = "❯ ", stderr = "" },            -- capture: ready
+    }, function(calls)
+        local ok = ct.ensure_session("claude-bg-x", "/repo", 5000, 10)
+        assert(ok, "ensure_session should succeed once ready")
+        assert(#calls >= 4, "should have polled the pane, got " .. #calls .. " calls")
+        assert(calls[3][2] == "capture-pane", "3rd call should poll the pane")
+    end)
+end)
+
+test("ensure_session surfaces the trust prompt instead of silently failing", function()
+    with_stub({
+        { code = 1, stdout = "", stderr = "" },
+        { code = 0, stdout = "", stderr = "" },
+        { code = 0, stdout = "❯ 1. Yes, I trust this folder", stderr = "" },
+    }, function()
+        local ok, err = ct.ensure_session("claude-bg-x", "/repo", 5000, 10)
+        assert(not ok, "should not report success while the trust dialog blocks input")
+        assert(err:match("approve"), "error should tell the user to approve: " .. tostring(err))
     end)
 end)
 
