@@ -148,4 +148,87 @@ function M.goto_session(name)
     return true
 end
 
+--- Path relative to the session's cwd, so "@path" resolves for the background
+--- Claude (which is rooted at the repo, not at nvim's cwd).
+---@param file string
+---@param root string
+---@return string
+local function relative_to(file, root)
+    if root ~= "" and file:sub(1, #root + 1) == root .. "/" then
+        return file:sub(#root + 2)
+    end
+    return file
+end
+
+--- Prompt for a question and throw it, with the current file/selection, at the
+--- background Claude.
+---@param opts table|nil  { range = <0|1|2>, line1 = <int>, line2 = <int> }
+function M.throw_current(opts)
+    opts = opts or {}
+
+    local ok, err = M.available()
+    if not ok then
+        vim.notify("claude-throw: " .. err, vim.log.levels.ERROR)
+        return
+    end
+
+    local file = vim.api.nvim_buf_get_name(0)
+    if file == "" then
+        vim.notify("claude-throw: buffer has no file", vim.log.levels.ERROR)
+        return
+    end
+
+    local root = M.repo_root(file)
+    local name = M.session_name(root)
+    local relpath = relative_to(file, root)
+
+    local range = nil
+    if opts.range and opts.range > 0 then
+        range = { first = opts.line1, last = opts.line2 }
+    end
+
+    vim.ui.input({ prompt = "Ask background Claude: " }, function(question)
+        -- Empty or cancelled: abort quietly. An empty send would submit a bare
+        -- prompt to the background session.
+        local text = M.compose(relpath, range, question)
+        if not text then return end
+
+        local ok2, err2 = M.ensure_session(name, root)
+        if not ok2 then
+            vim.notify("claude-throw: " .. err2, vim.log.levels.ERROR)
+            return
+        end
+
+        local ok3, err3 = M.throw(text, name)
+        if not ok3 then
+            vim.notify("claude-throw: " .. err3, vim.log.levels.ERROR)
+            return
+        end
+
+        vim.notify("thrown to " .. name, vim.log.levels.INFO)
+    end)
+end
+
+--- Register commands and keymaps. Called from lua/kolbbond/init.lua.
+function M.setup()
+    vim.api.nvim_create_user_command("ClaudeThrow", function(o)
+        M.throw_current({ range = o.range, line1 = o.line1, line2 = o.line2 })
+    end, { range = true, desc = "Throw file/selection + question to background Claude" })
+
+    vim.api.nvim_create_user_command("ClaudeGoto", function()
+        local root = M.repo_root(vim.api.nvim_buf_get_name(0))
+        local ok, err = M.goto_session(M.session_name(root))
+        if not ok then
+            vim.notify("claude-throw: " .. err, vim.log.levels.WARN)
+        end
+    end, { desc = "Switch to the background Claude tmux session" })
+
+    -- Visual mode: ":" auto-inserts the '<,'> range, so o.range == 2 there and
+    -- 0 in normal mode -- which is how throw_current tells file from selection.
+    vim.keymap.set({ "n", "v" }, "<leader>at", ":ClaudeThrow<CR>",
+        { silent = true, desc = "Throw to background Claude" })
+    vim.keymap.set("n", "<leader>ag", "<cmd>ClaudeGoto<cr>",
+        { silent = true, desc = "Go to background Claude session" })
+end
+
 return M

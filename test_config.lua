@@ -287,6 +287,35 @@ test("<leader>aa still belongs to harpoon", function()
     assert((m.desc or ""):match("harpoon"), "<leader>aa is not harpoon's")
 end)
 
+test("claude_throw module loads", function()
+    local ok, m = pcall(require, "kolbbond.claude_throw")
+    assert(ok, "claude_throw failed to load: " .. tostring(m))
+    assert(type(m.throw_current) == "function", "throw_current missing")
+    assert(type(m.setup) == "function", "setup missing")
+end)
+
+test("ClaudeThrow command exists and takes a range", function()
+    local cmds = vim.api.nvim_get_commands({})
+    assert(cmds.ClaudeThrow, "ClaudeThrow command not registered")
+    assert(cmds.ClaudeThrow.range, "ClaudeThrow must accept a range")
+end)
+
+test("ClaudeGoto command exists", function()
+    assert(vim.api.nvim_get_commands({}).ClaudeGoto, "ClaudeGoto not registered")
+end)
+
+test("<leader>at mapped in normal and visual", function()
+    for _, mode in ipairs({ "n", "v" }) do
+        local m = vim.fn.maparg(" at", mode, false, true)
+        assert(m and next(m), "<leader>at not mapped in mode " .. mode)
+    end
+end)
+
+test("<leader>ag mapped", function()
+    local m = vim.fn.maparg(" ag", "n", false, true)
+    assert(m and next(m), "<leader>ag not mapped")
+end)
+
 -- ═══════════════════════════════════════════
 print("\n══════════════════════════════════════")
 print(string.format("  RESULTS: %d passed, %d failed, %d skipped",
