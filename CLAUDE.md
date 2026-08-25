@@ -13,6 +13,7 @@ Personal Neovim configuration focused on C/C++ development with CMake, Python/MA
 - `:IronRepl` - Launch Python/Octave REPL
 - `:MatlabLaunchServer` - Launch MATLAB REPL
 - `:ClangFormat` / `:ClangFormatInfo` - Format C/C++ buffer; show which binary resolved
+- `:ClaudeThrow` / `:ClaudeGoto` - Throw file/selection + a question to the background Claude tmux session; switch to it
 
 ## Architecture
 
@@ -93,6 +94,11 @@ without complaint.
 - `<leader>ps` - Telescope ripgrep search
 - `<leader>sh` - Switch header/source (C/C++)
 - `<leader>af` - clang-format current buffer (C/C++)
+- `<leader>ac` - Toggle attached Claude (in an nvim buffer)
+- `<leader>aj` - Jump to attached Claude
+- `<leader>at` - Throw file (normal) or selection (visual) + question to background Claude
+- `<leader>ag` - Go to the background Claude tmux session
+- `:w` / `:q` in a Claude diff - accept / reject the proposed edit
 - `<leader>lr` - Restart LSP (`:lsp restart`, nvim 0.12 core command)
 - `<leader>cfp` - Copy current file path
 - `<leader>sl` - Send line to Python REPL
