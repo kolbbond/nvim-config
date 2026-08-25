@@ -316,6 +316,20 @@ test("<leader>ag mapped", function()
     assert(m and next(m), "<leader>ag not mapped")
 end)
 
+test("<M-hjkl> navigate in terminal mode (escape the Claude split)", function()
+    for _, k in ipairs({ "<M-h>", "<M-j>", "<M-k>", "<M-l>" }) do
+        local m = vim.fn.maparg(k, "t", false, true)
+        assert(m and next(m), k .. " not mapped in terminal mode")
+    end
+end)
+
+test("<M-hjkl> still navigate in normal mode", function()
+    for _, k in ipairs({ "<M-h>", "<M-j>", "<M-k>", "<M-l>" }) do
+        local m = vim.fn.maparg(k, "n", false, true)
+        assert(m and next(m), k .. " lost its normal-mode mapping")
+    end
+end)
+
 -- ═══════════════════════════════════════════
 print("\n══════════════════════════════════════")
 print(string.format("  RESULTS: %d passed, %d failed, %d skipped",
