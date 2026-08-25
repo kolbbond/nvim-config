@@ -53,12 +53,27 @@ function M.compose(relpath, range, question)
     return string.format("@%s: %s", relpath, question)
 end
 
---- tmux target with the "=" exact-match prefix. Without it, target lookup is
---- prefix-based and "claude-bg-nv" would match "claude-bg-nvim-config".
+--- tmux targets carry the "=" exact-match prefix. Without it, lookup is
+--- prefix-based: "bg:" happily matches a session named "bg-long", which is
+--- exactly the mis-delivery we must not risk.
+---
+--- The two target KINDS are not interchangeable, and this bit only shows up
+--- against a real tmux (verified empirically):
+---   * has-session / switch-client take a target-SESSION -> "=name"
+---   * send-keys / capture-pane take a target-PANE       -> "=name:"
+--- Passing "=name" to send-keys fails with "can't find pane: =name".
 ---@param name string
 ---@return string
-local function target(name)
+local function session_target(name)
     return "=" .. name
+end
+
+--- Target-pane form: the trailing ":" selects the session's active window and
+--- pane while keeping the "=" exact-match semantics.
+---@param name string
+---@return string
+local function pane_target(name)
+    return "=" .. name .. ":"
 end
 
 --- Is the background tier usable at all?
@@ -95,7 +110,7 @@ end
 ---@param name string
 ---@return boolean
 function M.session_exists(name)
-    return M.runner({ "tmux", "has-session", "-t", target(name) }).code == 0
+    return M.runner({ "tmux", "has-session", "-t", session_target(name) }).code == 0
 end
 
 --- Find or create the background session, rooted at the repo.
@@ -122,12 +137,12 @@ end
 ---@param name string
 ---@return boolean ok, string|nil err
 function M.throw(text, name)
-    local res = M.runner({ "tmux", "send-keys", "-t", target(name), "-l", "--", text })
+    local res = M.runner({ "tmux", "send-keys", "-t", pane_target(name), "-l", "--", text })
     if res.code ~= 0 then
         return false, "tmux send-keys failed: " .. vim.trim(res.stderr)
     end
 
-    res = M.runner({ "tmux", "send-keys", "-t", target(name), "Enter" })
+    res = M.runner({ "tmux", "send-keys", "-t", pane_target(name), "Enter" })
     if res.code ~= 0 then
         return false, "tmux send-keys Enter failed: " .. vim.trim(res.stderr)
     end
@@ -141,7 +156,7 @@ function M.goto_session(name)
         return false, "not inside tmux; attach with: tmux attach -t " .. name
     end
 
-    local res = M.runner({ "tmux", "switch-client", "-t", target(name) })
+    local res = M.runner({ "tmux", "switch-client", "-t", session_target(name) })
     if res.code ~= 0 then
         return false, "tmux switch-client failed: " .. vim.trim(res.stderr)
     end

@@ -140,11 +140,28 @@ test("throw sends literal text then Enter separately", function()
     with_stub({}, function(calls)
         assert(ct.throw("press Enter now", "claude-bg-x"), "throw reported failure")
         assert(vim.deep_equal(calls[1],
-            { "tmux", "send-keys", "-t", "=claude-bg-x", "-l", "--", "press Enter now" }),
+            { "tmux", "send-keys", "-t", "=claude-bg-x:", "-l", "--", "press Enter now" }),
             "wrong text argv: " .. vim.inspect(calls[1]))
         assert(vim.deep_equal(calls[2],
-            { "tmux", "send-keys", "-t", "=claude-bg-x", "Enter" }),
+            { "tmux", "send-keys", "-t", "=claude-bg-x:", "Enter" }),
             "wrong Enter argv: " .. vim.inspect(calls[2]))
+    end)
+end)
+
+test("send-keys uses the target-PANE form, has-session the target-SESSION form", function()
+    -- Regression: tmux rejects "=name" for send-keys ("can't find pane: =name")
+    -- because send-keys takes a target-pane, which needs the trailing ":".
+    -- has-session takes a target-session and must NOT have it. Verified against
+    -- real tmux; a self-consistent-but-wrong argv passes unit tests otherwise.
+    with_stub({}, function(calls)
+        ct.session_exists("claude-bg-x")
+        assert(calls[1][4] == "=claude-bg-x",
+            "has-session target must be =name, got: " .. tostring(calls[1][4]))
+    end)
+    with_stub({}, function(calls)
+        ct.throw("hi", "claude-bg-x")
+        assert(calls[1][4] == "=claude-bg-x:",
+            "send-keys target must be =name:, got: " .. tostring(calls[1][4]))
     end)
 end)
 
