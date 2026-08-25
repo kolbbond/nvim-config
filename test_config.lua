@@ -269,6 +269,24 @@ test("nvim version >= 0.10", function()
         string.format("need >= 0.10, got %d.%d.%d", v.major, v.minor, v.patch))
 end)
 
+test("claude focus mapped to <leader>aj (not shadowed <leader>af)", function()
+    local m = vim.fn.maparg(" aj", "n", false, true)
+    assert(m and next(m), "<leader>aj is not mapped")
+    assert((m.desc or ""):match("Claude"), "<leader>aj is not the Claude focus map")
+end)
+
+test("<leader>af still belongs to format, not Claude", function()
+    local m = vim.fn.maparg(" af", "n", false, true)
+    assert(m and next(m), "<leader>af lost its mapping")
+    assert(not (m.desc or ""):match("Claude"), "<leader>af was taken by Claude")
+end)
+
+test("<leader>aa still belongs to harpoon", function()
+    local m = vim.fn.maparg(" aa", "n", false, true)
+    assert(m and next(m), "<leader>aa lost its mapping")
+    assert((m.desc or ""):match("harpoon"), "<leader>aa is not harpoon's")
+end)
+
 -- ═══════════════════════════════════════════
 print("\n══════════════════════════════════════")
 print(string.format("  RESULTS: %d passed, %d failed, %d skipped",
