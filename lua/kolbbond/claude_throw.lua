@@ -53,4 +53,99 @@ function M.compose(relpath, range, question)
     return string.format("@%s: %s", relpath, question)
 end
 
+--- tmux target with the "=" exact-match prefix. Without it, target lookup is
+--- prefix-based and "claude-bg-nv" would match "claude-bg-nvim-config".
+---@param name string
+---@return string
+local function target(name)
+    return "=" .. name
+end
+
+--- Is the background tier usable at all?
+---@return boolean ok, string|nil err
+function M.available()
+    if vim.env.TMUX == nil or vim.env.TMUX == "" then
+        return false, "not inside a tmux session"
+    end
+    if vim.fn.executable("tmux") == 0 then
+        return false, "tmux not found on PATH"
+    end
+    return true
+end
+
+--- Git toplevel for a path, falling back to its containing directory.
+---@param path string
+---@return string
+function M.repo_root(path)
+    local dir = path
+    if dir == nil or dir == "" then
+        dir = vim.fn.getcwd()
+    elseif vim.fn.isdirectory(dir) == 0 then
+        dir = vim.fn.fnamemodify(dir, ":h")
+    end
+
+    local res = M.runner({ "git", "-C", dir, "rev-parse", "--show-toplevel" })
+    if res.code ~= 0 then return dir end
+
+    local root = vim.trim(res.stdout)
+    if root == "" then return dir end
+    return root
+end
+
+---@param name string
+---@return boolean
+function M.session_exists(name)
+    return M.runner({ "tmux", "has-session", "-t", target(name) }).code == 0
+end
+
+--- Find or create the background session, rooted at the repo.
+---@param name string
+---@param root string
+---@return boolean ok, string|nil err
+function M.ensure_session(name, root)
+    if M.session_exists(name) then return true end
+
+    local res = M.runner({
+        "tmux", "new-session", "-d", "-s", name, "-c", root, "claude",
+    })
+    if res.code ~= 0 then
+        return false, "tmux new-session failed: " .. vim.trim(res.stderr)
+    end
+    return true
+end
+
+--- Send text to the background session, then submit it.
+--- `-l` sends the text LITERALLY: without it tmux interprets key names, so a
+--- question containing "Enter" or "C-c" would fire those keys instead of being
+--- typed. `--` stops a question beginning with "-" being parsed as flags.
+---@param text string
+---@param name string
+---@return boolean ok, string|nil err
+function M.throw(text, name)
+    local res = M.runner({ "tmux", "send-keys", "-t", target(name), "-l", "--", text })
+    if res.code ~= 0 then
+        return false, "tmux send-keys failed: " .. vim.trim(res.stderr)
+    end
+
+    res = M.runner({ "tmux", "send-keys", "-t", target(name), "Enter" })
+    if res.code ~= 0 then
+        return false, "tmux send-keys Enter failed: " .. vim.trim(res.stderr)
+    end
+    return true
+end
+
+---@param name string
+---@return boolean ok, string|nil err
+function M.goto_session(name)
+    if vim.env.TMUX == nil or vim.env.TMUX == "" then
+        return false, "not inside tmux; attach with: tmux attach -t " .. name
+    end
+
+    local res = M.runner({ "tmux", "switch-client", "-t", target(name) })
+    if res.code ~= 0 then
+        return false, "tmux switch-client failed: " .. vim.trim(res.stderr)
+    end
+    return true
+end
+
 return M
