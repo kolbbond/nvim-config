@@ -127,8 +127,8 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
     vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-    vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-    vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+    -- ]d/[d intentionally unmapped: nvim 0.12 binds them to vim.diagnostic.jump()
+    -- in the right direction. The old buffer-local pair here had them reversed.
     vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
@@ -150,18 +150,5 @@ vim.keymap.set("n", "<leader>af", function()
     vim.lsp.buf.format({
         async = false, timeout_ms = 1000 })
 end)
-
--- End
-lsp.setup();
-
---[[
-require("lspconfig").arduino_language_server.setup({
-    filetypes = { 'ino', 'cpp' },
-});
---]]
-
-
--- hyprls
---require("lspconfig").hyprls.setup({});
 
 lsp.setup();
