@@ -1,4 +1,6 @@
--- Theme plugins: gruvbox (fork) and alternatives
+-- Themes: gruvbox (fork) is the one in use; kanagawa is the alternate.
+-- The 15 other colorschemes that lived here were removed -- eager-loaded, never
+-- selected. Re-adding one is a single line; git history has the list.
 
 return {
     -- Gruvbox (custom fork - primary theme)
@@ -59,61 +61,17 @@ return {
         end,
     },
 
-    -- Gruvbox alternatives
-    { "luisiacc/gruvbox-baby" },
-    { "sainnhe/gruvbox-material" },
-
-    -- Rose Pine
-    { "rose-pine/neovim", name = "rose-pine" },
-
-    -- Colorbuddy
-    { "tjdevries/colorbuddy.nvim" },
-
-    -- GitHub theme
-    { "projekt0n/github-nvim-theme" },
-
-    -- Lush - Theme creation framework
-    { "rktjmp/lush.nvim" },
-
-    -- Tokyo Night
-    { "folke/tokyonight.nvim" },
-
-    -- Modus themes
-    { "miikanissi/modus-themes.nvim" },
-
-    -- Oxocarbon
-    { "nyoom-engineering/oxocarbon.nvim" },
-
-    -- Nord
-    { "gbprod/nord.nvim" },
-
-    -- VSCode
-    { "Mofiqul/vscode.nvim" },
-
-    -- Kanagawa
-    { "rebelot/kanagawa.nvim" },
-
-    -- Flow
-    { "0xstepit/flow.nvim" },
-
-    -- Rasmus
-    { "kvrohit/rasmus.nvim" },
-
-    -- Darkvoid
-    { "aliqyan-21/darkvoid.nvim" },
-
-    -- Falcon
-    { "fenetikm/falcon" },
-
-    -- Miasma
-    { "xero/miasma.nvim" },
-
-    -- Fluoromachine (neon)
-    { "maxmx03/fluoromachine.nvim" },
-
-    -- Moonlight (neon)
-    { "shaunsingh/moonlight.nvim" },
-
-    -- Lackluster
-    { "slugbyte/lackluster.nvim" },
+    -- Alternate; lazy.nvim loads it on `:colorscheme kanagawa`.
+    {
+        "rebelot/kanagawa.nvim",
+        lazy = true,
+        opts = {
+            -- no italics anywhere
+            commentStyle = { italic = false },
+            keywordStyle = { italic = false },
+            overrides = function()
+                return { ["@variable.builtin"] = { italic = false } }
+            end,
+        },
+    },
 }

@@ -1,7 +1,5 @@
 -- remaps
-
--- make space the "<leader>" key
-vim.g.mapleader = " "
+-- <leader> is space; set in kolbbond/set.lua, which loads first
 
 -- project viewer (netrw file explorer)
 vim.keymap.set("n", "<leader>pv", vim.cmd.Explore)

@@ -1,5 +1,9 @@
 -- additional settings for vim
 
+-- single source of truth; must land before remap.lua and before lazy.setup()
+vim.g.mapleader = " ";
+vim.g.maplocalleader = "\\";
+
 -- fat cursor
 vim.opt.guicursor = "";
 
@@ -43,7 +47,14 @@ vim.opt.updatetime = 50;
 
 vim.opt.colorcolumn = "80";
 
-vim.g.mapleader = " ";
+-- ftplugins set formatoptions, so undo them after FileType, not before.
+-- 'r'/'o': no comment leader on <CR> or o/O. 'c': no auto-wrapping comments.
+vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("kolbbond_formatoptions", { clear = true }),
+    callback = function()
+        vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+    end,
+})
 
 if not os.getenv("DISPLAY") then
   vim.g.clipboard = {

@@ -1,8 +1,6 @@
 -- main init.lua for neovim
+-- options/keymaps first, plugin globals next, lazy.setup() last
 require("kolbbond")
-
--- format, turn off auto paste comments!
-vim.opt_local.formatoptions:remove({ 'r', 'o' })
 
 -- slime
 --vim.g.slime_target = "tmux"
