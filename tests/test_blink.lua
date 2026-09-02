@@ -20,37 +20,31 @@ test("blink.cmp loads", function()
     assert(blink, "blink.cmp module is nil")
 end)
 
--- 2. blink-cmp-copilot loads
-test("blink-cmp-copilot loads", function()
-    local copilot = require("blink-cmp-copilot")
-    assert(copilot, "blink-cmp-copilot module is nil")
-end)
-
--- 3. LuaSnip loads
+-- 2. LuaSnip loads
 test("LuaSnip loads", function()
     local ls = require("luasnip")
     assert(ls, "luasnip module is nil")
 end)
 
--- 4. old nvim-cmp is NOT loaded
+-- 3. old nvim-cmp is NOT loaded
 test("nvim-cmp is NOT loaded", function()
     local ok, _ = pcall(require, "cmp")
     assert(not ok, "nvim-cmp should not be loadable anymore")
 end)
 
--- 5. lsp-zero loads
+-- 4. lsp-zero loads
 test("lsp-zero loads", function()
     local lsp = require("lsp-zero")
     assert(lsp, "lsp-zero module is nil")
 end)
 
--- 6. copilot.lua loads
+-- 5. copilot.lua loads
 test("copilot.lua loads", function()
     local copilot = require("copilot")
     assert(copilot, "copilot module is nil")
 end)
 
--- 7. blink.cmp has get_lsp_capabilities
+-- 6. blink.cmp has get_lsp_capabilities
 test("blink.cmp exposes get_lsp_capabilities", function()
     local blink = require("blink.cmp")
     assert(type(blink.get_lsp_capabilities) == "function", "get_lsp_capabilities missing")
@@ -58,7 +52,7 @@ test("blink.cmp exposes get_lsp_capabilities", function()
     assert(type(caps) == "table", "capabilities should be a table")
 end)
 
--- 8. lspkind loads
+-- 7. lspkind loads
 test("lspkind loads", function()
     local lspkind = require("lspkind")
     assert(lspkind, "lspkind module is nil")
