@@ -1,59 +1,41 @@
-local ok, configs = pcall(require, 'nvim-treesitter.configs')
+-- nvim-treesitter `main` branch: configs.setup{} is gone, parsers install to
+-- stdpath('data')/site (already on rtp) and highlighting starts per-buffer.
+local ok, ts = pcall(require, 'nvim-treesitter')
 if not ok then return end
-configs.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "matlab", "c", "lua", "vim", "python",
-        "vimdoc", "query", "cpp", "luadoc", "markdown" },
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
-
-    -- List of parsers to ignore installing (or "all")
-    --ignore_install = { "javascript" },
-
-    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-    indent = { enable = false },
-
-    highlight = {
-        enable = true,
-
-        -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-        -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-        -- the name of the parser)
-        -- list of language that will be disabled
-        --disable = { "c", "rust" },
-        -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-        --disable = function(lang, buf)
-        --local max_filesize = 100 * 1024 -- 100 KB
-        --local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        --if ok and stats and stats.size > max_filesize then
-        --return true
-        --end
-        --end,
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-
-    -- custom capture highlighting
-    custom_captures = {
-        ['section'] = 'keyword.return',
-        ['test'] = 'comment'
-    }
-
+local ensure = {
+    'matlab', 'c', 'cpp', 'lua', 'luadoc', 'vim', 'vimdoc', 'query',
+    'python', 'markdown', 'markdown_inline', 'yaml', 'html', 'bash',
+    'json', 'toml',
 }
 
--- try custom highlights here
---require('nvim-treesitter.highlight').custom_captures {
---   ['section'] = 'keyword.return',
--- @hey, figure out how to highlight matlab sections
---}
+-- get_installed() scans the parser dir; memoize and only rescan on a miss so
+-- async installs still get picked up
+local cache
+local function is_installed(lang)
+    if cache and cache[lang] then return true end
+    cache = {}
+    for _, l in ipairs(ts.get_installed('parsers')) do cache[l] = true end
+    return cache[lang] == true
+end
+
+local missing = vim.tbl_filter(function(lang)
+    return not is_installed(lang)
+end, ensure)
+if #missing > 0 then
+    ts.install(missing) -- async; never block startup
+end
+
+-- replaces master's highlight.enable; indent stays off (was indent.enable = false)
+vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('kolbbond_treesitter', { clear = true }),
+    callback = function(args)
+        local lang = vim.treesitter.language.get_lang(args.match)
+        if lang and is_installed(lang) then
+            pcall(vim.treesitter.start, args.buf, lang)
+        end
+    end,
+})
+
+-- matlab %% section headers
 vim.api.nvim_set_hl(0, "@section.matlab", { link = "Identifier" })

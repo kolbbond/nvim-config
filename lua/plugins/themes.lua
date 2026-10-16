@@ -27,6 +27,20 @@ return {
                     ["@string"] = { fg = "#646a20", italic = true },
                     ["@constant.builtin"] = { fg = "#bb55bb" },
                     ["@function.builtin"] = { fg = "#a18a20" },
+
+                    -- ts `main` queries split these off; gruvbox links them to
+                    -- its own stock groups, so they bypass the parents above
+                    ["@keyword.import"] = { fg = "#882206", bold = true },
+                    ["@keyword.return"] = { fg = "#882206", bold = true },
+                    ["@keyword.repeat"] = { fg = "#df5520" },
+                    ["@keyword.exception"] = { fg = "#df5520" },
+                    ["@function.method"] = { fg = "#ddcccc" },
+                    ["@function.method.call"] = { fg = "#ddcccc" },
+                    ["@variable.parameter"] = { fg = "#bbbbbb" },
+                    -- brackets are noise; operators stay readable above @comment
+                    ["@punctuation.bracket"] = { fg = "#777777" },
+                    ["@punctuation.delimiter"] = { fg = "#777777" },
+                    ["@operator"] = { fg = "#999999" },
                     cStorageClass = { fg = "#882206", bold = true },
                 },
                 palette_overrides = {
