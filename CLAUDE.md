@@ -19,11 +19,11 @@ Personal Neovim configuration focused on C/C++ development with CMake, Python/MA
 ```
 init.vim                    # Entry point: sets runtimepath, sources lua/init.lua
 lua/
-  init.lua                  # Requires kolbbond, asyncrun notifications
+  init.lua                  # Requires kolbbond, then config.lazy last
   modules.lua               # Build notification system (emoji-based asyncrun status)
-  config/lazy.lua           # lazy.nvim bootstrap + setup; sets mapleader BEFORE load
+  config/lazy.lua           # lazy.nvim bootstrap + setup
   kolbbond/
-    init.lua                # Requires remap, config.lazy, set, autoreload
+    init.lua                # Requires set, remap, autoreload (in that order)
     set.lua                 # Vim settings (tabs=4, relative numbers, no swap)
     remap.lua               # Keymaps (leader=SPACE)
     autoreload.lua          # Reload buffers on out-of-band disk writes
@@ -46,15 +46,12 @@ Uses **lazy.nvim**. Bootstrap and `lazy.setup()` live in `lua/config/lazy.lua`; 
 specs live in `lua/plugins/*.lua` and are pulled in via `{ import = "plugins" }`.
 Versions are pinned in `lazy-lock.json`.
 
-`lazy.setup()` must run exactly once. It is invoked from `lua/kolbbond/init.lua`;
-do not add another `require("config.lazy")` elsewhere. (Lua caches modules, so a
-second require is a silent no-op rather than an error -- which makes a stray one
-easy to miss.)
+`lazy.setup()` runs once, from the end of `lua/init.lua`, after `require("kolbbond")`
+and every plugin global are set. Don't move it into `lua/kolbbond/init.lua`, and
+don't delete it as "redundant" -- it is the only call site.
 
-`mapleader` is set in `lua/config/lazy.lua` before `lazy.setup()`, and again in
-`remap.lua`/`set.lua`. All three set it to `" "`, so ordering is currently safe --
-but any plugin spec using `<leader>` in a `keys =` table depends on it being set
-before lazy loads.
+`mapleader` is set only in `lua/kolbbond/set.lua`, which loads first, so `<leader>`
+in a spec's `keys =` table resolves correctly.
 
 Packer was the previous manager and is fully removed from the config. The
 `plugin/packer_compiled.lua` entry in `.gitignore` is a leftover of that era.
