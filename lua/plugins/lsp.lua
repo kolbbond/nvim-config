@@ -1,22 +1,10 @@
--- LSP plugins: lsp-zero, mason, cmp, copilot, luasnip
+-- LSP plugins: mason, lspconfig, blink, copilot, luasnip
 
 return {
-    -- LSP Zero - Main LSP configuration
-    {
-        "VonHeikemen/lsp-zero.nvim",
-        branch = "v3.x",
-        dependencies = {
-            -- Mason for managing LSP servers
-            { "williamboman/mason.nvim" },
-            { "williamboman/mason-lspconfig.nvim" },
-
-            -- LSP Support
-            { "neovim/nvim-lspconfig" },
-
-            -- Snippets
-            { "L3MON4D3/LuaSnip" },
-        },
-    },
+    -- server defaults (lsp/*.lua) for vim.lsp.config; mason installs binaries
+    { "neovim/nvim-lspconfig" },
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
 
     -- Autocompletion (blink.cmp)
     {

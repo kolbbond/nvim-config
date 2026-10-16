@@ -31,7 +31,7 @@ lua/
     core.lua debug.lua lsp.lua repl.lua themes.lua tools.lua ui.lua
     tmux.lua claude.lua
 after/plugin/               # Per-plugin runtime config (~28 files)
-  lsp.lua                   # LSP setup with Mason and lsp-zero
+  lsp.lua                   # Native vim.lsp.config/enable; Mason installs servers
   cmp.lua                   # Completion via blink.cmp (+ copilot source)
   clang_format.lua          # Version-tolerant clang-format integration
   dap.lua                   # Debug adapters (GDB, LLDB, CppDBG, Python)

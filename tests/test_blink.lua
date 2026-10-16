@@ -38,10 +38,10 @@ test("nvim-cmp is NOT loaded", function()
     assert(not ok, "nvim-cmp should not be loadable anymore")
 end)
 
--- 5. lsp-zero loads
-test("lsp-zero loads", function()
-    local lsp = require("lsp-zero")
-    assert(lsp, "lsp-zero module is nil")
+-- 5. lspconfig loads
+test("lspconfig loads", function()
+    local lsp = require("lspconfig")
+    assert(lsp, "lspconfig module is nil")
 end)
 
 -- 6. copilot.lua loads

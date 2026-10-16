@@ -96,7 +96,7 @@ end)
 print("\n[lsp]")
 -- ───────────────────────────────────────────
 
-test("lsp-zero loads", function() try_require("lsp-zero") end)
+test("lspconfig loads", function() try_require("lspconfig") end)
 test("lspconfig loads", function() try_require("lspconfig") end)
 test("mason loads", function() try_require("mason") end)
 test("mason-lspconfig loads", function() try_require("mason-lspconfig") end)
