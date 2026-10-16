@@ -229,6 +229,12 @@ test("lsp format mapped (<leader>F)", function()
     assert(keymap_exists("n", " F"), "missing <leader>F mapping")
 end)
 
+test("kernel REPL mapped (<leader>vk/<leader>hk)", function()
+    assert(keymap_exists("n", " vk"), "missing <leader>vk mapping")
+    assert(keymap_exists("n", " hk"), "missing <leader>hk mapping")
+    assert(keymap_exists("n", " vp"), "ipython <leader>vp must stay")
+end)
+
 test("make mapped (<leader>rm)", function()
     assert(keymap_exists("n", " rm"), "missing <leader>rm mapping")
     assert(vim.fn.exists(":Make") == 2, "missing :Make command")

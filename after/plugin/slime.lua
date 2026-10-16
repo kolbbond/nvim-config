@@ -12,6 +12,8 @@ local SPLITS = {
     horizontal = { flag = '-v', size = '35%' },
 }
 local last_split = 'vertical'
+-- 'ipython' (plain REPL) or 'kernel' (jupyter console on the project's smgk kernel + viewer)
+local repl_kind = 'ipython'
 
 -- ipython mode routes multi-line sends through %cpaste so indented blocks run.
 -- Its `--` terminator is a SyntaxError in plain python, so the flag must match
@@ -27,6 +29,33 @@ local function repl_command()
     return string.format('source "%s/bin/activate" && %s', venv, has_ipython and 'ipython' or 'python')
 end
 repl_command()
+
+local function buf_dir()
+    local dir = vim.fn.expand('%:p:h')
+    return dir ~= '' and dir or vim.fn.getcwd()
+end
+
+local function smgk(args)
+    local r = vim.system(vim.list_extend({ 'smgk' }, args), { text = true }):wait()
+    if r.code ~= 0 then
+        vim.notify(vim.trim(r.stderr ~= '' and r.stderr or r.stdout), vim.log.levels.ERROR)
+        return nil
+    end
+    return vim.trim(r.stdout)
+end
+
+-- jupyter console runs magics in the kernel, so %cpaste is out; bracketed paste does the job
+local function kernel_command()
+    if vim.fn.executable('smgk') == 0 then
+        vim.notify("Slime: smgk not installed (make install in ~/programs/cpp/smgk)", vim.log.levels.ERROR)
+        return nil
+    end
+    local conn = smgk({ 'start', '--dir', buf_dir() })
+    if not conn then return nil end
+    vim.g.slime_python_ipython = 0
+    -- plots belong in the smgk viewer; the console would otherwise pop each one up in eog
+    return 'jupyter-console --ZMQTerminalInteractiveShell.image_handler=None --existing ' .. vim.fn.shellescape(conn)
+end
 
 local function tmux(args)
     local out = vim.fn.system(vim.list_extend({ 'tmux' }, args))
@@ -54,20 +83,24 @@ local function repl_ready(pane)
     return last:match('^In %[%d+%]:') or last:match('^>>>')
 end
 
-local function open_repl(split)
+local function open_repl(split, kind)
     if not os.getenv('TMUX') then
         vim.notify("Slime: not inside tmux", vim.log.levels.ERROR)
         return
     end
     last_split = split or last_split
+    repl_kind = kind or repl_kind
+    local cmd = repl_kind == 'kernel' and kernel_command() or repl_kind == 'ipython' and repl_command()
+    if not cmd then return end
     local s = SPLITS[last_split]
     -- -d keeps focus in nvim
-    local ok, pane = tmux({ 'split-window', '-d', s.flag, '-l', s.size, '-P', '-F', '#{pane_id}', repl_command() })
+    local ok, pane = tmux({ 'split-window', '-d', s.flag, '-l', s.size, '-P', '-F', '#{pane_id}', cmd })
     if not ok or not pane:match('^%%%d+$') then
         vim.notify("Slime: failed to open REPL pane: " .. pane, vim.log.levels.ERROR)
         return
     end
     set_target(pane)
+    if repl_kind == 'kernel' then smgk({ 'view', '--dir', buf_dir() }) end
     vim.notify("Slime connected to " .. pane)
     return pane
 end
@@ -81,6 +114,8 @@ end
 
 local function restart_repl()
     close_repl()
+    -- kernel flow: restart means fresh kernel state (and a new notebook), not just a new console
+    if repl_kind == 'kernel' and not smgk({ 'restart', '--dir', buf_dir() }) then return end
     return open_repl()
 end
 
@@ -100,8 +135,10 @@ vim.api.nvim_create_user_command('SlimeRestart', restart_repl, {})
 vim.api.nvim_create_user_command('SlimeRestartAndSend', restart_and_send, {})
 
 local map = vim.keymap.set
-map('n', '<leader>vp', function() open_repl('vertical') end, { desc = 'Open Python REPL (vertical split)' })
-map('n', '<leader>hp', function() open_repl('horizontal') end, { desc = 'Open Python REPL (horizontal split)' })
+map('n', '<leader>vp', function() open_repl('vertical', 'ipython') end, { desc = 'Open Python REPL (vertical split)' })
+map('n', '<leader>hp', function() open_repl('horizontal', 'ipython') end, { desc = 'Open Python REPL (horizontal split)' })
+map('n', '<leader>vk', function() open_repl('vertical', 'kernel') end, { desc = 'Open kernel console + smgk viewer (vertical)' })
+map('n', '<leader>hk', function() open_repl('horizontal', 'kernel') end, { desc = 'Open kernel console + smgk viewer (horizontal)' })
 map('n', '<leader>vc', '<cmd>SlimeConfig<cr>', { desc = 'SlimeConfig' })
 map('n', '<leader>sq', close_repl, { desc = 'Close Slime REPL' })
 map('n', '<leader>sr', restart_repl, { desc = 'Restart Slime REPL' })
