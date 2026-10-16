@@ -16,7 +16,8 @@ vim.opt.tabstop = 4;
 vim.opt.softtabstop = 4;
 vim.opt.shiftwidth = 4;
 vim.opt.expandtab = true;
-vim.opt.smartindent = true;
+-- off: it forces '#' comments to col 0, breaking '>>' in Python
+vim.opt.smartindent = false;
 
 -- no wrap
 vim.opt.wrap = false;
