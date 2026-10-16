@@ -17,10 +17,16 @@ blink.setup({
         ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
     },
 
-    -- copilot deliberately absent: it renders as inline ghost text
-    -- (lua/plugins/lsp.lua), so duplicating it here would double-request
     sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        -- copilot last and with no score_offset: LSP symbols outrank guesses
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+        providers = {
+            copilot = {
+                name = "copilot",
+                module = "blink-cmp-copilot",
+                async = true,
+            },
+        },
     },
 
     cmdline = {
@@ -51,5 +57,10 @@ blink.setup({
 
     appearance = {
         nerd_font_variant = 'mono',
+        kind_icons = {
+            Copilot = "",
+        },
     },
 })
+
+vim.api.nvim_set_hl(0, "BlinkCmpKindCopilot", { fg = "#6CC644" })

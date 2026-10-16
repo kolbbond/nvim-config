@@ -24,6 +24,7 @@ return {
         version = "1.*",
         dependencies = {
             "L3MON4D3/LuaSnip",
+            "giuxtaposition/blink-cmp-copilot",
         },
     },
 
@@ -40,18 +41,8 @@ return {
         event = "InsertEnter",
         config = function()
             require("copilot").setup({
-                -- ghost text is the in-buffer AI surface; blink handles symbols
-                suggestion = {
-                    enabled = true,
-                    auto_trigger = true,
-                    keymap = {
-                        accept = "<M-y>",
-                        -- <M-hjkl> belong to vim-tmux-navigator
-                        next = "<M-]>",
-                        prev = "<M-[>",
-                        dismiss = "<C-]>",
-                    },
-                },
+                -- ghost text off: copilot surfaces in the blink menu instead
+                suggestion = { enabled = false },
                 panel = { enabled = false },
                 server_opts_overrides = {
                     trace = "verbose",

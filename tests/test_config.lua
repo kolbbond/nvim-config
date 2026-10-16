@@ -83,6 +83,7 @@ test("blink.cmp exposes get_lsp_capabilities", function()
     assert(caps.textDocument, "capabilities missing textDocument")
 end)
 
+test("blink-cmp-copilot loads", function() try_require("blink-cmp-copilot") end)
 test("luasnip loads", function() try_require("luasnip") end)
 test("lspkind loads", function() try_require("lspkind") end)
 
