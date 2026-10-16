@@ -17,18 +17,16 @@ local repl_kind = 'ipython'
 
 -- ipython mode routes multi-line sends through %cpaste so indented blocks run.
 -- Its `--` terminator is a SyntaxError in plain python, so the flag must match
--- the interpreter that launches; this function owns both.
+-- the interpreter that launches: each command returns the slime_python_ipython it needs.
 local function repl_command()
     local venv = os.getenv("VIRTUAL_ENV")
     if not venv or venv == "" then
-        vim.g.slime_python_ipython = 1
-        return 'ipython3'
+        return 'ipython3', 1
     end
     local has_ipython = vim.fn.executable(venv .. "/bin/ipython") == 1
-    vim.g.slime_python_ipython = has_ipython and 1 or 0
-    return string.format('source "%s/bin/activate" && %s', venv, has_ipython and 'ipython' or 'python')
+    return string.format('source "%s/bin/activate" && %s', venv, has_ipython and 'ipython' or 'python'), has_ipython and 1 or 0
 end
-repl_command()
+vim.g.slime_python_ipython = select(2, repl_command())
 
 local function buf_dir()
     local dir = vim.fn.expand('%:p:h')
@@ -50,11 +48,14 @@ local function kernel_command()
         vim.notify("Slime: smgk not installed (make install in ~/programs/cpp/smgk)", vim.log.levels.ERROR)
         return nil
     end
+    if vim.fn.executable('jupyter-console') == 0 then
+        vim.notify("Slime: jupyter-console not installed (python3 -m pip install --user jupyter-console)", vim.log.levels.ERROR)
+        return nil
+    end
     local conn = smgk({ 'start', '--dir', buf_dir() })
     if not conn then return nil end
-    vim.g.slime_python_ipython = 0
     -- plots belong in the smgk viewer; the console would otherwise pop each one up in eog
-    return 'jupyter-console --ZMQTerminalInteractiveShell.image_handler=None --existing ' .. vim.fn.shellescape(conn)
+    return 'jupyter-console --ZMQTerminalInteractiveShell.image_handler=None --existing ' .. vim.fn.shellescape(conn), 0
 end
 
 local function tmux(args)
@@ -88,19 +89,22 @@ local function open_repl(split, kind)
         vim.notify("Slime: not inside tmux", vim.log.levels.ERROR)
         return
     end
-    last_split = split or last_split
-    repl_kind = kind or repl_kind
-    local cmd = repl_kind == 'kernel' and kernel_command() or repl_kind == 'ipython' and repl_command()
+    split = split or last_split
+    kind = kind or repl_kind
+    local cmd, ipython = (kind == 'kernel' and kernel_command or repl_command)()
     if not cmd then return end
-    local s = SPLITS[last_split]
+    local s = SPLITS[split]
     -- -d keeps focus in nvim
     local ok, pane = tmux({ 'split-window', '-d', s.flag, '-l', s.size, '-P', '-F', '#{pane_id}', cmd })
     if not ok or not pane:match('^%%%d+$') then
         vim.notify("Slime: failed to open REPL pane: " .. pane, vim.log.levels.ERROR)
         return
     end
+    -- commit only once the pane exists: a failed <leader>vk must not repoint
+    -- restart/paste mode away from the REPL that is still working
+    last_split, repl_kind, vim.g.slime_python_ipython = split, kind, ipython
     set_target(pane)
-    if repl_kind == 'kernel' then smgk({ 'view', '--dir', buf_dir() }) end
+    if kind == 'kernel' then smgk({ 'view', '--dir', buf_dir() }) end
     vim.notify("Slime connected to " .. pane)
     return pane
 end
