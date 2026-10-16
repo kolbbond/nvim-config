@@ -264,4 +264,61 @@ return {
             filter_kind = false,
         },
     },
+
+    -- render-markdown - In-buffer markdown rendering
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        ft = { "markdown" },
+        keys = {
+            { "<leader>md", "<cmd>RenderMarkdown toggle<cr>", desc = "Toggle markdown render" },
+        },
+        opts = {
+            latex = { enabled = false }, -- needs latex2text from pylatexenc
+            completions = { lsp = { enabled = true } },
+            html = { comment = { conceal = false } }, -- keep <!-- --> visible
+        },
+        config = function(_, opts)
+            require("render-markdown").setup(opts)
+
+            -- <!-- --> defaults to @comment, which gruvbox dims to #777777 and
+            -- washes out. Use the Comment teal set alongside the colorscheme.
+            local function comment_hl()
+                vim.api.nvim_set_hl(0, "RenderMarkdownHtmlComment", { link = "Comment" })
+            end
+            comment_hl()
+            vim.api.nvim_create_autocmd("ColorScheme", {
+                group = vim.api.nvim_create_augroup("kolbbond_render_markdown_hl", { clear = true }),
+                callback = comment_hl,
+            })
+        end,
+        init = function()
+            -- wrap stays off (global default); only spell is markdown-specific
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "markdown",
+                callback = function()
+                    vim.opt_local.spell = true
+                    vim.opt_local.spelllang = "en_us"
+                    vim.opt_local.spelloptions = "camel" -- don't flag camelCase
+                end,
+            })
+        end,
+    },
+
+    -- img-clip - Paste images from clipboard into markdown
+    {
+        "HakonHarnes/img-clip.nvim",
+        ft = { "markdown" },
+        keys = {
+            { "<leader>mp", "<cmd>PasteImage<cr>", desc = "Paste image from clipboard" },
+        },
+        opts = {
+            default = {
+                dir_path = "assets", -- relative to the file, keeps specs self-contained
+                relative_to_current_file = true,
+                prompt_for_file_name = false,
+                use_absolute_path = false,
+            },
+        },
+    },
 }
