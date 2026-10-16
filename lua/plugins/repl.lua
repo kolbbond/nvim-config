@@ -1,12 +1,9 @@
--- REPL plugins: vim-slime, iron.nvim, nvim-matlab, molten, jupynium
+-- REPL plugins: vim-slime, nvim-matlab, molten, jupynium
 
 return {
     -- MATLAB (custom fork)
     -- NOTE: Remote plugin — must not be lazy-loaded
     { "kolbbond/nvim-matlab", lazy = false },
-
-    -- Iron - REPL for Python/Octave
-    { "Vigemus/iron.nvim" },
 
     -- Slime - Send code to tmux panes
     { "jpalardy/vim-slime" },

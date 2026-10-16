@@ -10,7 +10,6 @@ Personal Neovim configuration focused on C/C++ development with CMake, Python/MA
 
 - `:Lazy` - Plugin manager UI; `:Lazy sync` to install/update, `:Lazy check` for updates
 - `:Mason` - Manage LSP servers (clangd, pylsp, lua_ls, matlab_ls)
-- `:IronRepl` - Launch Python/Octave REPL
 - `:MatlabLaunchServer` - Launch MATLAB REPL
 - `:ClangFormat` / `:ClangFormatInfo` - Format C/C++ buffer; show which binary resolved
 
@@ -37,7 +36,6 @@ after/plugin/               # Per-plugin runtime config (~28 files)
   dap.lua                   # Debug adapters (GDB, LLDB, CppDBG, Python)
   colors.lua                # Gruvbox customization with 20+ highlight overrides
   slime.lua                 # Python REPL via tmux panes
-  iron.lua                  # REPL for Python/Octave
 ```
 
 ## Plugin Management

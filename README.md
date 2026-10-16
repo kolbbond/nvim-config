@@ -53,9 +53,9 @@ can find include and src directory. Since we rely on cmake we suggest that you s
 `<leader>rr` run matlab section (cell)
 `CTRL+L` run single matlab line
 
-We have basic python repl support
-`:IronRepl` launch iron repl (for python)
-`<leader>sl` send python line to interpreter
+Python REPL via slime in a tmux pane
+`<leader>vp` / `<leader>hp` open ipython (vertical / horizontal split)
+`<leader>ss` / `CTRL+L` send line, `<leader>sc` send cell, `<leader>sq` close
 
 
 

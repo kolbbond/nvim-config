@@ -183,8 +183,6 @@ test("neotest loads", function() try_require("neotest") end)
 print("\n[repl]")
 -- ───────────────────────────────────────────
 
-test("iron loads", function() try_require("iron.core") end)
-
 test("vim-slime loaded", function()
     assert(vim.g.slime_target ~= nil or vim.fn.exists(":SlimeSend") >= 1,
         "vim-slime not configured")
