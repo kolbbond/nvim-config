@@ -231,6 +231,11 @@ test("lsp format mapped (<leader>F)", function()
     assert(keymap_exists("n", " F"), "missing <leader>F mapping")
 end)
 
+test("make mapped (<leader>rm)", function()
+    assert(keymap_exists("n", " rm"), "missing <leader>rm mapping")
+    assert(vim.fn.exists(":Make") == 2, "missing :Make command")
+end)
+
 test("fugitive mapped (<leader>gs)", function()
     assert(keymap_exists("n", " gs"), "missing <leader>gs mapping")
 end)
