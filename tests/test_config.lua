@@ -227,8 +227,8 @@ test("undotree mapped (<leader>ut)", function()
     assert(keymap_exists("n", " ut"), "missing <leader>ut mapping")
 end)
 
-test("lsp format mapped (<leader>af)", function()
-    assert(keymap_exists("n", " af"), "missing <leader>af mapping")
+test("lsp format mapped (<leader>F)", function()
+    assert(keymap_exists("n", " F"), "missing <leader>F mapping")
 end)
 
 test("fugitive mapped (<leader>gs)", function()

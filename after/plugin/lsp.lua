@@ -18,7 +18,7 @@ mason.setup({
 local mason_lsp_ok, mason_lspconfig = pcall(require, 'mason-lspconfig')
 if not mason_lsp_ok then return end
 mason_lspconfig.setup({
-    ensure_installed = { 'clangd', 'lua_ls', 'pylsp'
+    ensure_installed = { 'clangd', 'lua_ls', 'pylsp', 'marksman'
         --'matlab_ls',
     },
     handlers = {
@@ -145,8 +145,8 @@ end
 
 vim.keymap.set("n", "<leader>sh", clang_switch);
 
--- lsp auto format keymap
-vim.keymap.set("n", "<leader>af", function()
+-- <leader>a* is the claude namespace, so format lives on <leader>F
+vim.keymap.set("n", "<leader>F", function()
     vim.lsp.buf.format({
         async = false, timeout_ms = 1000 })
 end)
